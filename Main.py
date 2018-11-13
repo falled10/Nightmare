@@ -29,6 +29,7 @@ class HelloCocos(cocos.layer.ScrollableLayer):
         self.spriterunright.position = (100, 150)
         self.spriterunright.scale = 2
         self.spriterunright.velocity = (0,0)
+        
         self.spriterunright.do(Mover())
 
         self.add(self.spriterunright)
@@ -55,10 +56,10 @@ class BackgroundLayer(cocos.layer.ScrollableLayer):
 
         bg = cocos.sprite.Sprite('level1.png')
 
-        bg.position = 1500, 300
+        bg.position = bg.width // 2, bg.height // 2
 
-        self.px_width = 3000
-        self.px_height = 600
+        self.px_width = bg.width
+        self.px_height = bg.height
 
         self.add(bg)
 
