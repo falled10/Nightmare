@@ -1,2 +1,7 @@
-class hello:
+import cocos
+
+class hello1:
     pass
+
+class anotherclass:
+	pass
