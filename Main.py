@@ -1,3 +1,4 @@
+
 import cocos
 
 class hello1:
