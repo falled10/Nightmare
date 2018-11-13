@@ -11,8 +11,7 @@ class Mover(cocos.actions.Move):
     def step(self,dt):
         super().step(dt)
         vel_x = (keyboard[key.RIGHT] - keyboard[key.LEFT]) * 500
-        vel_y = (keyboard[key.UP] - keyboard[key.DOWN]) * 500
-        self.target.velocity = (vel_x, vel_y)
+        self.target.velocity = (vel_x, 0)
         scroller.set_focus(self.target.x, self.target.y)
 
 class HelloCocos(cocos.layer.ScrollableLayer):
@@ -26,14 +25,12 @@ class HelloCocos(cocos.layer.ScrollableLayer):
         anim_r = pyglet.image.Animation.from_image_sequence(img_grid_r[0:], 0.1, loop=True)
 
         self.spriterunright = cocos.sprite.Sprite(anim_r)
-        self.spriterunright.position = (100, 150)
+        self.spriterunright.position = (100, 180)
         self.spriterunright.scale = 2
         self.spriterunright.velocity = (0,0)
         self.spriterunright.do(Mover())
 
         self.add(self.spriterunright)
-
-        """
         img_l = pyglet.image.load('runleft.png')
         img_grid_l = pyglet.image.ImageGrid(img_l, 1, 6, item_width=50, item_height=37)
         temp = img_grid_l[::-1]
@@ -42,11 +39,30 @@ class HelloCocos(cocos.layer.ScrollableLayer):
         self.spriterunleft = cocos.sprite.Sprite(anim_l)
         self.spriterunleft.visible = False
         self.spriterunleft.scale = 2
-        self.spriterunleft.position = (100, 150)
+        self.spriterunleft.velocity = (0,0)
+        self.spriterunleft.do(Mover())
+        self.spriterunleft.position = (100, 180)
         self.add(self.spriterunleft)
-    
+        self.speed = 100.0
         self.pressed = defaultdict(int)
-       """
+        self.schedule(self.update)
+
+
+    def on_key_press(self, k, m):
+        if k == 65361:
+            self.spriterunright.visible = False
+            self.spriterunleft.visible = True
+        if k == 65363:
+            self.spriterunright.visible = True
+            self.spriterunleft.visible = False
+
+    def on_key_release(self, k, m):
+        pass
+
+
+    def update(self, dt):
+        pass
+
 
 class BackgroundLayer(cocos.layer.ScrollableLayer):
 
