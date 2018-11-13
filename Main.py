@@ -9,3 +9,6 @@ class anotherclass:
 
 class hello:
     pass
+
+class hello3:
+    pass
