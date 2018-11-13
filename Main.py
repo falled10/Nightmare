@@ -13,6 +13,7 @@ class Mover(cocos.actions.Move):
         vel_x = (keyboard[key.RIGHT] - keyboard[key.LEFT]) * 500
         vel_y = (keyboard[key.UP] - keyboard[key.DOWN]) * 500
         self.target.velocity = (vel_x, vel_y)
+        scroller.set_focus(self.target.x, self.target.y)
 
 class HelloCocos(cocos.layer.ScrollableLayer):
     is_event_handler = True
@@ -53,6 +54,11 @@ class BackgroundLayer(cocos.layer.ScrollableLayer):
         super().__init__()
 
         bg = cocos.sprite.Sprite('level1.png')
+
+        bg.position = 1500, 300
+
+        self.px_width = 3000
+        self.px_height = 600
 
         self.add(bg)
 
