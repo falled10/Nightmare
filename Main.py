@@ -1,4 +1,3 @@
-
 import cocos
 
 class hello1:
@@ -6,3 +5,7 @@ class hello1:
 
 class anotherclass:
 	pass
+
+
+class hello:
+    pass
