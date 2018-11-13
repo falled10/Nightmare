@@ -18,7 +18,7 @@ class HelloCocos(cocos.layer.ScrollableLayer):
     is_event_handler = True
     def __init__(self):
         super().__init__()
-
+        #run right
         img_r = pyglet.image.load('adventurer-run3-sword-Sheet.png')
         img_grid_r = pyglet.image.ImageGrid(img_r, 1, 6, item_width=50, item_height=37 )
 
@@ -27,22 +27,13 @@ class HelloCocos(cocos.layer.ScrollableLayer):
         self.spriterunright = cocos.sprite.Sprite(anim_r)
         self.spriterunright.position = (100, 180)
         self.spriterunright.scale = 2
+        self.spriterunright.scale_x = 1
         self.spriterunright.velocity = (0,0)
         self.spriterunright.do(Mover())
-
         self.add(self.spriterunright)
-        img_l = pyglet.image.load('runleft.png')
-        img_grid_l = pyglet.image.ImageGrid(img_l, 1, 6, item_width=50, item_height=37)
-        temp = img_grid_l[::-1]
-        
-        anim_l = pyglet.image.Animation.from_image_sequence(temp[0:], 0.1, loop=True)
-        self.spriterunleft = cocos.sprite.Sprite(anim_l)
-        self.spriterunleft.visible = False
-        self.spriterunleft.scale = 2
-        self.spriterunleft.velocity = (0,0)
-        self.spriterunleft.do(Mover())
-        self.spriterunleft.position = (100, 180)
-        self.add(self.spriterunleft)
+
+        #attak1
+
         self.speed = 100.0
         self.pressed = defaultdict(int)
         self.schedule(self.update)
@@ -50,11 +41,9 @@ class HelloCocos(cocos.layer.ScrollableLayer):
 
     def on_key_press(self, k, m):
         if k == 65361:
-            self.spriterunright.visible = False
-            self.spriterunleft.visible = True
+            self.spriterunright.scale_x = -1
         if k == 65363:
-            self.spriterunright.visible = True
-            self.spriterunleft.visible = False
+            self.spriterunright.scale_x = 1
 
     def on_key_release(self, k, m):
         pass
