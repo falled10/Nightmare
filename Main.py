@@ -14,7 +14,7 @@ class Mover(cocos.actions.Move):
         self.target.velocity = (vel_x, 0)
         scroller.set_focus(self.target.x, self.target.y)
 
-class HelloCocos(cocos.layer.ScrollableLayer):
+class HelloCocos(cocos.layer.ScrollableLayer):   
     is_event_handler = True
     def __init__(self):
         super().__init__()
@@ -47,7 +47,7 @@ class HelloCocos(cocos.layer.ScrollableLayer):
         self.speed = 100.0
         self.pressed = defaultdict(int)
         self.schedule(self.update)
-
+        #h
 
     def on_key_press(self, k, m):
         if k == 65361:
