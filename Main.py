@@ -1,1 +1,2 @@
-asdfdsafasd
+class hello:
+    pass
