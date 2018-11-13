@@ -3,8 +3,7 @@ import cocos
 class hello1:
     pass
 
-class another1:
-	pass
+
 
 class hello:
     pass
