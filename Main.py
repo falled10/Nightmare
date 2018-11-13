@@ -1,2 +1,2 @@
-import cocos
+import cocos2d
 
