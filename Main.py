@@ -71,7 +71,7 @@ class Background(cocos.layer.Layer):
         self.add(bg)
 
 if __name__ == '__main__':
-    cocos.director.director.init(width=800, height=800, caption='Hello cocos')
+    cocos.director.director.init(width=800, height=800, caption='Nightmare') 
 
     layer = HelloCocos()
     bglayer = Background()
