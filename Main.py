@@ -1,8 +1,9 @@
 import cocos
 
 
-class Hui:
+class hello:
 	pass
 
-class Hui2:
+class hello2:
     pass
+
