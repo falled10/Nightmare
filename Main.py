@@ -37,6 +37,7 @@ class MainMenu(cocos.menu.Menu):
         self.create_menu(items, cocos.menu.shake(), cocos.menu.shake_back())
         
     def on_new_game(self):
+        
         director.replace(FadeTRTransition(Level1_Scene, duration=2))
    
     def on_exit(self):
@@ -91,9 +92,11 @@ class HelloCocos(ScrollableLayer):
 
     def on_key_press(self, k, m):
         print(k)
+
         if k == 65361:
             self.sprite.scale_x = -1
             self.sprite._animation = self.anim_r
+
         if k == 65363:
             self.sprite.scale_x = 1
             self.sprite._animation = self.anim_r
