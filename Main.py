@@ -1,9 +1,12 @@
 import cocos
 import cocos.actions as ac
 import pyglet
+import math
 from collections import defaultdict
 from pyglet.window import key
 from cocos.director import director
+
+
 
 
 
@@ -14,6 +17,7 @@ class Mover(cocos.actions.Move):
         self.target.velocity = (vel_x, 0)
         scroller.set_focus(self.target.x, self.target.y)
 
+
 class HelloCocos(cocos.layer.ScrollableLayer):
     is_event_handler = True
     def __init__(self):
@@ -21,10 +25,9 @@ class HelloCocos(cocos.layer.ScrollableLayer):
         #run right --------------------------------------------------
         self.img_r = pyglet.image.load('adventurer-run3-sword-Sheet.png')
         self.img_grid_r = pyglet.image.ImageGrid(self.img_r, 1, 6, item_width=50, item_height=37 )
-
         self.anim_r = pyglet.image.Animation.from_image_sequence(self.img_grid_r[0:], 0.1, loop=True)
         # ----------------------------------------------------------
-
+        
         #attak1
         self.img_a1 = pyglet.image.load('attack1/Attacksheet.png')
         self.img_grid_a1 = pyglet.image.ImageGrid(self.img_a1, 1, 5, item_width=50, item_height=37 )
@@ -32,7 +35,7 @@ class HelloCocos(cocos.layer.ScrollableLayer):
         self.anim_a1 = pyglet.image.Animation.from_image_sequence(self.img_grid_a1[0:], 0.1, loop=True)
         #_-----------------------------------------------------------------
 
-        #attak1
+        # idle
         self.img_i = pyglet.image.load('idle/idlesheet.png')
         self.img_grid_i = pyglet.image.ImageGrid(self.img_i, 1, 4, item_width=50, item_height=37 )
 
