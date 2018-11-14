@@ -177,12 +177,14 @@ if __name__ == '__main__':
     scroller.add(layer)
     
     test_scene = Scene()  
-
+    test_scene2 = Scene()
+   
     test_scene.add(main)
 
-  
-    test_scene.add(scroller)
     test_scene.add(menu)
+    test_scene2.add(scroller)
+    
 
     director.run(test_scene)
+    director.run(test_scene2)
     # director.run(SceneControlLayer.active_scene)
