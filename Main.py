@@ -42,10 +42,10 @@ class MainMenu(cocos.menu.Menu):
         items[0].x = 40
         items.append(MenuItem("Exit", self.on_exit))
         self.create_menu(items, cocos.menu.shake(), cocos.menu.shake_back())
-        
+    
     
     def on_new_game(self):
-        print("Game started")
+        print("Game started")  
 
     def on_exit(self):
         director.window.close()
@@ -187,7 +187,7 @@ if __name__ == '__main__':
     test_scene.add(menu)
     test_scene2.add(scroller)
     
-
+    
     director.run(test_scene)
-    director.run(test_scene2)
-    # director.run(SceneControlLayer.active_scene)
+    
+    director.run(SceneControlLayer.active_scene)
