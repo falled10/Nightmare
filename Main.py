@@ -9,7 +9,7 @@ from cocos.sprite import Sprite
 from cocos.scene import Scene
 from cocos.menu import MenuItem
 from cocos.layer import Layer
-from cocos.layer import ScrollableLayer
+from cocos.layer import ScrollableLayer, ScrollingManager
 from cocos.menu import Menu
 from cocos.scenes.transitions import *
 
@@ -22,6 +22,8 @@ class MainScene(Scene):
 
         self.px_width = menu_bg.width 
         self.px_height = menu_bg.height
+
+        
         self.add(menu_bg)
 """
 class PauseScene(Scene):
@@ -42,10 +44,9 @@ class MainMenu(cocos.menu.Menu):
         items[0].x = 40
         items.append(MenuItem("Exit", self.on_exit))
         self.create_menu(items, cocos.menu.shake(), cocos.menu.shake_back())
-    
-    
+        
     def on_new_game(self):
-        print("Game started")  
+        director
 
     def on_exit(self):
         director.window.close()
@@ -57,7 +58,7 @@ class Mover(cocos.actions.Move):
         super().step(dt)
         vel_x = (keyboard[key.RIGHT] - keyboard[key.LEFT]) * 180
         self.target.velocity = (vel_x, 0)
-        scroller.set_focus(self.target.x, self.target.y)
+        scroller_1.set_focus(self.target.x, self.target.y)
 
 
 class HelloCocos(ScrollableLayer):   
@@ -122,7 +123,7 @@ class HelloCocos(ScrollableLayer):
 
 
 class Level1_Layer(ScrollableLayer):
-
+   
     def __init__(self):
         super().__init__()
 
@@ -157,9 +158,17 @@ class SceneControlLayer(Layer):
 
     def on_key_press(self, symbol, modifiers):
         if symbol == key.P:
-            SceneControlLayer.active_scene = PauseScene()
-            director.replace(FlipX3DTransition(SceneControlLayer.active_scene, duration = 2)) """
+            SceneControlLayer.active_scene = IntroScene()
+            director.replace(FlipX3DTransition(SceneControlLayer.active_scene, duration = 2)) 
+        if symbol == key.SPACE:
+            SceneControlLayer.active_scene = TestScene1()
+            director.replace(FlipX3DTransition(SceneControlLayer.active_scene, duration = 2))  """
 
+
+
+
+   
+    
 if __name__ == '__main__':
     director.init(width=800, height=600, caption='Nightmare')    
 
@@ -167,27 +176,38 @@ if __name__ == '__main__':
     keyboard = key.KeyStateHandler()
     director.window.push_handlers(keyboard)
 
-  #  SceneControlLayer.active_scene = PauseScene()
+   #SceneControlLayer.active_scene = PauseScene()
     
     menu = MainMenu()  
     main = MainScene()
     layer = HelloCocos()
     level1_layer = Level1_Layer()
+    level2_layer = Level2_Layer()
    
-    
-    scroller = cocos.layer.ScrollingManager()
-    scroller.add(level1_layer)
-    scroller.add(layer)
-    
-    test_scene = Scene()  
-    test_scene2 = Scene()
-   
-    test_scene.add(main)
+  
 
-    test_scene.add(menu)
-    test_scene2.add(scroller)
+    scroller_1 = ScrollingManager()
+    scroller_1.add(level1_layer)
+    scroller_1.add(layer)
+
+    scroller_2 = ScrollingManager()
+    scroller_2.add(level2_layer)
+    scroller_2.add(layer)
     
+
+    Main_Scene = Scene()  
+    Level1_Scene = Scene()
+    Level2_Scene = Scene()
+   
+   
+    Main_Scene.add(main)
+
+    Main_Scene.add(menu)
+    Level1_Scene.add(scroller_1)
+    Level2_Scene.add(scroller_2)
+    director.push(Level1_Scene)
     
-    director.run(test_scene)
-    
-    director.run(SceneControlLayer.active_scene)
+
+    director.run(Main_Scene)
+   
+  
