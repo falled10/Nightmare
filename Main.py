@@ -1,6 +1,7 @@
 import cocos
 import cocos.actions as ac
 import pyglet
+import math
 from collections import defaultdict
 from pyglet.window import key
 from cocos.director import director
@@ -37,10 +38,17 @@ class MainMenu(Menu):
         self.create_menu(items, cocos.menu.shake(), cocos.menu.shake_back())
         
     def on_new_game(self):
-        pass
-   
+        director.init(width=800, height=600, caption='Nightmare')    
+        director.window.pop_handlers()
+        keyboard = key.KeyStateHandler()
+        director.window.push_handlers(keyboard)
+        director.window.close()
+        director.run(Level1_Scene)
+    
     def on_exit(self):
         director.window.close()
+
+
 
 class Mover(cocos.actions.Move):
     def step(self,dt):
@@ -49,6 +57,7 @@ class Mover(cocos.actions.Move):
         self.target.velocity = (vel_x, 0)
         scroller_1.set_focus(self.target.x, self.target.y)
 
+
 class HelloCocos(ScrollableLayer):   
     is_event_handler = True
     def __init__(self):
@@ -56,10 +65,9 @@ class HelloCocos(ScrollableLayer):
         #run right --------------------------------------------------
         self.img_r = pyglet.image.load('adventurer-run3-sword-Sheet.png')
         self.img_grid_r = pyglet.image.ImageGrid(self.img_r, 1, 6, item_width=50, item_height=37 )
-
         self.anim_r = pyglet.image.Animation.from_image_sequence(self.img_grid_r[0:], 0.1, loop=True)
         # ----------------------------------------------------------
-
+        
         #attak1
         self.img_a1 = pyglet.image.load('attack1/Attacksheet.png')
         self.img_grid_a1 = pyglet.image.ImageGrid(self.img_a1, 1, 5, item_width=50, item_height=37 )
@@ -67,7 +75,7 @@ class HelloCocos(ScrollableLayer):
         self.anim_a1 = pyglet.image.Animation.from_image_sequence(self.img_grid_a1[0:], 0.1, loop=True)
         #_-----------------------------------------------------------------
 
-        #attak1
+        # idle
         self.img_i = pyglet.image.load('idle/idlesheet.png')
         self.img_grid_i = pyglet.image.ImageGrid(self.img_i, 1, 4, item_width=50, item_height=37 )
 
@@ -143,7 +151,7 @@ class Level2_Layer(ScrollableLayer):
 
         self.add(lvl2_bg)
         self.add(SceneControlLayer())
-        
+    
 
 class SceneControlLayer(Layer):
     is_event_handler = True
@@ -156,6 +164,9 @@ class SceneControlLayer(Layer):
             SceneControlLayer.active_scene = Scene(Level1_Scene)
             director.replace(FlipX3DTransition(SceneControlLayer.active_scene, duration = 2)) 
         if symbol == key.SPACE:
+            SceneControlLayer.active_scene = Scene(Level2_Scene)
+            director.replace(FlipX3DTransition(SceneControlLayer.active_scene, duration = 2))
+        if symbol == key.O:
             SceneControlLayer.active_scene = Scene(Level2_Scene)
             director.replace(FlipX3DTransition(SceneControlLayer.active_scene, duration = 2))
             
@@ -197,10 +208,7 @@ if __name__ == '__main__':
     Level1_Scene.add(scroller_1)
     Level2_Scene.add(scroller_2)
     
-    MS.add(SceneControlLayer())
-    SceneControlLayer.active_scene = Scene(Level1_Scene)
-    director.run(SceneControlLayer.active_scene)
-        
+    director.run(MS)   
     
     
 
