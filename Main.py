@@ -6,7 +6,7 @@ from pyglet.window import key
 from cocos.director import director
 from cocos.sprite import Sprite
 from cocos.scene import Scene
-from cocos.menu import MenuItem
+from cocos.menu import MenuItem, Menu
 from cocos.layer import Layer
 from cocos.layer import ScrollableLayer, ScrollingManager
 from cocos.menu import Menu
@@ -24,7 +24,7 @@ class MainScene(Scene):
         self.px_height = menu_bg.height
         self.add(menu_bg)
        
-class MainMenu(cocos.menu.Menu):
+class MainMenu(Menu):
     def __init__(self):
         super().__init__("Nightmare")
 
@@ -37,8 +37,7 @@ class MainMenu(cocos.menu.Menu):
         self.create_menu(items, cocos.menu.shake(), cocos.menu.shake_back())
         
     def on_new_game(self):
-        
-        director.replace(FadeTRTransition(Level1_Scene, duration=2))
+        pass
    
     def on_exit(self):
         director.window.close()
@@ -117,7 +116,7 @@ class HelloCocos(ScrollableLayer):
 class Level1_Layer(ScrollableLayer):
    
     def __init__(self):
-        super().__init__()
+        super(Level1_Layer, self).__init__()
 
         lvl1_bg = Sprite('map/level1.png')
 
@@ -127,12 +126,13 @@ class Level1_Layer(ScrollableLayer):
         self.px_height = lvl1_bg.height
 
         self.add(lvl1_bg)
+        self.add(SceneControlLayer())
     
 
 class Level2_Layer(ScrollableLayer):
     is_event_handler = True
     def __init__(self):
-        super().__init__()
+        super(Level2_Layer,self).__init__()
 
         lvl2_bg = Sprite('map/level2.png')
 
@@ -142,7 +142,9 @@ class Level2_Layer(ScrollableLayer):
         self.px_height = lvl2_bg.height
 
         self.add(lvl2_bg)
-"""
+        self.add(SceneControlLayer())
+        
+
 class SceneControlLayer(Layer):
     is_event_handler = True
     active_scene = None
@@ -151,12 +153,13 @@ class SceneControlLayer(Layer):
 
     def on_key_press(self, symbol, modifiers):
         if symbol == key.P:
-            SceneControlLayer.active_scene = IntroScene()
+            SceneControlLayer.active_scene = Scene(Level1_Scene)
             director.replace(FlipX3DTransition(SceneControlLayer.active_scene, duration = 2)) 
         if symbol == key.SPACE:
-            SceneControlLayer.active_scene = TestScene1()
-            director.replace(FlipX3DTransition(SceneControlLayer.active_scene, duration = 2)) 
-"""
+            SceneControlLayer.active_scene = Scene(Level2_Scene)
+            director.replace(FlipX3DTransition(SceneControlLayer.active_scene, duration = 2))
+            
+
 if __name__ == '__main__':
     director.init(width=800, height=600, caption='Nightmare')    
 
@@ -164,7 +167,7 @@ if __name__ == '__main__':
     keyboard = key.KeyStateHandler()
     director.window.push_handlers(keyboard)
 
-   #SceneControlLayer.active_scene = PauseScene()
+   
     
     menu = MainMenu()  
     main = MainScene()
@@ -183,19 +186,21 @@ if __name__ == '__main__':
     scroller_2.add(layer)
     
 
-    Main_Scene = Scene()  
+    MS = Scene()  
     Level1_Scene = Scene()
     Level2_Scene = Scene()
    
    
-    Main_Scene.add(main)
+    MS.add(main)
+    MS.add(menu)
 
-    Main_Scene.add(menu)
     Level1_Scene.add(scroller_1)
     Level2_Scene.add(scroller_2)
     
-   
-    director.run(Main_Scene)
+    MS.add(SceneControlLayer())
+    SceneControlLayer.active_scene = Scene(Level1_Scene)
+    director.run(SceneControlLayer.active_scene)
+        
     
     
 
