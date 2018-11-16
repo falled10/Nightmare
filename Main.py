@@ -12,6 +12,7 @@ from cocos.layer import Layer
 from cocos.layer import ScrollableLayer, ScrollingManager
 from cocos.menu import Menu
 from cocos.scenes.transitions import *
+from cocos.scenes import *
 
 
 class MainScene(Scene):
@@ -22,16 +23,7 @@ class MainScene(Scene):
 
         self.px_width = menu_bg.width 
         self.px_height = menu_bg.height
-
-        
         self.add(menu_bg)
-"""
-class PauseScene(Scene):
-    def __init__(self):
-        super().__init__()
-       
-        self.add(SceneControlLayer())
-    """  
        
 class MainMenu(cocos.menu.Menu):
     def __init__(self):
@@ -46,8 +38,15 @@ class MainMenu(cocos.menu.Menu):
         self.create_menu(items, cocos.menu.shake(), cocos.menu.shake_back())
         
     def on_new_game(self):
-        director
+        director.init(width=800, height=600, caption='Nightmare')    
 
+        director.window.pop_handlers()
+        keyboard = key.KeyStateHandler()
+        director.window.push_handlers(keyboard)
+        director.run(Level1_Scene)
+        main = MainScene()
+        director.replace(FadeTRTransition(main, duration=2))
+   
     def on_exit(self):
         director.window.close()
 
@@ -135,9 +134,10 @@ class Level1_Layer(ScrollableLayer):
         self.px_height = lvl1_bg.height
 
         self.add(lvl1_bg)
+    
 
 class Level2_Layer(ScrollableLayer):
-
+    is_event_handler = True
     def __init__(self):
         super().__init__()
 
@@ -162,13 +162,8 @@ class SceneControlLayer(Layer):
             director.replace(FlipX3DTransition(SceneControlLayer.active_scene, duration = 2)) 
         if symbol == key.SPACE:
             SceneControlLayer.active_scene = TestScene1()
-            director.replace(FlipX3DTransition(SceneControlLayer.active_scene, duration = 2))  """
-
-
-
-
-   
-    
+            director.replace(FlipX3DTransition(SceneControlLayer.active_scene, duration = 2)) 
+"""
 if __name__ == '__main__':
     director.init(width=800, height=600, caption='Nightmare')    
 
@@ -207,7 +202,7 @@ if __name__ == '__main__':
     Level2_Scene.add(scroller_2)
     director.push(Level1_Scene)
     
-
+ 
     director.run(Main_Scene)
    
   
