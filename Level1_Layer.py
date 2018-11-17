@@ -1,19 +1,16 @@
 import cocos
+import pyglet
 from cocos.director import director
 from cocos.scene import Scene
-from cocos.layer import ScrollableLayer, ScrollingManager
-from cocos.layer import Layer
-from pyglet.window import key
+from cocos.layer import Layer, ScrollableLayer, ScrollingManager
 from cocos.sprite import Sprite
+from cocos.actions import Move
+from collections import defaultdict
+from pyglet.window import key
 from MainSprite import MainHero
-
-__all__ = ['get_newgame']
 
 
 scroller = ScrollingManager()
-
-
-
 
 
 class Level1_Layer(ScrollableLayer):
@@ -34,6 +31,7 @@ class Level1_Layer(ScrollableLayer):
     
 
 def get_newgame():
+  
     scene = Scene()
     hero = MainHero()
    

@@ -4,17 +4,21 @@ from cocos.scene import Scene
 from cocos.layer import MultiplexLayer
 from Menu import MainMenu
 from cocos.director import director
-
+from cocos.layer import *
+from Menu_Background import MainScene
 from pyglet.window import key
 
-keyboard = key.KeyStateHandler()
-
 def main():
-    director.init(width=800, height=600, caption="Match 3")
-    director.window.pop_handlers()
-    director.window.push_handlers(keyboard)
+    director.init(width=800, height=600, caption="Nightmare")
+   
+    
+    menu = MainMenu()
+    main_bg = MainScene()
     scene = Scene()
-    scene.add(MainMenu())
+
+    scene.add(main_bg)
+    scene.add(menu)
+    
 
     director.run(scene)
 
