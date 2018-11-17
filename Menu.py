@@ -6,7 +6,7 @@ import pyglet
 
 class MainMenu(Menu):
     def __init__(self):
-        super(MainMenu, self).__init__('Match3')
+        super(MainMenu, self).__init__('Nightmare')
 
         # you can override the font that will be used for the title and the items
         # you can also override the font size and the colors. see menu.py for
@@ -28,10 +28,10 @@ class MainMenu(Menu):
 
         items = []
 
-        items.append(MenuItem('New Game', self.on_new_game))
+        items.append(MenuItem('Нова гра', self.on_new_game))
         # items.append( MenuItem('Options', self.on_options) )
         # items.append( MenuItem('Scores', self.on_scores) )
-        items.append(MenuItem('Quit', self.on_quit))
+        items.append(MenuItem('Вихід', self.on_quit))
 
         self.create_menu(items, shake(), shake_back())
 
