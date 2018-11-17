@@ -1,14 +1,22 @@
 import cocos
 from cocos.director import director
 from cocos.scene import Scene
-
+from cocos.layer import ScrollableLayer, ScrollingManager
 from cocos.layer import Layer
+from pyglet.window import key
 from cocos.sprite import Sprite
+from MainSprite import MainHero
 
 __all__ = ['get_newgame']
 
 
-class Level1_Layer(cocos.layer.ScrollableLayer):
+scroller = ScrollingManager()
+
+
+
+
+
+class Level1_Layer(ScrollableLayer):
     is_event_handler = True  #: enable director.window events
 
     def __init__(self):
@@ -27,6 +35,11 @@ class Level1_Layer(cocos.layer.ScrollableLayer):
 
 def get_newgame():
     scene = Scene()
-    scene.add(Level1_Layer())
+    hero = MainHero()
+   
+    scroller.add(Level1_Layer())
+    scroller.add(hero)
+
+    scene.add(scroller)
 
     return scene
