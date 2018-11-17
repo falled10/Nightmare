@@ -5,12 +5,14 @@ from collections import defaultdict
 from pyglet.window import key
 from cocos.layer import ScrollableLayer
 import Level1_Layer
+import Main
 
-keyboard = key.KeyStateHandler()
+
+
 class Mover(cocos.actions.Move):
     def step(self,dt):
         super().step(dt)
-        vel_x = (keyboard[key.RIGHT] - keyboard[key.LEFT]) * 180
+        vel_x = (Main.keyboard[key.RIGHT] - Main.keyboard[key.LEFT]) * 180
         self.target.velocity = (vel_x, 0)
         Level1_Layer.scroller.set_focus(self.target.x, self.target.y)
 
