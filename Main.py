@@ -4,13 +4,11 @@ import pyglet
 import math
 from collections import defaultdict
 from pyglet.window import key
-from cocos.director import director
 from cocos.sprite import Sprite
 from cocos.scene import Scene
 from cocos.menu import MenuItem
 from cocos.layer import Layer
 from cocos.layer import ScrollableLayer, ScrollingManager
-from cocos.menu import Menu
 from cocos.scenes.transitions import *
 from cocos.scenes import *
 
@@ -38,17 +36,12 @@ class MainMenu(cocos.menu.Menu):
         self.create_menu(items, cocos.menu.shake(), cocos.menu.shake_back())
         
     def on_new_game(self):
-        director.init(width=800, height=600, caption='Nightmare')    
-
-        director.window.pop_handlers()
-        keyboard = key.KeyStateHandler()
-        director.window.push_handlers(keyboard)
-        director.run(Level1_Scene)
-        main = MainScene()
-        director.replace(FadeTRTransition(main, duration=2))
+        level1 = Level1_Layer()
+        Scene_l = Scene()
+        cocos.director.director.push(Scene_l)
    
     def on_exit(self):
-        director.window.close()
+        cocos.director.director.window.close()
 
 
 
@@ -119,10 +112,12 @@ class HelloCocos(ScrollableLayer):
 
     def update(self, dt):
         pass
+        
 
 
 class Level1_Layer(ScrollableLayer):
    
+    is_event_handler = True
     def __init__(self):
         super().__init__()
 
@@ -165,11 +160,8 @@ class SceneControlLayer(Layer):
             director.replace(FlipX3DTransition(SceneControlLayer.active_scene, duration = 2)) 
 """
 if __name__ == '__main__':
-    director.init(width=800, height=600, caption='Nightmare')    
+    cocos.director.director.init(width=800, height=600, caption='Nightmare')    
 
-    director.window.pop_handlers()
-    keyboard = key.KeyStateHandler()
-    director.window.push_handlers(keyboard)
 
    #SceneControlLayer.active_scene = PauseScene()
     
@@ -193,16 +185,15 @@ if __name__ == '__main__':
     Main_Scene = Scene()  
     Level1_Scene = Scene()
     Level2_Scene = Scene()
-   
+
    
     Main_Scene.add(main)
 
     Main_Scene.add(menu)
     Level1_Scene.add(scroller_1)
     Level2_Scene.add(scroller_2)
-    director.push(Level1_Scene)
     
  
-    director.run(Main_Scene)
+    cocos.director.director.run(Main_Scene)
    
   
