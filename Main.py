@@ -10,9 +10,7 @@ from pyglet.window import key
 
 def main():
     director.init(width=800, height=600, caption="Nightmare")
-    director.window.pop_handlers()
-    keyboard = key.KeyStateHandler()
-    director.window.push_handlers(keyboard)
+   
     
     menu = MainMenu()
     main_bg = MainScene()
