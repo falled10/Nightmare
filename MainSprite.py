@@ -9,6 +9,7 @@ from cocos.scenes.transitions import *
 from cocos.actions import Move
 import Level1_Layer
 import Main
+import time
 
 
 
@@ -49,12 +50,20 @@ class MainHero(ScrollableLayer):
         self.anim_i = pyglet.image.Animation.from_image_sequence(self.img_grid_i[0:], 0.3, loop=True)
         #_-----------------------------------------------------------------
 
+        # jump
+        self.img_j = pyglet.image.load('jump/jumpsheet.png')
+        self.img_grid_j = pyglet.image.ImageGrid(self.img_j, 1, 4, item_width=50, item_height=37 )
+
+        self.anim_j = pyglet.image.Animation.from_image_sequence(self.img_grid_j[0:], 0.2, loop=True)
+        #_-----------------------------------------------------------------
+
 
         self.sprite = cocos.sprite.Sprite(self.anim_i)
         self.sprite.position = (100, 180)
         self.sprite.scale = 2
         self.sprite.scale_x = 1
         self.sprite.velocity = (0,0)
+        self.can_jump = True
         self.sprite.do(Mover())
         self.add(self.sprite)
         
@@ -65,7 +74,6 @@ class MainHero(ScrollableLayer):
 
     def on_key_press(self, k, m):
         print(k)
-
         if k == 65361:
             self.sprite.scale_x = -1
             self.sprite._animation = self.anim_r
@@ -75,8 +83,16 @@ class MainHero(ScrollableLayer):
             self.sprite._animation = self.anim_r
 
         if k == 65362:
-            self.sprite.position_y += 5
-            self.sprite._animation = self.anim_a1
+            x, y = self.sprite.position
+            if self.sprite.scale_x == -1:
+                if y == 180:
+                    self.sprite.do(ac.JumpBy((-100, 0), 100, 1, 1))
+                    self.sprite._animation = self.anim_j
+            else:        
+                if y == 180:
+                    self.sprite.do(ac.JumpBy((100, 0), 100, 1, 1))
+                    self.sprite._animation = self.anim_j
+
 
 
     def on_key_release(self, k, m):

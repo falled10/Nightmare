@@ -21,7 +21,7 @@ class Level1_Layer(ScrollableLayer):
     
         lvl1_bg = Sprite('map/level1.png')
 
-        lvl1_bg.position = director.window.width // 2, director.window.height // 2
+        lvl1_bg.position = lvl1_bg.width // 2, lvl1_bg.height // 2
 
         self.px_width = lvl1_bg.width
         self.px_height = lvl1_bg.height
