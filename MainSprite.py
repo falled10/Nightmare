@@ -5,6 +5,7 @@ from cocos.director import director
 from collections import defaultdict
 from pyglet.window import key
 from cocos.layer import ScrollableLayer
+from cocos.scenes.transitions import *
 from cocos.actions import Move
 import Level1_Layer
 import Main
@@ -74,6 +75,7 @@ class MainHero(ScrollableLayer):
             self.sprite._animation = self.anim_r
 
         if k == 65362:
+            self.sprite.position_y += 5
             self.sprite._animation = self.anim_a1
 
 
