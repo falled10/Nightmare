@@ -3,10 +3,7 @@ from cocos.layer import ScrollableLayer, ScrollingManager
 from cocos.sprite import Sprite
 from cocos.scene import Scene
 from MainSprite import MainHero
-from Audio import AudioLayer
 
-from cocos.audio.pygame.mixer import Sound
-from cocos.audio.pygame import mixer
 
 from cocos import mapcolliders
 from MainSprite import MainHero
@@ -33,7 +30,6 @@ class Level1_Background(ScrollableLayer):
     
 
 def get_newgame():
-    mixer.init()
     scene = Scene()
     
     bg_layer = Level1_Background()
