@@ -20,15 +20,20 @@ director.window.push_handlers(keyboard)
 
 class Mover(Move):
     def step(self,dt):
-        super().step(dt)
         vel_x = (keyboard[key.RIGHT] - keyboard[key.LEFT]) * 180
-        self.target.velocity = (vel_x, 0)
+        dx = vel_x * dt
+
+        last = self.target.get_rect()
+
+        new = last.copy()
+        new.x = dx
+        self.target.velocity = self.target.collide_map(last, new, vel_x, 0)
         Level1_Layer.scroller.set_focus(self.target.x, self.target.y)
 
 class MainHero(ScrollableLayer):
     is_event_handler = True
 
-    def __init__(self):
+    def __init__(self, collision_handler):
         super().__init__()
         #run right --------------------------------------------------
         self.img_r = pyglet.image.load('adventurer-run3-sword-Sheet.png')
@@ -36,7 +41,8 @@ class MainHero(ScrollableLayer):
         self.anim_r = pyglet.image.Animation.from_image_sequence(self.img_grid_r[0:], 0.1, loop=True)
         # ----------------------------------------------------------
         
-        #attak1
+        #attack1
+        
         self.img_a1 = pyglet.image.load('attack1/Attacksheet.png')
         self.img_grid_a1 = pyglet.image.ImageGrid(self.img_a1, 1, 5, item_width=50, item_height=37 )
 
@@ -52,10 +58,10 @@ class MainHero(ScrollableLayer):
 
         # jump
         self.img_j = pyglet.image.load('jump/jumpsheet.png')
-        self.img_grid_j = pyglet.image.ImageGrid(self.img_j, 1, 4, item_width=50, item_height=37 )
+        self.img_grid_j = pyglet.image.ImageGrid(self.img_j, 1, 4, item_width=50, item_height=37)
 
         self.anim_j = pyglet.image.Animation.from_image_sequence(self.img_grid_j[0:], 0.2, loop=True)
-        #_-----------------------------------------------------------------
+        #------------------------------------------------------------------
 
 
         self.sprite = cocos.sprite.Sprite(self.anim_i)
@@ -63,6 +69,7 @@ class MainHero(ScrollableLayer):
         self.sprite.scale = 2
         self.sprite.scale_x = 1
         self.sprite.velocity = (0,0)
+        self.sprite.collide_map = collision_handler
         self.can_jump = True
         self.sprite.do(Mover())
         self.add(self.sprite)

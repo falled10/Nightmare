@@ -8,34 +8,31 @@ from cocos.actions import Move
 from collections import defaultdict
 from pyglet.window import key
 from MainSprite import MainHero
+from cocos import mapcolliders
 
 
 scroller = ScrollingManager()
 
 
-class Level1_Layer(ScrollableLayer):
-    is_event_handler = True  #: enable director.window events
+class Level1_Layer():
 
     def __init__(self):
-        super(Level1_Layer, self).__init__()
     
-        lvl1_bg = Sprite('map/level1.png')
+        lvl1_bg = cocos.tiles.load('map/level1.1.tmx')
+        self.layer1 = lvl1_bg['Objects']
 
-        lvl1_bg.position = lvl1_bg.width // 2, lvl1_bg.height // 2
-
-        self.px_width = lvl1_bg.width
-        self.px_height = lvl1_bg.height
-
-        self.add(lvl1_bg)
         
     
 
 def get_newgame():
-  
+    bg_layer = Level1_Layer()
     scene = Scene()
-    hero = MainHero()
+    mapcollider = mapcolliders.TmxObjectMapCollider()
+    mapcollider.on_bump_handler = mapcollider.on_bump_bounce
+    collision_handler = mapcolliders.make_collision_handler(mapcollider, bg_layer.layer1)
+    hero = MainHero(collision_handler)
    
-    scroller.add(Level1_Layer())
+    scroller.add(bg_layer.layer1)
     scroller.add(hero)
 
     scene.add(scroller)
