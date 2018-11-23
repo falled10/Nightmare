@@ -36,10 +36,10 @@ class MainMenu(Menu):
         self.create_menu(items, shake(), shake_back())
 
     def on_new_game(self):
-        import Level1_Layer
+        import Level1_Background
 
         director.push(FlipAngular3DTransition(
-            Level1_Layer.get_newgame(), 1.5))
+            Level1_Background.get_newgame(), 1.5))
 
    
 
