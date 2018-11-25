@@ -3,12 +3,14 @@ from cocos.layer import ScrollableLayer, ScrollingManager
 from cocos.sprite import Sprite
 from cocos.scene import Scene
 from Level3_Hero import Level3_Hero
-
-
+from pyglet.window import key
+from cocos.director import director
+from cocos.scenes.transitions import *
+import Sound
+import PauseScene
 
 
 scroller_3 = ScrollingManager()
-
 
 
 class Level3_Background(ScrollableLayer):
@@ -26,6 +28,9 @@ class Level3_Background(ScrollableLayer):
 
         self.add(bg)
         
+    def on_key_press(self, k, m):
+        if k == key.P: 
+            director.push(ZoomTransition(PauseScene.get_pause()))
     
 
 def get_newgame():
@@ -33,6 +38,8 @@ def get_newgame():
     bg_layer = Level3_Background()
     hero = Level3_Hero()
     
+    Sound.play("res/audio/Level3.mp3")
+
     scroller_3.add(bg_layer)
     scroller_3.add(hero)   
    

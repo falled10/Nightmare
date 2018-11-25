@@ -4,6 +4,8 @@ from cocos.scenes.transitions import *
 import pyglet
 from cocos.scene import Scene
 from Menu_Background import MainScene
+import Sound
+
 
 
 class MainMenu(Menu):
@@ -15,6 +17,7 @@ class MainMenu(Menu):
         self.font_title['bold'] = True
         self.font_title['font_size'] = 60
         self.font_title['color'] = (0, 75, 0, 255)
+        
 
         # ITEM
         self.font_item['font_name'] = 'Motion Control'
@@ -41,9 +44,8 @@ class MainMenu(Menu):
         self.create_menu(items, shake(), shake_back())
 
     def on_new_game(self):
-        import Level1_Background
-
-        director.push(SlideInTTransition(Level1_Background.get_newgame()))
+        import Level3_Background
+        director.push(SlideInTTransition(Level3_Background.get_newgame()))
 
     def on_quit(self):
         pyglet.app.exit()
@@ -55,6 +57,8 @@ def get_menu():
     main_bg = MainScene()
     scene = Scene()
    
+    Sound.play("res/audio/Menu.mp3")
+
     scene.add(main_bg)
     scene.add(menu)
 
