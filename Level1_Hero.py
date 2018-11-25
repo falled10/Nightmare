@@ -11,6 +11,7 @@ from cocos.sprite import Sprite
 import Level1_Background
 from cocos.scene import Scene
 from cocos.scenes.transitions import *
+from Level1_Monsters import WhiteWolf
 
 
 director.window.pop_handlers()
@@ -29,6 +30,7 @@ class Level1_Hero(ScrollableLayer):
 
     def __init__(self):
         super().__init__()
+        self.white_wolf = WhiteWolf()
         #run right --------------------------------------------------
         self.img_r = pyglet.image.load('res/animation/run/adventurer-run3-sword-Sheet.png')
         self.img_grid_r = pyglet.image.ImageGrid(self.img_r, 1, 6, item_width=50, item_height=37 )
@@ -68,7 +70,7 @@ class Level1_Hero(ScrollableLayer):
         self.anim_j = pyglet.image.Animation.from_image_sequence(self.img_grid_j[0:], 0.2, loop=True)
         #------------------------------------------------------------------
 
-
+        self.life = 3
         self.sprite = Sprite(self.anim_i)
         self.sprite.position = (100, 180)
         self.sprite.scale = 2
@@ -76,7 +78,7 @@ class Level1_Hero(ScrollableLayer):
         self.sprite.velocity = (0,0)
         
         self.sprite.do(Mover())
-        
+        self.add(self.white_wolf)
         self.add(self.sprite)
         
         self.pressed = defaultdict(int)
@@ -121,7 +123,37 @@ class Level1_Hero(ScrollableLayer):
     def on_key_release(self, k, m):
         self.sprite._animation = self.anim_i
 
+    def wolf_action(self):
+        x, y = self.sprite.position
+        w_x, w_y = self.white_wolf.sprite.position
+        if (w_x-x) < 200:
+            if w_x <= x:
+                w_x += 0
+                self.white_wolf.sprite.position = w_x, w_y
+                return
+            self.white_wolf.sprite.scale_x = -1
+            w_x -= 4
+            self.white_wolf.sprite.position = w_x, w_y
+
+        if (w_x - x) < 20:
+            if self.sprite._animation == self.anim_a1:
+                self.white_wolf.sprite.visible = False
+                print('wolf dead')
+            else:
+                if self.white_wolf.sprite.visible == True:
+                    if self.life == 0:
+                        print('you dead')
+                        self.sprite.position = (100, 180)
+                    else:
+                        self.life -= 1
+                        self.sprite.position = (100, 180)
+                    
+
 
     def update(self, dt):
-        pass
-       
+        self.wolf_action()
+        
+
+
+
+        

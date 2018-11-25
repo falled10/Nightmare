@@ -7,6 +7,7 @@ from Level2_Hero import Level2_Hero
 
 
 
+
 scroller_2 = ScrollingManager()
 
 

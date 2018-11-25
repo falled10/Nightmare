@@ -3,6 +3,7 @@ from cocos.layer import ScrollableLayer, ScrollingManager
 from cocos.sprite import Sprite
 from cocos.scene import Scene
 from Level1_Hero import Level1_Hero
+from Level1_Monsters import WhiteWolf
 
 
 
@@ -32,9 +33,10 @@ def get_newgame():
     scene = Scene()
     bg_layer = Level1_Background()
     hero = Level1_Hero()
+    wolf = WhiteWolf()
     
     scroller_1.add(bg_layer)
-    scroller_1.add(hero)   
+    scroller_1.add(hero)  
    
     scene.add(scroller_1)
     return scene

@@ -9,6 +9,7 @@ from collections import defaultdict
 from pyglet.window import key
 from MainSprite import MainHero
 from cocos import mapcolliders
+from Level1_Monsters import WhiteWolf
 
 
 scroller = ScrollingManager()
@@ -27,13 +28,16 @@ class Level1_Layer():
 def get_newgame():
     bg_layer = Level1_Layer()
     scene = Scene()
+    wolf = WhiteWolf()
     mapcollider = mapcolliders.TmxObjectMapCollider()
     mapcollider.on_bump_handler = mapcollider.on_bump_bounce
     collision_handler = mapcolliders.make_collision_handler(mapcollider, bg_layer.layer1)
     hero = MainHero(collision_handler)
    
     scroller.add(bg_layer.layer1)
+    scroller.add(wolf)
     scroller.add(hero)
+    
 
     scene.add(scroller)
 
