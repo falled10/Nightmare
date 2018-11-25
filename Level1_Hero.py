@@ -40,7 +40,19 @@ class Level1_Hero(ScrollableLayer):
         self.img_grid_a1 = pyglet.image.ImageGrid(self.img_a1, 1, 5, item_width=50, item_height=37 )
 
         self.anim_a1 = pyglet.image.Animation.from_image_sequence(self.img_grid_a1[0:], 0.1, loop=True)
-        #_-----------------------------------------------------------------
+        #------------------------------------------------------------------
+
+        #attack2
+        self.img_a2 = pyglet.image.load('res/animation/attack2/attack2sheet.png')
+        self.img_grid_a2 = pyglet.image.ImageGrid(self.img_a2, 6, 1, item_width=50, item_height=37)
+        self.anim_a2 = pyglet.image.Animation.from_image_sequence(self.img_grid_a2[::-1], 0.1, loop=True)
+        #------------------------------------------------------------------
+
+        #attack3
+        self.img_a3 = pyglet.image.load('res/animation/attack3/attack3sheet.png')
+        self.img_grid_a3 = pyglet.image.ImageGrid(self.img_a3, 6, 1, item_width=50, item_height=37)
+        self.anim_a3 = pyglet.image.Animation.from_image_sequence(self.img_grid_a3[::-1], 0.1, loop=True)
+        #-------------------------------------------------------------------
 
         # idle
         self.img_i = pyglet.image.load('res/animation/idle/idlesheet.png')
@@ -91,6 +103,15 @@ class Level1_Hero(ScrollableLayer):
                     self.sprite.do(ac.JumpBy((100, 0), 100, 1, 1))
                     self.sprite._animation = self.anim_j
 
+
+        if k == key.Z:
+            self.sprite._animation = self.anim_a1
+
+        if k == key.X:
+            self.sprite._animation = self.anim_a2
+
+        if k == key.C:
+            self.sprite._animation = self.anim_a3
 
         if k == key.P:
             import PauseScene
