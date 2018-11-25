@@ -9,6 +9,7 @@ from cocos.scenes.transitions import *
 import Sound
 import PauseScene
 
+
 scroller_2 = ScrollingManager()
 
 class Level2_Background(ScrollableLayer):
@@ -24,8 +25,6 @@ class Level2_Background(ScrollableLayer):
         self.px_width = bg.width
         self.px_height = bg.height
 
-       
-        bg.scale_y = 2.2
         self.add(bg)
         
     def on_key_press(self, k, m):

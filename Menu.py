@@ -39,13 +39,18 @@ class MainMenu(Menu):
 
         items.append(MenuItem('Нова гра', self.on_new_game))
         items[0].x += 35
-        items.append(MenuItem('Вихід', self.on_quit))
+        items.append(MenuItem('Вибрати рівень', self.on_choose_lvl))
         items[1].x += 35
+        items.append(MenuItem('Вихід', self.on_quit))
+        items[2].x += 35
         self.create_menu(items, shake(), shake_back())
 
     def on_new_game(self):
         import Level3_Background
         director.push(SlideInTTransition(Level3_Background.get_newgame()))
+
+    def on_choose_lvl(self):
+        pass
 
     def on_quit(self):
         pyglet.app.exit()
