@@ -9,6 +9,8 @@ from pyglet.window import key
 from cocos.menu import *
 from cocos.scenes.transitions import *
 from Menu_Background import MainScene
+import Sound
+
 
 
 class PauseScene(Menu):
@@ -50,10 +52,12 @@ class PauseScene(Menu):
         director.pop()
     
     def on_menu(self):
+        Sound.stop()
         import Menu
         director.push(ZoomTransition(Menu.get_menu()))
 
     def on_quit(self):
+        Sound.stop()
         pyglet.app.exit()
     
     
@@ -62,7 +66,7 @@ def get_pause():
     scene = Scene()
     main_bg = MainScene()
     pause = PauseScene()
-    
+
     scene.add(main_bg)
     scene.add(pause)
 
