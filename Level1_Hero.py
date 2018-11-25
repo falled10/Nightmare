@@ -115,10 +115,6 @@ class Level1_Hero(ScrollableLayer):
         if k == key.C:
             self.sprite._animation = self.anim_a3
 
-        if k == key.P:
-            import PauseScene
-
-            director.push(ZoomTransition(PauseScene.get_pause()))
             
     def on_key_release(self, k, m):
         self.sprite._animation = self.anim_i

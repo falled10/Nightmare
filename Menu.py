@@ -44,8 +44,8 @@ class MainMenu(Menu):
         self.create_menu(items, shake(), shake_back())
 
     def on_new_game(self):
-        import Level3_Background
-        director.push(SlideInTTransition(Level3_Background.get_newgame()))
+        import Level1_Background
+        director.push(SlideInTTransition(Level1_Background.get_newgame()))
 
     def on_quit(self):
         pyglet.app.exit()
