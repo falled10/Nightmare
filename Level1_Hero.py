@@ -14,6 +14,8 @@ from cocos.scenes.transitions import *
 from Level1_Monsters import WhiteWolf
 
 
+flag = 10
+
 director.window.pop_handlers()
 keyboard = key.KeyStateHandler()
 director.window.push_handlers(keyboard)
@@ -115,7 +117,8 @@ class Level1_Hero(ScrollableLayer):
         if k == key.C:
             self.sprite._animation = self.anim_a3
 
-            
+      
+
     def on_key_release(self, k, m):
         self.sprite._animation = self.anim_i
 
@@ -138,8 +141,12 @@ class Level1_Hero(ScrollableLayer):
             else:
                 if self.white_wolf.sprite.visible == True:
                     if self.life == 0:
-                        print('you dead')
+                        import GameOver
+                        flag = True
+                        director.push(ZoomTransition(GameOver.get_gameover()))
+                        self.life = 3
                         self.sprite.position = (100, 180)
+                        
                     else:
                         self.life -= 1
                         self.sprite.position = (100, 180)
