@@ -66,7 +66,7 @@ class Level1_Hero(ScrollableLayer):
         #_-----------------------------------------------------------------
 
         # jump
-        self.img_j = pyglet.image.load('jump/jumpsheet.png')
+        self.img_j = pyglet.image.load('res/animation/jump/jumpsheet.png')
         self.img_grid_j = pyglet.image.ImageGrid(self.img_j, 1, 4, item_width=50, item_height=37)
 
         self.anim_j = pyglet.image.Animation.from_image_sequence(self.img_grid_j[0:], 0.2, loop=True)

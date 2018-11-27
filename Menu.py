@@ -41,8 +41,12 @@ class MainMenu(Menu):
         items[0].x += 35
         items.append(MenuItem('Вибрати рівень', self.on_choose_lvl))
         items[1].x += 35
-        items.append(MenuItem('Вихід', self.on_quit))
+        items.append(MenuItem('Допомога', self.on_help))
         items[2].x += 35
+        items.append(MenuItem('Про авторів', self.on_author))
+        items[3].x += 35
+        items.append(MenuItem('Вихід', self.on_quit))
+        items[4].x += 35
         self.create_menu(items, shake(), shake_back())
 
     def on_new_game(self):
@@ -50,6 +54,13 @@ class MainMenu(Menu):
         director.push(SlideInTTransition(Level3_Background.get_newgame()))
 
     def on_choose_lvl(self):
+        import ChooseLVL
+        director.push(ZoomTransition(ChooseLVL.get_choose()))    
+    
+    def on_help(self):
+        pass
+
+    def on_author(self):
         pass
 
     def on_quit(self):
