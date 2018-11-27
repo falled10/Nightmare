@@ -66,7 +66,7 @@ class Level1_Hero(ScrollableLayer):
         #_-----------------------------------------------------------------
 
         # jump
-        self.img_j = pyglet.image.load('jump/jumpsheet.png')
+        self.img_j = pyglet.image.load('res/animation/jump/jumpsheet.png')
         self.img_grid_j = pyglet.image.ImageGrid(self.img_j, 1, 4, item_width=50, item_height=37)
 
         self.anim_j = pyglet.image.Animation.from_image_sequence(self.img_grid_j[0:], 0.2, loop=True)
@@ -78,6 +78,7 @@ class Level1_Hero(ScrollableLayer):
         self.sprite.scale = 2
         self.sprite.scale_x = 1
         self.sprite.velocity = (0,0)
+        self.flag = False
         
         self.sprite.do(Mover())
         self.add(self.white_wolf)
@@ -125,32 +126,37 @@ class Level1_Hero(ScrollableLayer):
     def wolf_action(self):
         x, y = self.sprite.position
         w_x, w_y = self.white_wolf.sprite.position
-        if (w_x-x) < 200:
-            if w_x <= x:
-                w_x += 0
-                self.white_wolf.sprite.position = w_x, w_y
-                return
-            self.white_wolf.sprite.scale_x = -1
-            w_x -= 4
-            self.white_wolf.sprite.position = w_x, w_y
+        if (w_x - x) < -100:
+            self.flag = True
 
-        if (w_x - x) < 20:
-            if self.sprite._animation == self.anim_a1:
+        if (w_x-x) < 200 and (w_x-x) > 0:
+            self.white_wolf.sprite.scale_x = -1     
+            self.white_wolf.sprite.do(ac.MoveTo((x, w_y),0.7))
+        elif (w_x-x) < 0:
+            self.white_wolf.sprite.scale_x = 1     
+            self.white_wolf.sprite.do(ac.MoveTo((x, w_y),0.7))
+
+        if (w_x - x) < 20 and (w_x - x) > 0 or (w_x - x) < 0 and (w_x - x) > -20 :
+            
+            if self.sprite._animation == self.anim_a1 or self.sprite._animation == self.anim_a2 or self.sprite._animation == self.anim_a3:
                 self.white_wolf.sprite.visible = False
+               
                 print('wolf dead')
-            else:
+            elif y <= 200:
+                
                 if self.white_wolf.sprite.visible == True:
                     if self.life == 0:
-                        import GameOver
+                        import Menu
                         flag = True
-                        director.push(ZoomTransition(GameOver.get_gameover()))
+                        director.push(ZoomTransition(Menu.get_menu()))
                         self.life = 3
-                        self.sprite.position = (100, 180)
-                        
+                        self.sprite.position = (100, 180)            
                     else:
                         self.life -= 1
+                        self.white_wolf.sprite.position = (800,160)
+                        self.white_wolf.sprite.visible = True
                         self.sprite.position = (100, 180)
-                    
+        print(y)
 
 
     def update(self, dt):
