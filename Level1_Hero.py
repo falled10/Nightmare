@@ -101,11 +101,11 @@ class Level1_Hero(ScrollableLayer):
             x, y = self.sprite.position
             if self.sprite.scale_x == -1:
                 if y == 180:
-                    self.sprite.do(ac.JumpBy((-100, 0), 100, 1, 1))
+                    self.sprite.do(ac.JumpBy((-150, 0), 100, 1, 1))
                     self.sprite._animation = self.anim_j
             else:        
                 if y == 180:
-                    self.sprite.do(ac.JumpBy((100, 0), 100, 1, 1))
+                    self.sprite.do(ac.JumpBy((150, 0), 100, 1, 1))
                     self.sprite._animation = self.anim_j
 
 
@@ -130,6 +130,7 @@ class Level1_Hero(ScrollableLayer):
             self.flag = True
 
         if (w_x-x) < 200 and (w_x-x) > 0:
+            self.white_wolf.sprite._animation = self.white_wolf.get_idle_animation()
             self.white_wolf.sprite.scale_x = -1     
             self.white_wolf.sprite.do(ac.MoveTo((x, w_y),0.7))
         elif (w_x-x) < 0:
@@ -153,6 +154,7 @@ class Level1_Hero(ScrollableLayer):
                         self.sprite.position = (100, 180)            
                     else:
                         self.life -= 1
+                        self.white_wolf.sprite._animation = self.white_wolf.anim
                         self.white_wolf.sprite.position = (800,160)
                         self.white_wolf.sprite.visible = True
                         self.sprite.position = (100, 180)
