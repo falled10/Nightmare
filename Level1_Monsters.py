@@ -37,5 +37,28 @@ class WhiteWolf(ScrollableLayer):
         return anim
 
 
+class BlueWolf(ScrollableLayer):
+    def __init__(self):
+        super(BlueWolf, self).__init__()
+
+        #animation
+        self.img = pyglet.image.load('res/animation/level1_monters/wolf2/wolf-runing-cycle-skin.png')
+        self.img_grid = pyglet.image.ImageGrid(self.img, 1, 4, item_width=54, item_height=31)
+        self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[1:2], 0.2, loop=True)
+
+        self.sprite = Sprite(self.anim)
+        self.sprite.scale = 1.4
+        self.sprite.position = (1000, 160)
+        self.x = 0
+        
+        self.add(self.sprite)
+
+
+    def get_idle_animation(self):
+        img = pyglet.image.load('res/animation/level1_monters/wolf2/wolf-runing-cycle-skin.png')
+        img_grid = pyglet.image.ImageGrid(img, 1, 4, item_width=54, item_height=31)
+        anim = pyglet.image.Animation.from_image_sequence(img_grid[0:], 0.2, loop=True)
+        return anim
+
     
 

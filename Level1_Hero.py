@@ -11,7 +11,7 @@ from cocos.sprite import Sprite
 import Level1_Background
 from cocos.scene import Scene
 from cocos.scenes.transitions import *
-from Level1_Monsters import WhiteWolf
+from Level1_Monsters import WhiteWolf, BlueWolf
 
 
 flag = 10
@@ -33,6 +33,7 @@ class Level1_Hero(ScrollableLayer):
     def __init__(self):
         super().__init__()
         self.white_wolf = WhiteWolf()
+        self.blue_wolf = BlueWolf()
         #run right --------------------------------------------------
         self.img_r = pyglet.image.load('res/animation/run/adventurer-run3-sword-Sheet.png')
         self.img_grid_r = pyglet.image.ImageGrid(self.img_r, 1, 6, item_width=50, item_height=37 )
@@ -81,6 +82,7 @@ class Level1_Hero(ScrollableLayer):
         self.flag = False
         
         self.sprite.do(Mover())
+        self.add(self.blue_wolf)
         self.add(self.white_wolf)
         self.add(self.sprite)
         
@@ -123,17 +125,17 @@ class Level1_Hero(ScrollableLayer):
     def on_key_release(self, k, m):
         self.sprite._animation = self.anim_i
 
-    def wolf_action(self, position, enemy):
+    def wolf_action(self, position, enemy, speed):
         x, y = self.sprite.position
         w_x, w_y = enemy.sprite.position
     
         if (w_x-x) < position and (w_x-x) > 0:
             enemy.sprite._animation = enemy.get_idle_animation()
             enemy.sprite.scale_x = -1     
-            enemy.sprite.do(ac.MoveTo((x, w_y),0.7))
+            enemy.sprite.do(ac.MoveTo((x, w_y), speed))
         elif (w_x-x) < 0:
             enemy.sprite.scale_x = 1     
-            enemy.sprite.do(ac.MoveTo((x, w_y),0.7))
+            enemy.sprite.do(ac.MoveTo((x, w_y), speed))
 
         if (w_x - x) < 20 and (w_x - x) > 0 or (w_x - x) < 0 and (w_x - x) > -20 :
             
@@ -160,7 +162,8 @@ class Level1_Hero(ScrollableLayer):
 
 
     def update(self, dt):
-        self.wolf_action(200, self.white_wolf)
+        self.wolf_action(200, self.white_wolf, 0.7)
+        self.wolf_action(200, self.blue_wolf, 0.4)
         
 
 
