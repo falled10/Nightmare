@@ -123,27 +123,27 @@ class Level1_Hero(ScrollableLayer):
     def on_key_release(self, k, m):
         self.sprite._animation = self.anim_i
 
-    def wolf_action(self):
+    def wolf_action(self, position, enemy):
         x, y = self.sprite.position
-        w_x, w_y = self.white_wolf.sprite.position
+        w_x, w_y = enemy.sprite.position
     
-        if (w_x-x) < 200 and (w_x-x) > 0:
-            self.white_wolf.sprite._animation = self.white_wolf.get_idle_animation()
-            self.white_wolf.sprite.scale_x = -1     
-            self.white_wolf.sprite.do(ac.MoveTo((x, w_y),0.7))
+        if (w_x-x) < position and (w_x-x) > 0:
+            enemy.sprite._animation = enemy.get_idle_animation()
+            enemy.sprite.scale_x = -1     
+            enemy.sprite.do(ac.MoveTo((x, w_y),0.7))
         elif (w_x-x) < 0:
-            self.white_wolf.sprite.scale_x = 1     
-            self.white_wolf.sprite.do(ac.MoveTo((x, w_y),0.7))
+            enemy.sprite.scale_x = 1     
+            enemy.sprite.do(ac.MoveTo((x, w_y),0.7))
 
         if (w_x - x) < 20 and (w_x - x) > 0 or (w_x - x) < 0 and (w_x - x) > -20 :
             
             if self.sprite._animation == self.anim_a1 or self.sprite._animation == self.anim_a2 or self.sprite._animation == self.anim_a3:
-                self.white_wolf.sprite.visible = False
+                enemy.sprite.visible = False
                
                 print('wolf dead')
             elif y <= 200:
                 
-                if self.white_wolf.sprite.visible == True:
+                if enemy.sprite.visible == True:
                     if self.life == 0:
                         import Menu
                         flag = True
@@ -152,15 +152,15 @@ class Level1_Hero(ScrollableLayer):
                         self.sprite.position = (100, 180)            
                     else:
                         self.life -= 1
-                        self.white_wolf.sprite._animation = self.white_wolf.anim
-                        self.white_wolf.sprite.position = (800,160)
-                        self.white_wolf.sprite.visible = True
+                        enemy.sprite._animation = enemy.anim
+                        enemy.sprite.position = (800,160)
+                        enemy.sprite.visible = True
                         self.sprite.position = (100, 180)
         
 
 
     def update(self, dt):
-        self.wolf_action()
+        self.wolf_action(200, self.white_wolf)
         
 
 
