@@ -21,7 +21,8 @@ class WhiteWolf(ScrollableLayer):
         self.img = pyglet.image.load('res/animation/level1_monters/wolf1/wolf-runing-cycle.png')
         self.img_grid = pyglet.image.ImageGrid(self.img, 1, 4, item_width=54, item_height=31)
         self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[1:2], 0.2, loop=True)
-
+        self.lifes = 1
+        self.flag = False
         self.sprite = Sprite(self.anim)
         self.sprite.scale = 1.4
         self.sprite.position = (800, 160)

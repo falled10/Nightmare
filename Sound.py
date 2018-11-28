@@ -14,7 +14,7 @@ def play(soundtrack):
     # music.load(bytes(os.path.join("assets", "music", soundtrack), 'utf-8'))
     music.load(soundtrack)
     music
-    music.set_volume(0.5)
+    music.set_volume(0)
     music.play(loops=-1)
 
 def pause():
