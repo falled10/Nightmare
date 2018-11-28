@@ -126,9 +126,7 @@ class Level1_Hero(ScrollableLayer):
     def wolf_action(self):
         x, y = self.sprite.position
         w_x, w_y = self.white_wolf.sprite.position
-        if (w_x - x) < -100:
-            self.flag = True
-
+    
         if (w_x-x) < 200 and (w_x-x) > 0:
             self.white_wolf.sprite._animation = self.white_wolf.get_idle_animation()
             self.white_wolf.sprite.scale_x = -1     
@@ -158,7 +156,7 @@ class Level1_Hero(ScrollableLayer):
                         self.white_wolf.sprite.position = (800,160)
                         self.white_wolf.sprite.visible = True
                         self.sprite.position = (100, 180)
-        print(y)
+        
 
 
     def update(self, dt):
