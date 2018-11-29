@@ -77,6 +77,14 @@ class Level1_Hero(ScrollableLayer):
         self.anim_j = pyglet.image.Animation.from_image_sequence(self.img_grid_j[0:], 0.2, loop=True)
   
         #------------------------------------------------------------------
+
+        # block
+        self.img_b = pyglet.image.load('res/animation/block/blocksheet.png')
+        self.img_grid_b = pyglet.image.ImageGrid(self.img_b, 3, 1, item_width=50, item_height=37)
+
+        self.anim_b = pyglet.image.Animation.from_image_sequence(self.img_grid_b[0:], 0.3, loop=True)
+  
+        #------------------------------------------------------------------
     
         self.life = 3
         self.sprite = Sprite(self.anim_i)
@@ -103,6 +111,7 @@ class Level1_Hero(ScrollableLayer):
                     enemy.lifes -= 1
                     
                 else:
+                    enemy.sprite.position = (-1000, 1000)
                     enemy.visible = False
                     print('emeny`s dead')
 
@@ -118,7 +127,6 @@ class Level1_Hero(ScrollableLayer):
             self.sprite.image = self.anim_r
 
         if k == 65362:
-            f = self.anim_j.get_duration()
             x, y = self.sprite.position
             if self.sprite.scale_x == -1:
                 if y == 180:
@@ -131,7 +139,8 @@ class Level1_Hero(ScrollableLayer):
                     print(self.anim_j.get_duration())
                     self.sprite.do(ac.JumpBy((150, 0), 100, 1, 1))
                     self.sprite.image = self.anim_j
-
+        if k == key.B:
+            self.sprite.image = self.anim_b
 
         if k == key.Z:
             self.get_flag(self.white_wolf)
@@ -139,48 +148,49 @@ class Level1_Hero(ScrollableLayer):
             self.get_flag(self.blue_wolf2)
             print(self.white_wolf.lifes)
             
-            
-
-
-      
-
+        
     def on_key_release(self, k, m):
         if k == key.Z:
             self.sprite.image = self.anim_a1
         else:
             self.sprite.image = self.anim_i
 
+
     def wolf_action(self, position, enemy, speed):
         x, y = self.sprite.position
         w_x, w_y = enemy.sprite.position
-    
-        if (w_x-x) < position and (w_x-x) > 0:
-            enemy.sprite.image = enemy.get_idle_animation()
-            enemy.sprite.scale_x = -1     
-            enemy.sprite.do(ac.MoveTo((x, w_y), speed))
-        elif (w_x-x) < 0:
-            enemy.sprite.scale_x = 1     
-            enemy.sprite.do(ac.MoveTo((x, w_y), speed))
-
-        if (w_x - x) <= 100 and (w_x - x) >= -100:
-            enemy.flag = True
-            # if y <= 200:=
-                
-            #     if enemy.sprite.visible == True:
-            #         if self.life == 0:
-            #             import Menu
-            #             flag = True
-            #             director.push(ZoomTransition(Menu.get_menu()))
-            #             self.life = 3
-            #             self.sprite.position = (100, 180)            
-            #         else:
-            #             self.life -= 1
-            #             enemy.sprite._animation = enemy.anim
-            #             enemy.sprite.position = (800,160)
-            #             enemy.sprite.visible = True
-            #             self.sprite.position = (100, 180)
-        elif (w_x - x) > 100 or (w_x - x) < -100:
-            enemy.flag = False
+        print(enemy.sprite.position)
+        if enemy.sprite.visible  is not False:
+            if (w_x-x) < position and (w_x-x) > 0:
+                enemy.sprite._animation = enemy.get_idle_animation()
+                enemy.sprite.scale_x = -1     
+                enemy.sprite.position = (w_x-2, w_y)
+            elif (w_x-x) < 0 and (w_x-x) > position:
+                enemy.sprite.scale_x = 1     
+                enemy.sprite.do(ac.MoveTo((x, w_y), speed))
+                enemy.sprite.position = (w_x+2, w_y)
+            if self.sprite.image == self.anim_b and (w_x - x) <= 40 and (w_x - x) >= 0:
+                enemy.sprite.position = (w_x+80, w_y)
+            if self.sprite.image == self.anim_b and (w_x - x) <= 0 and (w_x - x) >= -40:
+                enemy.sprite.position = (w_x-80, w_y)
+            if (w_x - x) <= 100 and (w_x - x) >= -100:
+                enemy.flag = True
+                if y <= 200 and (w_x - x) <= 20 and (w_x - x) >= -20:
+                    
+                    
+                    if enemy.sprite.visible is True:
+                        if self.life == 0:
+                            import Menu
+                            flag = True
+                            director.push(ZoomTransition(Menu.get_menu()))
+                            self.life = 3
+                            self.sprite.position = (100, 180)            
+                        else:
+                            self.life -= 1
+                            enemy.sprite.image = enemy.anim
+                            self.sprite.position = (100, 180)
+            elif (w_x - x) > 80 or (w_x - x) < -80:
+                enemy.flag = False
         
 
 
