@@ -4,7 +4,7 @@ import pyglet
 
 import cocos
 
-mixer.pre_init(44100, -16, 2, 1024)
+mixer.pre_init(44100, -16, 2, 1024)     
 mixer.init()
 
 # Make sure we exit the mixer when the application quits

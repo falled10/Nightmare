@@ -47,7 +47,7 @@ class Level1_Hero(ScrollableLayer):
         self.img_a1 = pyglet.image.load('res/animation/attack1/Attacksheet.png')
         self.img_grid_a1 = pyglet.image.ImageGrid(self.img_a1, 1, 5, item_width=50, item_height=37 )
 
-        self.anim_a1 = pyglet.image.Animation.from_image_sequence(self.img_grid_a1[0:], 0.05, loop=True)
+        self.anim_a1 = pyglet.image.Animation.from_image_sequence(self.img_grid_a1[0:], 0.05, loop=False)
         #------------------------------------------------------------------
 
         #attack2
@@ -95,28 +95,27 @@ class Level1_Hero(ScrollableLayer):
         self.pressed = defaultdict(int)
         self.schedule(self.update)
 
-    def on_key_release(self, k, m):
-        print(k)
-
-        if k == key.Z:
-            self.sprite._animation = self.anim_a1
-
-        if k == key.X:
-            self.sprite._animation = self.anim_a2
-
-        if k == key.C:
-            self.sprite._animation = self.anim_a3
+   
+    
+    def get_flag(self, enemy):
+        if enemy.flag:
+                if enemy.lifes != 0:
+                    enemy.lifes -= 1
+                    
+                else:
+                    enemy.visible = False
+                    print('emeny`s dead')
 
       
 
     def on_key_press(self, k, m):
         if k == 65361:
             self.sprite.scale_x = -1
-            self.sprite._animation = self.anim_r
+            self.sprite.image = self.anim_r
 
         if k == 65363:
             self.sprite.scale_x = 1
-            self.sprite._animation = self.anim_r
+            self.sprite.image = self.anim_r
 
         if k == 65362:
             f = self.anim_j.get_duration()
@@ -124,22 +123,39 @@ class Level1_Hero(ScrollableLayer):
             if self.sprite.scale_x == -1:
                 if y == 180:
                     self.sprite.do(ac.JumpBy((-150, 0), 100, 1, 1))
-                    self.sprite._animation = self.anim_j
+                    self.sprite.image = self.anim_j
                     
             else:        
                 if y == 180:
 
                     print(self.anim_j.get_duration())
                     self.sprite.do(ac.JumpBy((150, 0), 100, 1, 1))
-                    self.sprite._animation = self.anim_j
-        self.sprite._animation = self.anim_i
+                    self.sprite.image = self.anim_j
+
+
+        if k == key.Z:
+            self.get_flag(self.white_wolf)
+            self.get_flag(self.blue_wolf)
+            self.get_flag(self.blue_wolf2)
+            print(self.white_wolf.lifes)
+            
+            
+
+
+      
+
+    def on_key_release(self, k, m):
+        if k == key.Z:
+            self.sprite.image = self.anim_a1
+        else:
+            self.sprite.image = self.anim_i
 
     def wolf_action(self, position, enemy, speed):
         x, y = self.sprite.position
         w_x, w_y = enemy.sprite.position
     
         if (w_x-x) < position and (w_x-x) > 0:
-            enemy.sprite._animation = enemy.get_idle_animation()
+            enemy.sprite.image = enemy.get_idle_animation()
             enemy.sprite.scale_x = -1     
             enemy.sprite.do(ac.MoveTo((x, w_y), speed))
         elif (w_x-x) < 0:
@@ -147,7 +163,7 @@ class Level1_Hero(ScrollableLayer):
             enemy.sprite.do(ac.MoveTo((x, w_y), speed))
 
         if (w_x - x) <= 100 and (w_x - x) >= -100:
-            self.white_wolf.flag = True
+            enemy.flag = True
             # if y <= 200:=
                 
             #     if enemy.sprite.visible == True:
@@ -164,14 +180,15 @@ class Level1_Hero(ScrollableLayer):
             #             enemy.sprite.visible = True
             #             self.sprite.position = (100, 180)
         elif (w_x - x) > 100 or (w_x - x) < -100:
-            self.white_wolf.flag = False
+            enemy.flag = False
         
 
 
     def update(self, dt):
         self.wolf_action(200, self.white_wolf, 0.7)
+        self.wolf_action(200, self.blue_wolf, 0.5)
+        self.wolf_action(200, self.blue_wolf2, 0.5)    
+
+
         
-
-
-
         
