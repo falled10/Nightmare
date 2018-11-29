@@ -159,7 +159,6 @@ class Level1_Hero(ScrollableLayer):
     def wolf_action(self, position, enemy, speed):
         x, y = self.sprite.position
         w_x, w_y = enemy.sprite.position
-        print(enemy.sprite.position)
         if enemy.sprite.visible  is not False:
             if (w_x-x) < position and (w_x-x) > 0:
                 enemy.sprite._animation = enemy.get_idle_animation()
@@ -173,9 +172,9 @@ class Level1_Hero(ScrollableLayer):
                 enemy.sprite.position = (w_x+80, w_y)
             if self.sprite.image == self.anim_b and (w_x - x) <= 0 and (w_x - x) >= -40:
                 enemy.sprite.position = (w_x-80, w_y)
-            if (w_x - x) <= 100 and (w_x - x) >= -100:
+            if (w_x - x) <= 80 and (w_x - x) >= -80:
                 enemy.flag = True
-                if y <= 200 and (w_x - x) <= 20 and (w_x - x) >= -20:
+                if y <= 200 and (w_x - x) <= 30 and (w_x - x) >= -30:
                     
                     
                     if enemy.sprite.visible is True:
