@@ -95,8 +95,21 @@ class Level1_Hero(ScrollableLayer):
         self.pressed = defaultdict(int)
         self.schedule(self.update)
 
-    def on_key_press(self, k, m):
+    def on_key_release(self, k, m):
         print(k)
+
+        if k == key.Z:
+            self.sprite._animation = self.anim_a1
+
+        if k == key.X:
+            self.sprite._animation = self.anim_a2
+
+        if k == key.C:
+            self.sprite._animation = self.anim_a3
+
+      
+
+    def on_key_press(self, k, m):
         if k == 65361:
             self.sprite.scale_x = -1
             self.sprite._animation = self.anim_r
@@ -119,29 +132,6 @@ class Level1_Hero(ScrollableLayer):
                     print(self.anim_j.get_duration())
                     self.sprite.do(ac.JumpBy((150, 0), 100, 1, 1))
                     self.sprite._animation = self.anim_j
-
-
-        if k == key.Z:
-        
-            print(self.white_wolf.lifes)
-            self.sprite._animation = self.anim_a1
-            if self.white_wolf.flag:
-                if self.white_wolf.lifes != 0:
-                    self.white_wolf.lifes -= 1
-                    
-                else:
-                    self.white_wolf.sprite.visible = False
-                    print('wolf dead')
-            
-        if k == key.X:
-            self.sprite._animation = self.anim_a2
-
-        if k == key.C:
-            self.sprite._animation = self.anim_a3
-
-      
-
-    def on_key_release(self, k, m):
         self.sprite._animation = self.anim_i
 
     def wolf_action(self, position, enemy, speed):
