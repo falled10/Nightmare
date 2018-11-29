@@ -13,8 +13,8 @@ cocos.director.event_loop.push_handlers(on_exit=mixer.quit)
 def play(soundtrack):
     # music.load(bytes(os.path.join("assets", "music", soundtrack), 'utf-8'))
     music.load(soundtrack)
-    music
-    music.set_volume(0.5)
+   
+    music.set_volume(0)
     music.play(loops=-1)
 
 def pause():
@@ -25,13 +25,3 @@ def stop():
 
 def resume():
     music.unpause()
-    
-
-"""
-def transition(soundtrack, time):
-    music.fadeout(time * 1000)
-    pyglet.clock.schedule_once(next_music, time, soundtrack)
-
-def next_music(dt, soundtrack):
-    play(soundtrack)
-"""

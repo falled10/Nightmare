@@ -10,15 +10,14 @@ from cocos.menu import *
 from cocos.scenes.transitions import *
 from Menu_Background import MainScene
 import Sound
-import Level1_Hero
 
 
 
-class GameOver(Menu):
+class Help(Menu):
     is_event_handler = True  #: enable director.window events
 
     def __init__(self):
-        super(GameOver, self).__init__('Кінець гри')
+        super(Help, self).__init__('Допомога')
 
        # TITLE
         self.font_title['font_name'] = 'Motion Control'
@@ -40,18 +39,17 @@ class GameOver(Menu):
 
         items = []
 
-        items.append(MenuItem('Повторити', self.on_retry))
+        items.append(MenuItem('Гарячі клавіші', self.on_hotkey))
         items[0].x += 35
         items.append(MenuItem('В меню', self.on_menu))
         items[1].x += 35
-        items.append(MenuItem('Вихід', self.on_quit))
-        items[2].x += 35
+        
 
         self.create_menu(items, shake(), shake_back())
 
-    def on_retry(self):
-        import Level1_Background
-        director.push(SlideInTTransition(Level1_Background.get_newgame()))
+    def on_hotkey(self):
+        import Hotkeys
+        director.push(SlideInTTransition(Hotkeys.get_hotkeys()))
         
     
     def on_menu(self):
@@ -60,19 +58,17 @@ class GameOver(Menu):
         director.push(ZoomTransition(Menu.get_menu()))
 
     def on_quit(self):
-        Sound.stop()
-        pyglet.app.exit()
+        import Menu
+        director.push(ZoomTransition(Menu.get_menu()))
     
     
-def get_gameover():
-  
+def get_help():
+
     scene = Scene()
     main_bg = MainScene()
-    over = GameOver()
-
-    Sound.play("res/audio/GameOver.mp3")
+    help = Help()
 
     scene.add(main_bg)
-    scene.add(over)
+    scene.add(help)
 
     return scene

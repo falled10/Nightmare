@@ -33,6 +33,7 @@ class Level1_Hero(ScrollableLayer):
     def __init__(self):
         super().__init__()
         self.white_wolf = WhiteWolf()
+        
         #run right --------------------------------------------------
         self.img_r = pyglet.image.load('res/animation/run/adventurer-run3-sword-Sheet.png')
         self.img_grid_r = pyglet.image.ImageGrid(self.img_r, 1, 6, item_width=50, item_height=37 )
@@ -74,12 +75,19 @@ class Level1_Hero(ScrollableLayer):
 
         self.life = 3
         self.sprite = Sprite(self.anim_i)
+
+        
+
         self.sprite.position = (100, 180)
         self.sprite.scale = 2
         self.sprite.scale_x = 1
         self.sprite.velocity = (0,0)
         
         self.sprite.do(Mover())
+
+        self.key_P = Sprite("res/keyboard/key_P.png")
+        self.key_P.position = (100,200)
+        self.add(self.key_P)
         self.add(self.white_wolf)
         self.add(self.sprite)
         
@@ -110,7 +118,6 @@ class Level1_Hero(ScrollableLayer):
 
         if k == key.Z:
             self.sprite._animation = self.anim_a1
-
 
         if k == key.X:
             self.sprite._animation = self.anim_a2
@@ -143,7 +150,6 @@ class Level1_Hero(ScrollableLayer):
                 if self.white_wolf.sprite.visible == True:
                     if self.life == 0:
                         import GameOver
-                        flag = True
                         director.push(ZoomTransition(GameOver.get_gameover()))
                         self.life = 3
                         self.sprite.position = (100, 180)
