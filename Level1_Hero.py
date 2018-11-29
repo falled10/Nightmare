@@ -111,7 +111,7 @@ class Level1_Hero(ScrollableLayer):
                     enemy.lifes -= 1
                     
                 else:
-                    enemy.sprite.position = (-1000, 1000)
+                    enemy.sprite.position = (10000, -1000)
                     enemy.visible = False
                     print('emeny`s dead')
 
@@ -159,12 +159,13 @@ class Level1_Hero(ScrollableLayer):
     def wolf_action(self, position, enemy, speed):
         x, y = self.sprite.position
         w_x, w_y = enemy.sprite.position
+        print(enemy.sprite.position)
         if enemy.sprite.visible  is not False:
             if (w_x-x) < position and (w_x-x) > 0:
                 enemy.sprite._animation = enemy.get_idle_animation()
                 enemy.sprite.scale_x = -1     
                 enemy.sprite.position = (w_x-2, w_y)
-            elif (w_x-x) < 0 and (w_x-x) > position:
+            elif (w_x-x) < 0 and (w_x-x) < position:
                 enemy.sprite.scale_x = 1     
                 enemy.sprite.do(ac.MoveTo((x, w_y), speed))
                 enemy.sprite.position = (w_x+2, w_y)
