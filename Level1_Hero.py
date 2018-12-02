@@ -93,7 +93,7 @@ class Level1_Hero(ScrollableLayer):
         self.sprite.scale_x = 1
         self.sprite.velocity = (0,0)
         self.flag = False
-        
+        self.x_y = 0
         self.sprite.do(Mover())
         self.add(self.blue_wolf)
         self.add(self.blue_wolf2)
@@ -157,47 +157,43 @@ class Level1_Hero(ScrollableLayer):
 
 
     def wolf_action(self, position, enemy, speed):
+        self.x_y = self.sprite.position[0]
         x, y = self.sprite.position
         w_x, w_y = enemy.sprite.position
-        print(enemy.sprite.position)
         if enemy.sprite.visible  is not False:
-            if (w_x-x) < position and (w_x-x) > 0:
+            if (w_x-self.x_y) < position and (w_x-self.x_y) > 0:
                 enemy.sprite._animation = enemy.get_idle_animation()
                 enemy.sprite.scale_x = -1     
-                enemy.sprite.position = (w_x-2, w_y)
-            elif (w_x-x) < 0 and (w_x-x) < position:
+                enemy.sprite.position = (w_x - 2, w_y)
+            elif (w_x-self.x_y) <= -10:
                 enemy.sprite.scale_x = 1     
-                enemy.sprite.do(ac.MoveTo((x, w_y), speed))
-                enemy.sprite.position = (w_x+2, w_y)
+                enemy.sprite.do(ac.MoveTo((self.x_y, w_y), 0.5))
             if self.sprite.image == self.anim_b and (w_x - x) <= 40 and (w_x - x) >= 0:
                 enemy.sprite.position = (w_x+80, w_y)
             if self.sprite.image == self.anim_b and (w_x - x) <= 0 and (w_x - x) >= -40:
                 enemy.sprite.position = (w_x-80, w_y)
-            if (w_x - x) <= 80 and (w_x - x) >= -80:
-                enemy.flag = True
-                if y <= 200 and (w_x - x) <= 30 and (w_x - x) >= -30:
-                    
-                    
-                    if enemy.sprite.visible is True:
-                        if self.life == 0:
-                            import Menu
-                            flag = True
-                            director.push(ZoomTransition(Menu.get_menu()))
-                            self.life = 3
-                            self.sprite.position = (100, 180)            
-                        else:
-                            self.life -= 1
-                            enemy.sprite.image = enemy.anim
-                            self.sprite.position = (100, 180)
-            elif (w_x - x) > 80 or (w_x - x) < -80:
-                enemy.flag = False
         
+            
+            if (w_x - self.x_y) <= 80 and (w_x - self.x_y) >= -80:
+                enemy.flag = True
+            elif (w_x - self.x_y) > 80 or (w_x - self.x_y) < -80:
+                enemy.flag = False
+            if y == 180 and (w_x - self.x_y) <= 20 and (w_x - self.x_y) >= 0:
+                enemy.sprite.image = enemy.anim
+                self.x_y = self.sprite.position[0]
+                print(self.sprite.position[0], enemy.sprite.position[0])
+                return 1  
 
 
     def update(self, dt):
-        self.wolf_action(200, self.white_wolf, 0.7)
-        self.wolf_action(200, self.blue_wolf, 0.5)
-        self.wolf_action(200, self.blue_wolf2, 0.5)    
+        f = self.wolf_action(200, self.white_wolf, 0.7)
+        if f == 1:
+            self.sprite.position = (100, 180)
+            self.life -= 1
+            print(self.life)
+           
+      
+        
 
 
         

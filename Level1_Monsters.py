@@ -27,7 +27,7 @@ class WhiteWolf(ScrollableLayer):
         self.sprite.scale = 1.4
         self.sprite.position = (800, 160)
         self.x = 0
-        
+        self.can_attack = False
         self.add(self.sprite)
 
 
