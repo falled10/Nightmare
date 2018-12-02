@@ -38,11 +38,16 @@ class Help(Menu):
         self.font_item_selected['font_size'] = 35
 
         items = []
-
+        self.volumes = ['0', '2', '4', '6', '8', '10']
+        
         items.append(MenuItem('Гарячі клавіші', self.on_hotkey))
         items[0].x += 35
-        items.append(MenuItem('В меню', self.on_menu))
+        items.append(MultipleMenuItem('Гучність: ', self.on_switch, self.volumes, 3))
         items[1].x += 35
+        items.append(ToggleMenuItem("Кадри за секунду: ", self.on_show_fps, False))
+        items[2].x += 35
+        items.append(MenuItem('В меню', self.on_menu))
+        items[3].x += 35
         
 
         self.create_menu(items, shake(), shake_back())
@@ -50,16 +55,30 @@ class Help(Menu):
     def on_hotkey(self):
         import Hotkeys
         director.push(SlideInTTransition(Hotkeys.get_hotkeys()))
+
+    def on_switch(self, index):
+        if(self.volumes[index] == '0'):
+            Sound.mute_volume(0)
+        elif(self.volumes[index] == '2'):
+            Sound.mute_volume(0.1)
+        elif(self.volumes[index] == '4'):
+            Sound.mute_volume(0.3)
+        elif(self.volumes[index] == '6'):
+            Sound.mute_volume(0.5)
+        elif(self.volumes[index] == '8'):
+            Sound.mute_volume(0.7)
+        elif(self.volumes[index] == '10'):
+            Sound.mute_volume(0.9)
+       
+
+    def on_show_fps(self, show_fps):
+        director.show_FPS = show_fps
         
-    
     def on_menu(self):
-        Sound.stop()
-        import Menu
-        director.push(ZoomTransition(Menu.get_menu()))
+        director.pop()
 
     def on_quit(self):
-        import Menu
-        director.push(ZoomTransition(Menu.get_menu()))
+        director.pop()
     
     
 def get_help():

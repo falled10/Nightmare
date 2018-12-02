@@ -33,10 +33,10 @@ class Level1_Background(ScrollableLayer):
     def on_key_press(self, k, m):
          if k == key.P:
             director.push(ZoomTransition(PauseScene.get_pause()))
-
+            
          if k == key.M:
-             Sound.stop() 
-        
+             Sound.on_off()
+    
     
 
 def get_newgame():

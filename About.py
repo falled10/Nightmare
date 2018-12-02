@@ -29,20 +29,17 @@ class About(Menu):
 
         items = []
 
-        items.append(MenuItem('Повернутись в меню', self.on_menu))
+        items.append(MenuItem('Назад', self.on_menu))
         items[0].y -= 250
+        items[0].x += 30
 
         self.create_menu(items, shake(), shake_back())
     
     def on_menu(self):
-        import Menu
-        director.push(ZoomTransition(Menu.get_menu()))
+        director.pop()
 
     def on_quit(self):
-        import Help
-        director.push(ZoomTransition(Help.get_help()))
-
-    
+        director.pop()
 
 class AboutScene(Scene):
 
@@ -51,6 +48,22 @@ class AboutScene(Scene):
         bg = Sprite("res/keyboard/bg.jpg")
         bg.position = bg.width // 2, bg.height // 2
         self.add(bg)
+
+        title = Label("Над грою працювали: ", font_size = 40,bold = True, color = (0, 255, 0, 255))
+        title.position = (120, 550)
+        self.add(title)
+
+        y = Label("Кулик Юрій", font_size = 35,bold = True, color = (0, 255, 0, 255))
+        y.position = (200, 500)
+        self.add(y)
+
+        o = Label("Андріїв Олег", font_size = 35,bold = True, color = (0, 255, 0, 255))
+        o.position = (200, 420)
+        self.add(o)
+
+        i = Label("Перегінець Іван", font_size = 35,bold = True, color = (0, 255, 0, 255))
+        i.position = (200, 340)
+        self.add(i)
     
       
 def get_about():

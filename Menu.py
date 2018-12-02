@@ -13,7 +13,7 @@ class MainMenu(Menu):
         super(MainMenu, self).__init__('Головне меню')
 
         # TITLE
-        self.font_title['font_name'] = 'Motion Control'
+        self.font_title['font_name'] = 'Arial'
         self.font_title['bold'] = True
         self.font_title['font_size'] = 60
         self.font_title['color'] = (255, 69, 0, 255)

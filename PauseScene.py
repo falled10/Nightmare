@@ -10,6 +10,7 @@ from cocos.menu import *
 from cocos.scenes.transitions import *
 from Menu_Background import MainScene
 import Sound
+import pyglet
 
 
 
@@ -41,24 +42,39 @@ class PauseScene(Menu):
 
         items.append(MenuItem('Продовжити', self.on_continue))
         items[0].x += 35
-        items.append(MenuItem('В меню', self.on_menu))
+        items.append(MenuItem('Допомога', self.on_help))
         items[1].x += 35
-        items.append(MenuItem('Вихід', self.on_quit))
+        items.append(MenuItem('Про авторів', self.on_author))
         items[2].x += 35
+        items.append(MenuItem('В меню', self.on_menu))
+        items[3].x += 35
+        items.append(MenuItem('Вихід', self.on_ex))
+        items[4].x += 35
 
         self.create_menu(items, shake(), shake_back())
 
     def on_continue(self):
         director.pop()
-    
+
+    def on_help(self):
+        import Help
+        director.push(SlideInTTransition(Help.get_help()))  
+
+    def on_author(self):
+        import About
+        director.push(SlideInTTransition(About.get_about()))  
+
     def on_menu(self):
-        Sound.stop()
         import Menu
         director.push(ZoomTransition(Menu.get_menu()))
 
     def on_quit(self):
-        Sound.stop()
+        director.pop()
+
+    def on_ex(self):
         pyglet.app.exit()
+
+    
     
     
 def get_pause():

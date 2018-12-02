@@ -10,7 +10,7 @@ from cocos.menu import *
 from cocos.scenes.transitions import *
 from Menu_Background import MainScene
 import Sound
-import Level1_Hero
+
 
 
 
@@ -42,30 +42,50 @@ class GameOver(Menu):
 
         items.append(MenuItem('Повторити', self.on_retry))
         items[0].x += 35
-        items.append(MenuItem('В меню', self.on_menu))
+        items.append(MenuItem('Допомога', self.on_help))
         items[1].x += 35
-        items.append(MenuItem('Вихід', self.on_quit))
+        items.append(MenuItem('Про авторів', self.on_author))
         items[2].x += 35
+        items.append(MenuItem('В меню', self.on_menu))
+        items[3].x += 35
+        items.append(MenuItem('Вихід', self.on_quit))
+        items[4].x += 35
 
         self.create_menu(items, shake(), shake_back())
 
     def on_retry(self):
-        import Level1_Background
-        director.push(SlideInTTransition(Level1_Background.get_newgame()))
-        
-    
+        if(game_over_flag == 1):
+            import Level1_Background
+            director.push(SlideInTTransition(Level1_Background.get_newgame()))
+        if(game_over_flag == 2):
+            import Level2_Background
+            director.push(SlideInTTransition(Level2_Background.get_newgame()))
+        if(game_over_flag == 3):
+            import Level3_Background
+            director.push(SlideInTTransition(Level3_Background.get_newgame()))
+       
+    def on_help(self):
+        import Help
+        director.push(SlideInTTransition(Help.get_help()))  
+
+    def on_author(self):
+        import About
+        director.push(SlideInTTransition(About.get_about()))  
+
     def on_menu(self):
-        Sound.stop()
+        Sound.on_off()
         import Menu
         director.push(ZoomTransition(Menu.get_menu()))
 
     def on_quit(self):
-        Sound.stop()
         pyglet.app.exit()
     
-    
-def get_gameover():
-  
+
+def get_gameover(flag):
+
+    global game_over_flag
+    game_over_flag = flag
+
     scene = Scene()
     main_bg = MainScene()
     over = GameOver()

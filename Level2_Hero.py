@@ -137,8 +137,11 @@ class Level2_Hero(ScrollableLayer):
             self.sprite._animation = self.anim_a3
 
             self.mirror_sprite._animation = self.anim_a3
-            
+
+        
+           
     def on_key_release(self, k, m):
+        
         self.sprite._animation = self.anim_i
 
         self.mirror_sprite._animation = self.anim_i
