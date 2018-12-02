@@ -1,7 +1,7 @@
 from pygame import mixer
 from pygame.mixer import music
 import pyglet
-
+import time
 import cocos
 
 mixer.pre_init(44100, -16, 2, 1024)     
@@ -13,25 +13,26 @@ cocos.director.event_loop.push_handlers(on_exit=mixer.quit)
 def play(soundtrack):
     # music.load(bytes(os.path.join("assets", "music", soundtrack), 'utf-8'))
     music.load(soundtrack)
-    music
-    music.set_volume(0)
+    music.set_volume(0.5)
     music.play(loops=-1)
 
+def actions_play(soundtrack):
+    music.load(soundtrack)
+    
+    music.play(loops=1)
+    
+    
 def pause():
     music.pause()
 
-def stop():
-    music.stop()
+def mute_volume(m):
+    music.set_volume(m)
+
+def on_off():
+    if(music.get_volume()==1):
+        music.set_volume(0)
+    elif(music.get_volume()==0):
+        music.set_volume(1)
 
 def resume():
     music.unpause()
-    
-
-"""
-def transition(soundtrack, time):
-    music.fadeout(time * 1000)
-    pyglet.clock.schedule_once(next_music, time, soundtrack)
-
-def next_music(dt, soundtrack):
-    play(soundtrack)
-"""

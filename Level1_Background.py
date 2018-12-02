@@ -4,7 +4,6 @@ from cocos.sprite import Sprite
 from cocos.scene import Scene
 from Level1_Hero import Level1_Hero
 from Level1_Monsters import WhiteWolf
-
 from pyglet.window import key
 from cocos.director import director
 from cocos.scenes.transitions import *
@@ -24,18 +23,20 @@ class Level1_Background(ScrollableLayer):
         super(Level1_Background, self).__init__()
 
         bg = Sprite('res/maps/level1.png')
-
         bg.position = bg.width // 2, bg.height // 2
 
         self.px_width = bg.width
         self.px_height = bg.height
-
+        
         self.add(bg)
 
     def on_key_press(self, k, m):
          if k == key.P:
             director.push(ZoomTransition(PauseScene.get_pause()))
-        
+            
+         if k == key.M:
+             Sound.on_off()
+    
     
 
 def get_newgame():

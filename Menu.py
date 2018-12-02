@@ -13,10 +13,10 @@ class MainMenu(Menu):
         super(MainMenu, self).__init__('Головне меню')
 
         # TITLE
-        self.font_title['font_name'] = 'Motion Control'
+        self.font_title['font_name'] = 'Arial'
         self.font_title['bold'] = True
         self.font_title['font_size'] = 60
-        self.font_title['color'] = (0, 75, 0, 255)
+        self.font_title['color'] = (255, 69, 0, 255)
         
 
         # ITEM
@@ -39,18 +39,25 @@ class MainMenu(Menu):
 
         items.append(MenuItem('Нова гра', self.on_new_game))
         items[0].x += 35
-        items.append(MenuItem('Вибрати рівень', self.on_choose_lvl))
+        items.append(MenuItem('Допомога', self.on_help))
         items[1].x += 35
-        items.append(MenuItem('Вихід', self.on_quit))
+        items.append(MenuItem('Про авторів', self.on_author))
         items[2].x += 35
+        items.append(MenuItem('Вихід', self.on_quit))
+        items[3].x += 35
         self.create_menu(items, shake(), shake_back())
 
     def on_new_game(self):
         import Level1_Background
         director.push(SlideInTTransition(Level1_Background.get_newgame()))
 
-    def on_choose_lvl(self):
-        pass
+    def on_help(self):
+        import Help
+        director.push(SlideInTTransition(Help.get_help()))  
+
+    def on_author(self):
+        import About
+        director.push(SlideInTTransition(About.get_about()))  
 
     def on_quit(self):
         pyglet.app.exit()

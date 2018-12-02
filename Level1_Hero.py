@@ -13,10 +13,9 @@ import Level1_Background
 from cocos.scene import Scene
 from cocos.scenes.transitions import *
 from Level1_Monsters import *
-import Level1_Background
+import Sound
 
 
-flag = 10
 
 director.window.pop_handlers()
 keyboard = key.KeyStateHandler()
@@ -34,7 +33,20 @@ class Level1_Hero(ScrollableLayer):
 
     def __init__(self):
         super().__init__()
-        self.bg = Level1_Background.Level1_Background()
+
+        #hearts---------------------------------------------------------------------------
+
+        heart1 = Sprite('res/maps/heart1.png')
+        heart1.position = (25,570)
+        self.add(heart1)
+        heart2 = Sprite('res/maps/heart2.png')
+        heart2.position = (70,570)
+        self.add(heart2)
+        heart3 = Sprite('res/maps/heart1.png')
+        heart3.position = (115,570)
+        self.add(heart3)
+
+        #----------------------------------------------------------------------------------
         self.white_wolf = WhiteWolf()
         self.blue_wolf = BlueWolf()
         self.blue_wolf2 = BlueWolf()
@@ -89,8 +101,12 @@ class Level1_Hero(ScrollableLayer):
   
         #------------------------------------------------------------------
     
+       
         self.life = 3
         self.sprite = Sprite(self.anim_i)
+
+        
+
         self.sprite.position = (100, 180)
         self.sprite.scale = 2
         self.sprite.scale_x = 1
@@ -147,6 +163,7 @@ class Level1_Hero(ScrollableLayer):
             self.sprite.image = self.anim_b
 
         if k == key.Z:
+            
             self.get_flag(self.white_wolf)
             self.get_flag(self.blue_wolf)
             self.get_flag(self.blue_wolf2)
@@ -197,7 +214,8 @@ class Level1_Hero(ScrollableLayer):
         f = self.wolf_action(300, self.blue_wolf2, 3)
         if self.life == 0:
             import GameOver
-            director.push(ZoomTransition(GameOver.get_gameover()))
+            self.life = 3
+            director.push(ZoomTransition(GameOver.get_gameover(1)))
             
            
       
