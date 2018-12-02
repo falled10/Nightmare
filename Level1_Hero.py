@@ -13,6 +13,7 @@ import Level1_Background
 from cocos.scene import Scene
 from cocos.scenes.transitions import *
 from Level1_Monsters import *
+import Level1_Background
 
 
 flag = 10
@@ -33,6 +34,7 @@ class Level1_Hero(ScrollableLayer):
 
     def __init__(self):
         super().__init__()
+        self.bg = Level1_Background.Level1_Background()
         self.white_wolf = WhiteWolf()
         self.blue_wolf = BlueWolf()
         self.blue_wolf2 = BlueWolf()
