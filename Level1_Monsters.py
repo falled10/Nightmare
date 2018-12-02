@@ -62,5 +62,22 @@ class BlueWolf(ScrollableLayer):
         anim = pyglet.image.Animation.from_image_sequence(img_grid[0:], 0.2, loop=True)
         return anim
 
+
+class HellHound(ScrollableLayer):
+    def __init__(self):
+        super(HellHound, self).__init__()
+
+        #animation_idle
+        self.img_i = pyglet.image.load('res/animation/level1_monters/hell_hound/hell-hound-idle.png')
+        self.img_grid_i = pyglet.image.ImageGrid(self.img_i, 1, 6, item_width=64, item_height=31)
+        self.anim_i = pyglet.image.Animation.from_image_sequence(self.img_grid_i[0:], 0.2, loop=True)
+        self.lifes = 3
+        self.flag = False
+        self.sprite = Sprite(self.anim_i)
+        self.sprite.scale = 1.4
+        self.sprite.position = (1200, 160)
+        self.x = 0
+
+        self.add(self.sprite)
     
 

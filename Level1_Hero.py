@@ -12,7 +12,7 @@ from cocos.sprite import Sprite
 import Level1_Background
 from cocos.scene import Scene
 from cocos.scenes.transitions import *
-from Level1_Monsters import WhiteWolf, BlueWolf
+from Level1_Monsters import *
 
 
 flag = 10
@@ -36,6 +36,7 @@ class Level1_Hero(ScrollableLayer):
         self.white_wolf = WhiteWolf()
         self.blue_wolf = BlueWolf()
         self.blue_wolf2 = BlueWolf()
+        self.hell_hound = HellHound()
         self.blue_wolf2.sprite.position = (1100, 160)
         #run right --------------------------------------------------
         self.img_r = pyglet.image.load('res/animation/run/adventurer-run3-sword-Sheet.png')
@@ -98,6 +99,7 @@ class Level1_Hero(ScrollableLayer):
         self.add(self.blue_wolf)
         self.add(self.blue_wolf2)
         self.add(self.white_wolf)
+        self.add(self.hell_hound)
         self.add(self.sprite)
 
         self.pressed = defaultdict(int)
