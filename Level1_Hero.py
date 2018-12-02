@@ -130,14 +130,14 @@ class Level1_Hero(ScrollableLayer):
             x, y = self.sprite.position
             if self.sprite.scale_x == -1:
                 if y == 180:
-                    self.sprite.do(ac.JumpBy((-150, 0), 100, 1, 1))
+                    self.sprite.do(ac.JumpBy((-150, 0), 100, 1, 0.5))
                     self.sprite.image = self.anim_j
                     
             else:        
                 if y == 180:
 
                     print(self.anim_j.get_duration())
-                    self.sprite.do(ac.JumpBy((150, 0), 100, 1, 1))
+                    self.sprite.do(ac.JumpBy((150, 0), 100, 1, 0.5))
                     self.sprite.image = self.anim_j
         if k == key.B:
             self.sprite.image = self.anim_b
@@ -164,10 +164,10 @@ class Level1_Hero(ScrollableLayer):
             if (w_x-self.x_y) < position and (w_x-self.x_y) > 0:
                 enemy.sprite._animation = enemy.get_idle_animation()
                 enemy.sprite.scale_x = -1     
-                enemy.sprite.position = (w_x - 2, w_y)
-            elif (w_x-self.x_y) <= -10:
+                enemy.sprite.position = (w_x - speed, w_y)
+            elif (w_x-self.x_y) <= 0:
                 enemy.sprite.scale_x = 1     
-                enemy.sprite.do(ac.MoveTo((self.x_y, w_y), 0.5))
+                enemy.sprite.position = (w_x + speed, w_y)
             if self.sprite.image == self.anim_b and (w_x - x) <= 40 and (w_x - x) >= 0:
                 enemy.sprite.position = (w_x+80, w_y)
             if self.sprite.image == self.anim_b and (w_x - x) <= 0 and (w_x - x) >= -40:
@@ -178,19 +178,23 @@ class Level1_Hero(ScrollableLayer):
                 enemy.flag = True
             elif (w_x - self.x_y) > 80 or (w_x - self.x_y) < -80:
                 enemy.flag = False
-            if y == 180 and (w_x - self.x_y) <= 20 and (w_x - self.x_y) >= 0:
+            if y == 180 and (w_x - self.x_y) <= 10 and (w_x - self.x_y) >= 0:
                 enemy.sprite.image = enemy.anim
                 self.x_y = self.sprite.position[0]
                 print(self.sprite.position[0], enemy.sprite.position[0])
-                return 1  
+                self.sprite.position = (100, 180)
+                self.life -= 1
+                print(self.life)
 
 
     def update(self, dt):
-        f = self.wolf_action(200, self.white_wolf, 0.7)
-        if f == 1:
-            self.sprite.position = (100, 180)
-            self.life -= 1
-            print(self.life)
+        f = self.wolf_action(200, self.white_wolf, 2)
+        f = self.wolf_action(200, self.blue_wolf, 3)
+        f = self.wolf_action(300, self.blue_wolf2, 3)
+        if self.life == 0:
+            import GameOver
+            director.push(ZoomTransition(GameOver.get_gameover()))
+            
            
       
         
