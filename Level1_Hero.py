@@ -33,20 +33,6 @@ class Level1_Hero(ScrollableLayer):
 
     def __init__(self):
         super().__init__()
-
-        #hearts---------------------------------------------------------------------------
-
-        heart1 = Sprite('res/maps/heart1.png')
-        heart1.position = (25,570)
-        self.add(heart1)
-        heart2 = Sprite('res/maps/heart2.png')
-        heart2.position = (70,570)
-        self.add(heart2)
-        heart3 = Sprite('res/maps/heart1.png')
-        heart3.position = (115,570)
-        self.add(heart3)
-
-        #----------------------------------------------------------------------------------
         self.white_wolf = WhiteWolf()
         self.blue_wolf = BlueWolf()
         self.blue_wolf2 = BlueWolf()
@@ -100,8 +86,8 @@ class Level1_Hero(ScrollableLayer):
   
         #------------------------------------------------------------------
     
-       
-        self.life = 3
+        global life
+        life = 3
         self.sprite = Sprite(self.anim_i)
 
         
@@ -196,10 +182,10 @@ class Level1_Hero(ScrollableLayer):
                 if y <= 200 and (w_x - x) <= 30 and (w_x - x) >= -30:
      
                     if enemy.sprite.visible is True:
-                        if self.life == 0:
+                        if life == 0:
                             import GameOver
                             director.push(ZoomTransition(GameOver.get_gameover(1)))
-                            self.life = 3
+                            life = 3
                             self.sprite.position = (100, 180)            
                         else:
                             self.life -= 1
