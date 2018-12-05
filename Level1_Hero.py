@@ -12,7 +12,7 @@ from cocos.sprite import Sprite
 import Level1_Background
 from cocos.scene import Scene
 from cocos.scenes.transitions import *
-from Level1_Monsters import WhiteWolf, BlueWolf
+from Level1_Monsters import *
 import Sound
 
 
@@ -33,9 +33,24 @@ class Level1_Hero(ScrollableLayer):
 
     def __init__(self):
         super().__init__()
+
+        #hearts---------------------------------------------------------------------------
+
+        heart1 = Sprite('res/maps/heart1.png')
+        heart1.position = (25,570)
+        self.add(heart1)
+        heart2 = Sprite('res/maps/heart2.png')
+        heart2.position = (70,570)
+        self.add(heart2)
+        heart3 = Sprite('res/maps/heart1.png')
+        heart3.position = (115,570)
+        self.add(heart3)
+
+        #----------------------------------------------------------------------------------
         self.white_wolf = WhiteWolf()
         self.blue_wolf = BlueWolf()
         self.blue_wolf2 = BlueWolf()
+        self.hell_hound = HellHound()
         self.blue_wolf2.sprite.position = (1100, 160)
         #run right --------------------------------------------------
         self.img_r = pyglet.image.load('res/animation/run/adventurer-run3-sword-Sheet.png')
@@ -86,8 +101,8 @@ class Level1_Hero(ScrollableLayer):
   
         #------------------------------------------------------------------
     
-        global life
-        life = 3
+       
+        self.life = 3
         self.sprite = Sprite(self.anim_i)
 
         
@@ -97,11 +112,12 @@ class Level1_Hero(ScrollableLayer):
         self.sprite.scale_x = 1
         self.sprite.velocity = (0,0)
         self.flag = False
-        
+        self.x_y = 0
         self.sprite.do(Mover())
         self.add(self.blue_wolf)
         self.add(self.blue_wolf2)
         self.add(self.white_wolf)
+        self.add(self.hell_hound)
         self.add(self.sprite)
 
         self.pressed = defaultdict(int)
@@ -115,12 +131,11 @@ class Level1_Hero(ScrollableLayer):
                     enemy.lifes -= 1
                     
                 else:
-                    enemy.sprite.position = (-1000, 1000)
+                    enemy.sprite.position = (10000, -1000)
                     enemy.visible = False
                     print('emeny`s dead')
 
-      
-
+    
     def on_key_press(self, k, m):
         if k == 65361:
             self.sprite.scale_x = -1
@@ -134,14 +149,14 @@ class Level1_Hero(ScrollableLayer):
             x, y = self.sprite.position
             if self.sprite.scale_x == -1:
                 if y == 180:
-                    self.sprite.do(ac.JumpBy((-150, 0), 100, 1, 1))
+                    self.sprite.do(ac.JumpBy((-150, 0), 100, 1, 0.5))
                     self.sprite.image = self.anim_j
                     
             else:        
                 if y == 180:
 
                     print(self.anim_j.get_duration())
-                    self.sprite.do(ac.JumpBy((150, 0), 100, 1, 1))
+                    self.sprite.do(ac.JumpBy((150, 0), 100, 1, 0.5))
                     self.sprite.image = self.anim_j
         if k == key.B:
             self.sprite.image = self.anim_b
@@ -162,44 +177,55 @@ class Level1_Hero(ScrollableLayer):
 
 
     def wolf_action(self, position, enemy, speed):
+        self.x_y = self.sprite.position[0]
         x, y = self.sprite.position
         w_x, w_y = enemy.sprite.position
         if enemy.sprite.visible  is not False:
-            if (w_x-x) < position and (w_x-x) > 0:
+            if (w_x-self.x_y) < position and (w_x-self.x_y) > 0:
                 enemy.sprite._animation = enemy.get_idle_animation()
                 enemy.sprite.scale_x = -1     
-                enemy.sprite.position = (w_x-2, w_y)
-            elif (w_x-x) < 0 and (w_x-x) > position:
+                enemy.sprite.position = (w_x - speed, w_y)
+            elif (w_x-self.x_y) <= 0:
                 enemy.sprite.scale_x = 1     
-                enemy.sprite.do(ac.MoveTo((x, w_y), speed))
-                enemy.sprite.position = (w_x+2, w_y)
+                enemy.sprite.position = (w_x + speed, w_y)
             if self.sprite.image == self.anim_b and (w_x - x) <= 40 and (w_x - x) >= 0:
                 enemy.sprite.position = (w_x+80, w_y)
             if self.sprite.image == self.anim_b and (w_x - x) <= 0 and (w_x - x) >= -40:
                 enemy.sprite.position = (w_x-80, w_y)
-            if (w_x - x) <= 80 and (w_x - x) >= -80:
-                enemy.flag = True
-                if y <= 200 and (w_x - x) <= 30 and (w_x - x) >= -30:
-     
-                    if enemy.sprite.visible is True:
-                        if life == 0:
-                            import GameOver
-                            director.push(ZoomTransition(GameOver.get_gameover(1)))
-                            life = 3
-                            self.sprite.position = (100, 180)            
-                        else:
-                            self.life -= 1
-                            enemy.sprite.image = enemy.anim
-                            self.sprite.position = (100, 180)
-            elif (w_x - x) > 80 or (w_x - x) < -80:
-                enemy.flag = False
         
+            
+            if (w_x - self.x_y) <= 80 and (w_x - self.x_y) >= -80:
+                enemy.flag = True
+            elif (w_x - self.x_y) > 80 or (w_x - self.x_y) < -80:
+                enemy.flag = False
+            if y == 180 and (w_x - self.x_y) <= 10 and (w_x - self.x_y) >= 0:
+                enemy.sprite.image = enemy.anim
+                self.x_y = self.sprite.position[0]
+                print(self.sprite.position[0], enemy.sprite.position[0])
+                self.sprite.position = (100, 180)
+                self.life -= 1
+                print(self.life)
 
 
     def update(self, dt):
-        self.wolf_action(200, self.white_wolf, 0.7)
-        self.wolf_action(200, self.blue_wolf, 0.5)
-        self.wolf_action(200, self.blue_wolf2, 0.5)    
+        f = self.wolf_action(200, self.white_wolf, 2)
+        f = self.wolf_action(200, self.blue_wolf, 3)
+        f = self.wolf_action(300, self.blue_wolf2, 3)
+        if self.life == 0:
+            import GameOver
+            
+            self.life = 3
+            director.push(ZoomTransition(GameOver.get_gameover(1)))
+            
+            self.remove(self.sprite)
+           
+      
+        
+
+
+        
+        
+
 
 
         
