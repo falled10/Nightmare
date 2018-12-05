@@ -1,6 +1,7 @@
 from pygame import mixer
 from pygame.mixer import music
 import pyglet
+from pyglet.window import key
 import time
 import cocos
 
@@ -21,7 +22,6 @@ def actions_play(soundtrack):
     
     music.play(loops=1)
     
-    
 def pause():
     music.pause()
 
@@ -36,3 +36,4 @@ def on_off():
 
 def resume():
     music.unpause()
+      

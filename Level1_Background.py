@@ -7,9 +7,10 @@ from Level1_Monsters import WhiteWolf
 from pyglet.window import key
 from cocos.director import director
 from cocos.scenes.transitions import *
-
+from Hearts import HeartsIcons
 import PauseScene
 import Sound
+
 
 
 scroller_1 = ScrollingManager()
@@ -35,7 +36,8 @@ class Level1_Background(ScrollableLayer):
             director.push(ZoomTransition(PauseScene.get_pause()))
             
          if k == key.M:
-             Sound.on_off()
+             Sound.mute_volume(0)
+             Level1_Hero.SwordSoundMute()
     
     
 
@@ -45,11 +47,13 @@ def get_newgame():
     bg_layer = Level1_Background()
     hero = Level1_Hero()
     wolf = WhiteWolf()
+    hearts = HeartsIcons()
     
     Sound.play("res/audio/Level1.mp3")
 
     scroller_1.add(bg_layer)
     scroller_1.add(hero)
+    scroller_1.add(hearts)
     
    
     scene.add(scroller_1)
