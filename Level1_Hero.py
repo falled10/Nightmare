@@ -47,11 +47,19 @@ class Level1_Hero(ScrollableLayer):
         self.add(heart3)
 
         #----------------------------------------------------------------------------------
+        # first level monsters -------------------------------------------------
         self.white_wolf = WhiteWolf()
+        self.white_wolf2 = WhiteWolf()
         self.blue_wolf = BlueWolf()
         self.blue_wolf2 = BlueWolf()
         self.hell_hound = HellHound()
+        self.blue_wolf3 = BlueWolf()
+        self.hell_beast = HellBeast()
+        self.hell_beast.sprite.position = (300, 200)
+        self.blue_wolf3.sprite.position = (1350, 160)
+        self.white_wolf2.sprite.position = (1300, 160)
         self.blue_wolf2.sprite.position = (1100, 160)
+        #----------------------------------------------------------------------
         #run right --------------------------------------------------
         self.img_r = pyglet.image.load('res/animation/run/adventurer-run3-sword-Sheet.png')
         self.img_grid_r = pyglet.image.ImageGrid(self.img_r, 1, 6, item_width=50, item_height=37 )
@@ -59,10 +67,10 @@ class Level1_Hero(ScrollableLayer):
         # ----------------------------------------------------------
         
         #attack1
-        self.img_a1 = pyglet.image.load('res/animation/attack1/Attacksheet.png')
-        self.img_grid_a1 = pyglet.image.ImageGrid(self.img_a1, 1, 5, item_width=50, item_height=37 )
+        self.img_a1 = pyglet.image.load('res/animation/attack1/attack1sheet.png')
+        self.img_grid_a1 = pyglet.image.ImageGrid(self.img_a1, 6, 1, item_width=50, item_height=37 )
 
-        self.anim_a1 = pyglet.image.Animation.from_image_sequence(self.img_grid_a1[0:], 0.05, loop=False)
+        self.anim_a1 = pyglet.image.Animation.from_image_sequence(self.img_grid_a1[::-1], 0.05, loop=False)
         #------------------------------------------------------------------
 
         #attack2
@@ -114,10 +122,16 @@ class Level1_Hero(ScrollableLayer):
         self.flag = False
         self.x_y = 0
         self.sprite.do(Mover())
+        #first stack ------------------------------------------------
+        self.hell_beast.sprite.image = self.hell_beast.get_attack_animation()
+        self.add(self.hell_beast)
         self.add(self.blue_wolf)
         self.add(self.blue_wolf2)
         self.add(self.white_wolf)
         self.add(self.hell_hound)
+        self.add(self.white_wolf2)
+        self.add(self.blue_wolf3)
+        #-----------------------------------------------------------
         self.add(self.sprite)
 
         self.pressed = defaultdict(int)
@@ -146,19 +160,6 @@ class Level1_Hero(ScrollableLayer):
             self.sprite.scale_x = 1
             self.sprite.image = self.anim_r
 
-        if k == 65362:
-            x, y = self.sprite.position
-            if self.sprite.scale_x == -1:
-                if y == 180:
-                    self.sprite.do(ac.JumpBy((-150, 0), 100, 1, 0.5))
-                    self.sprite.image = self.anim_j
-                    
-            else:        
-                if y == 180:
-
-                    print(self.anim_j.get_duration())
-                    self.sprite.do(ac.JumpBy((150, 0), 100, 1, 0.5))
-                    self.sprite.image = self.anim_j
         if k == key.B:
             self.sprite.image = self.anim_b
 
@@ -167,8 +168,9 @@ class Level1_Hero(ScrollableLayer):
             self.get_flag(self.white_wolf)
             self.get_flag(self.blue_wolf)
             self.get_flag(self.blue_wolf2)
-            print(self.white_wolf.lifes)
-            
+            self.get_flag(self.hell_hound)
+            self.get_flag(self.white_wolf2)
+            self.get_flag(self.blue_wolf3)
         
     def on_key_release(self, k, m):
         if k == key.Z:
@@ -177,29 +179,29 @@ class Level1_Hero(ScrollableLayer):
             self.sprite.image = self.anim_i
 
 
-    def wolf_action(self, position, enemy, speed):
+    def wolf_action(self, position, enemy, speed, r, l):
         self.x_y = self.sprite.position[0]
         x, y = self.sprite.position
         w_x, w_y = enemy.sprite.position
         if enemy.sprite.visible  is not False:
             if (w_x-self.x_y) < position and (w_x-self.x_y) > 0:
                 enemy.sprite._animation = enemy.get_idle_animation()
-                enemy.sprite.scale_x = -1     
+                enemy.sprite.scale_x = l     
                 enemy.sprite.position = (w_x - speed, w_y)
             elif (w_x-self.x_y) <= 0:
-                enemy.sprite.scale_x = 1     
+                enemy.sprite.scale_x = r     
                 enemy.sprite.position = (w_x + speed, w_y)
             if self.sprite.image == self.anim_b and (w_x - x) <= 40 and (w_x - x) >= 0:
-                enemy.sprite.position = (w_x+80, w_y)
+                enemy.sprite.position = (w_x+100, w_y)
             if self.sprite.image == self.anim_b and (w_x - x) <= 0 and (w_x - x) >= -40:
-                enemy.sprite.position = (w_x-80, w_y)
+                enemy.sprite.position = (w_x-100, w_y)
         
             
             if (w_x - self.x_y) <= 80 and (w_x - self.x_y) >= -80:
                 enemy.flag = True
             elif (w_x - self.x_y) > 80 or (w_x - self.x_y) < -80:
                 enemy.flag = False
-            if y == 180 and (w_x - self.x_y) <= 10 and (w_x - self.x_y) >= 0:
+            if (w_x - self.x_y) <= 10 and (w_x - self.x_y) >= 0:
                 enemy.sprite.image = enemy.anim
                 self.x_y = self.sprite.position[0]
                 print(self.sprite.position[0], enemy.sprite.position[0])
@@ -209,9 +211,16 @@ class Level1_Hero(ScrollableLayer):
 
 
     def update(self, dt):
-        f = self.wolf_action(200, self.white_wolf, 2)
-        f = self.wolf_action(200, self.blue_wolf, 3)
-        f = self.wolf_action(300, self.blue_wolf2, 3)
+        # first stack --------------------------------------------
+        self.wolf_action(200, self.white_wolf, 2, 1, -1)
+        self.wolf_action(200, self.blue_wolf, 3, 1, -1)
+        self.wolf_action(300, self.blue_wolf2, 3, 1, -1)
+        #---------------------------------------------------------
+        # second stack--------------------------------------------
+        self.wolf_action(300, self.hell_hound, 4, -1, 1)
+        self.wolf_action(200, self.white_wolf2, 2, 1, -1)
+        self.wolf_action(200, self.blue_wolf3, 3, 1, -1)
+        #---------------------------------------------------------
         if self.life == 0:
             import GameOver
             self.life = 3
