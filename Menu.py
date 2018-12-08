@@ -48,8 +48,8 @@ class MainMenu(Menu):
         self.create_menu(items, shake(), shake_back())
 
     def on_new_game(self):
-        import Level1_Background
-        director.push(SlideInTTransition(Level1_Background.get_newgame()))
+        import Level2_Background
+        director.push(SlideInTTransition(Level2_Background.get_newgame()))
 
     def on_help(self):
         import Help

@@ -2,6 +2,7 @@ import cocos
 from cocos.layer import ScrollableLayer, ScrollingManager
 from cocos.sprite import Sprite
 from cocos.scene import Scene
+from cocos.actions import *
 from Level2_Hero import Level2_Hero
 from pyglet.window import key
 from cocos.director import director
@@ -25,7 +26,13 @@ class Level2_Background(ScrollableLayer):
         self.px_width = bg.width
         self.px_height = bg.height
 
+        lvl2 = Sprite('res/maps/LVL2.png')
+        lvl2.position = (420,500)
+        lvl2.scale = 0.7
+        blink = Blink(10,5)
+        lvl2.do(blink)
         self.add(bg)
+        self.add(lvl2)
         
     def on_key_press(self, k, m):
         if k == key.P: 

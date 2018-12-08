@@ -103,22 +103,15 @@ class HotkeyScene(Scene):
         self.add(l_a)
 
         # Jump =========================================================
-        up_arrow = Sprite('res/keyboard/up_arrow.png')
-        up_arrow.position = (580,390)
-        self.add(up_arrow)
-        
-        u_a = Label("Стрибок", font_size = 20, bold = True, color = (0,255,255, 255))
-        u_a.position = (620,380)
-        self.add(u_a)
-
-        # Block =========================================================
         key_B = Sprite('res/keyboard/key_B.png')
-        key_B.position = (580,330)
+        key_B.position = (580,390)
         self.add(key_B)
         
         b = Label("Блок", font_size = 20, bold = True, color = (0,255,255, 255))
-        b.position = (620,325)
+        b.position = (620,380)
         self.add(b)
+
+        
         #==============================================================
         
         attack = Label("Атака", font_size = 30, bold = True, color = (255, 0, 0, 255))

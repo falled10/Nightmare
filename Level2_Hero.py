@@ -1,6 +1,7 @@
 import cocos
 import cocos.actions as ac
 import pyglet
+from pyglet import image
 from cocos.director import director
 from collections import defaultdict
 from pyglet.window import key
@@ -29,45 +30,42 @@ class Level2_Hero(ScrollableLayer):
     def __init__(self):
         super().__init__()
         #run right --------------------------------------------------
-        self.img_r = pyglet.image.load('res/animation/run/adventurer-run3-sword-Sheet.png')
-        self.img_grid_r = pyglet.image.ImageGrid(self.img_r, 1, 6, item_width=50, item_height=37 )
-        self.anim_r = pyglet.image.Animation.from_image_sequence(self.img_grid_r[0:], 0.1, loop=True)
+        self.img_r = image.load('res/animation/run/adventurer-run3-sword-Sheet.png')
+        self.img_grid_r = image.ImageGrid(self.img_r, 1, 6, item_width=50, item_height=37 )
+        self.anim_r = image.Animation.from_image_sequence(self.img_grid_r[0:], 0.1, loop=True)
         # ----------------------------------------------------------
         
         #attack1
-        self.img_a1 = pyglet.image.load('res/animation/attack1/Attacksheet.png')
-        self.img_grid_a1 = pyglet.image.ImageGrid(self.img_a1, 1, 5, item_width=50, item_height=37 )
+        self.img_a1 = image.load('res/animation/attack1/Attacksheet.png')
+        self.img_grid_a1 = image.ImageGrid(self.img_a1, 1, 5, item_width=50, item_height=37 )
 
-        self.anim_a1 = pyglet.image.Animation.from_image_sequence(self.img_grid_a1[0:], 0.1, loop=True)
+        self.anim_a1 = image.Animation.from_image_sequence(self.img_grid_a1[0:], 0.1, loop=True)
         #_-----------------------------------------------------------------
 
         #attack2
-        self.img_a2 = pyglet.image.load('res/animation/attack2/attack2sheet.png')
-        self.img_grid_a2 = pyglet.image.ImageGrid(self.img_a2, 6, 1, item_width=50, item_height=37)
-        self.anim_a2 = pyglet.image.Animation.from_image_sequence(self.img_grid_a2[::-1], 0.1, loop=True)
+        self.img_a2 = image.load('res/animation/attack2/attack2sheet.png')
+        self.img_grid_a2 = image.ImageGrid(self.img_a2, 6, 1, item_width=50, item_height=37)
+        self.anim_a2 = image.Animation.from_image_sequence(self.img_grid_a2[::-1], 0.1, loop=True)
         #------------------------------------------------------------------
 
         #attack3
-        self.img_a3 = pyglet.image.load('res/animation/attack3/attack3sheet.png')
-        self.img_grid_a3 = pyglet.image.ImageGrid(self.img_a3, 6, 1, item_width=50, item_height=37)
-        self.anim_a3 = pyglet.image.Animation.from_image_sequence(self.img_grid_a3[::-1], 0.1, loop=True)
+        self.img_a3 = image.load('res/animation/attack3/attack3sheet.png')
+        self.img_grid_a3 = image.ImageGrid(self.img_a3, 6, 1, item_width=50, item_height=37)
+        self.anim_a3 = image.Animation.from_image_sequence(self.img_grid_a3[::-1], 0.1, loop=True)
         #-------------------------------------------------------------------
 
         # idle
-        self.img_i = pyglet.image.load('res/animation/idle/idlesheet.png')
-        self.img_grid_i = pyglet.image.ImageGrid(self.img_i, 1, 4, item_width=50, item_height=37 )
-
-        self.anim_i = pyglet.image.Animation.from_image_sequence(self.img_grid_i[0:], 0.3, loop=True)
+        self.img_i = image.load('res/animation/idle/idlesheet.png')
+        self.img_grid_i = image.ImageGrid(self.img_i, 1, 4, item_width=50, item_height=37 )
+        self.anim_i = image.Animation.from_image_sequence(self.img_grid_i[0:], 0.3, loop=True)
         #_-----------------------------------------------------------------
 
         # jump
-        self.img_j = pyglet.image.load('res/animation/jump/jumpsheet.png')
-        self.img_grid_j = pyglet.image.ImageGrid(self.img_j, 1, 4, item_width=50, item_height=37)
+        self.img_j = image.load('res/animation/jump/jumpsheet.png')
+        self.img_grid_j = image.ImageGrid(self.img_j, 1, 4, item_width=50, item_height=37)
 
-        self.anim_j = pyglet.image.Animation.from_image_sequence(self.img_grid_j[0:], 0.2, loop=True)
+        self.anim_j = image.Animation.from_image_sequence(self.img_grid_j[0:], 0.2, loop=True)
         #------------------------------------------------------------------
-
-
 
         self.sprite = Sprite(self.anim_i)
         self.sprite.position = (100, 410)
@@ -138,8 +136,7 @@ class Level2_Hero(ScrollableLayer):
 
             self.mirror_sprite._animation = self.anim_a3
 
-        
-           
+          
     def on_key_release(self, k, m):
         
         self.sprite._animation = self.anim_i

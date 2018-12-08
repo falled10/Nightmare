@@ -4,6 +4,7 @@ from cocos.sprite import Sprite
 from cocos.scene import Scene
 from Level3_Hero import Level3_Hero
 from pyglet.window import key
+from cocos.actions import *
 from cocos.director import director
 from cocos.scenes.transitions import *
 import Sound
@@ -27,7 +28,14 @@ class Level3_Background(ScrollableLayer):
         self.px_height = bg.height
 
         self.add(bg)
-        
+
+        lvl3 = Sprite('res/maps/LVL3.png')
+        lvl3.position = (420,500)
+        lvl3.scale = 0.7
+        blink = Blink(10,5)
+        lvl3.do(blink)
+        self.add(lvl3)
+   
     def on_key_press(self, k, m):
         if k == key.P: 
             director.push(ZoomTransition(PauseScene.get_pause()))
