@@ -30,7 +30,7 @@
                 <key>spriteSourceSize</key>
                 <string>{50,37}</string>
                 <key>textureRect</key>
-                <string>{{50,0},{50,37}}</string>
+                <string>{{0,37},{50,37}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -45,7 +45,7 @@
                 <key>spriteSourceSize</key>
                 <string>{50,37}</string>
                 <key>textureRect</key>
-                <string>{{100,0},{50,37}}</string>
+                <string>{{0,74},{50,37}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -60,7 +60,7 @@
                 <key>spriteSourceSize</key>
                 <string>{50,37}</string>
                 <key>textureRect</key>
-                <string>{{150,0},{50,37}}</string>
+                <string>{{0,111},{50,37}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -75,7 +75,22 @@
                 <key>spriteSourceSize</key>
                 <string>{50,37}</string>
                 <key>textureRect</key>
-                <string>{{200,0},{50,37}}</string>
+                <string>{{0,148},{50,37}}</string>
+                <key>textureRotated</key>
+                <false/>
+            </dict>
+            <key>adventurer-idle-2-00.png</key>
+            <dict>
+                <key>aliases</key>
+                <array/>
+                <key>spriteOffset</key>
+                <string>{0,0}</string>
+                <key>spriteSize</key>
+                <string>{50,37}</string>
+                <key>spriteSourceSize</key>
+                <string>{50,37}</string>
+                <key>textureRect</key>
+                <string>{{0,185},{50,37}}</string>
                 <key>textureRotated</key>
                 <false/>
             </dict>
@@ -89,13 +104,13 @@
             <key>premultiplyAlpha</key>
             <false/>
             <key>realTextureFileName</key>
-            <string>Attacksheet.png</string>
+            <string>attack1sheet.png</string>
             <key>size</key>
-            <string>{250,37}</string>
+            <string>{50,222}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:4a82f09c89d54145d595f29e8e087d00:481300f9ac16b03acb10398a6fec9d05:29333acb55ea0b24826d57c90e3104ac$</string>
+            <string>$TexturePacker:SmartUpdate:a769d61d6cad464815d804c2aa06b5a0:191219865ed4c86065731712b945237e:f327577866ad249d5fe1da6f2444f479$</string>
             <key>textureFileName</key>
-            <string>Attacksheet.png</string>
+            <string>attack1sheet.png</string>
         </dict>
     </dict>
 </plist>

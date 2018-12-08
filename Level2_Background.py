@@ -51,7 +51,7 @@ def get_newgame():
     bg_layer = Level2_Background()
     hero = Level2_Hero()
     
-    Sound.play("res/audio/Level2.mp3")
+    # Sound.play("res/audio/Level2.mp3")
 
     scroller_2.add(bg_layer)
     scroller_2.add(hero)   

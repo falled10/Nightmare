@@ -25,9 +25,11 @@ director.window.push_handlers(keyboard)
 class Mover(Move):
     def step(self,dt):
         super().step(dt)
+
         vel_x = (keyboard[key.RIGHT] - keyboard[key.LEFT]) * 180
         self.target.velocity = (vel_x, 0)
-        Level1_Background.scroller_1.set_focus(self.target.x, self.target.y)      
+        
+
 class Level1_Hero(ScrollableLayer):
     is_event_handler = True
 
@@ -35,12 +37,22 @@ class Level1_Hero(ScrollableLayer):
         super().__init__()
 
         #----------------------------------------------------------------------------------
+        # first level monsters -------------------------------------------------
+        self.run_r = False
+        self.run_l = False
         self.white_wolf = WhiteWolf()
+        self.white_wolf2 = WhiteWolf()
         self.blue_wolf = BlueWolf()
         self.blue_wolf2 = BlueWolf()
         self.hell_hound = HellHound()
+        self.blue_wolf3 = BlueWolf()
+        self.hell_beast = HellBeast()
+        self.ball = self.hell_beast.fire_ball
+        self.hell_beast.sprite.position = (500, 200)
+        self.blue_wolf3.sprite.position = (1350, 160)
+        self.white_wolf2.sprite.position = (1300, 160)
         self.blue_wolf2.sprite.position = (1100, 160)
-
+        #----------------------------------------------------------------------
         #run right --------------------------------------------------
         self.img_r = image.load('res/animation/run/adventurer-run3-sword-Sheet.png')
         self.img_grid_r = image.ImageGrid(self.img_r, 1, 6, item_width=50, item_height=37 )
@@ -48,7 +60,7 @@ class Level1_Hero(ScrollableLayer):
         # ----------------------------------------------------------
         
         #attack1
-        self.img_a1 = image.load('res/animation/attack1/Attacksheet.png')
+        self.img_a1 = image.load('res/animation/attack1/attack1sheet.png')
         self.img_grid_a1 = image.ImageGrid(self.img_a1, 1, 5, item_width=50, item_height=37 )
 
         self.anim_a1 = image.Animation.from_image_sequence(self.img_grid_a1[0:], 0.05, loop=False)
@@ -102,28 +114,49 @@ class Level1_Hero(ScrollableLayer):
         self.life = 3
         self.sprite = Sprite(self.anim_i)
 
+        self.can_attack = True
+
         self.sprite.position = (100, 180)
         self.sprite.scale = 2
         self.sprite.scale_x = 1
         self.sprite.velocity = (0,0)
+        self.attack = False
         self.flag = False
         self.x_y = 0
-        self.sprite.do(Mover())
+        
+        #first stack ------------------------------------------------
+        self.ball.visible = False
         self.add(self.blue_wolf)
         self.add(self.blue_wolf2)
         self.add(self.white_wolf)
         self.add(self.hell_hound)
+        self.add(self.white_wolf2)
+        self.add(self.blue_wolf3)
+        self.add(self.hell_beast)
+        self.add(self.ball)
+        #-----------------------------------------------------------
         self.add(self.sprite)
 
         self.pressed = defaultdict(int)
         self.schedule(self.update)
 
-   
+    def get_fire(self, enemy):
+        if enemy.flag:
+                if enemy.lifes != 0:
+                    enemy.lifes -= 1
+                    print('Enemy lifes: ',enemy.lifes)
+                    
+                else:
+                    enemy.sprite.position = (10000, -1000)
+                    enemy.visible = False
+                    print('emeny`s dead')
+                    self.flag = False
     
     def get_flag(self, enemy):
         if enemy.flag:
                 if enemy.lifes != 0:
                     enemy.lifes -= 1
+                    
                     
                 else:
                     enemy.sprite.position = (10000, -1000)
@@ -133,25 +166,15 @@ class Level1_Hero(ScrollableLayer):
     
     def on_key_press(self, k, m):
         if k == 65361:
+            self.run_l = True
             self.sprite.scale_x = -1
             self.sprite.image = self.anim_r
 
         if k == 65363:
+            self.run_r = True
             self.sprite.scale_x = 1
             self.sprite.image = self.anim_r
 
-        if k == 65362:
-            x, y = self.sprite.position
-            if self.sprite.scale_x == -1:
-                if y == 180:
-                    self.sprite.do(ac.JumpBy((-150, 0), 100, 1, 0.5))
-                    self.sprite.image = self.anim_j
-                    
-            else:        
-                if y == 180:
-                    print(self.anim_j.get_duration())
-                    self.sprite.do(ac.JumpBy((150, 0), 100, 1, 0.5))
-                    self.sprite.image = self.anim_j
         if k == key.B:
             self.sprite.image = self.anim_b
 
@@ -166,55 +189,147 @@ class Level1_Hero(ScrollableLayer):
             self.get_flag(self.white_wolf)
             self.get_flag(self.blue_wolf)
             self.get_flag(self.blue_wolf2)
-            print(self.white_wolf.lifes)
-           
+            self.get_flag(self.hell_hound)
+            self.get_flag(self.white_wolf2)
+            self.get_flag(self.blue_wolf3)
+            self.get_fire(self.hell_beast)
         
     def on_key_release(self, k, m):
+        if k == key.B:
+            self.sprite.image = self.anim_b
+            self.run_l = False
+            self.run_r = False
+
         if k == key.Z:
              #SwordSound
             SwordLoops.loop=False
             #------------------------------------------------------------------ 
+            self.run_l = False
+            self.run_r = False
             self.sprite.image = self.anim_a1
         else:
             self.sprite.image = self.anim_i
+            self.run_l = False
+            self.run_r = False
 
+    
+    def beast_action(self, position, enemy, fire_ball):
+        x, y = self.sprite.position
+        b_x, b_y = enemy.sprite.position
+        
+        if self.sprite.position[0] < 120:
+            self.can_attack = True
 
-    def wolf_action(self, position, enemy, speed):
+        if fire_ball.position[0] < (b_x - 400):
+            fire_ball.position = (b_x, b_y)
+
+            fire_ball.visible = False
+        if (b_x - x) > 300:
+            self.flag = False
+
+        
+        if self.flag:
+            self.sprite.position = x - 5, y
+        if (b_x - x) < position:
+            if (fire_ball.position[0]-x) < 10:
+                if self.sprite.image == self.anim_a1:
+                    fire_ball.position = (b_x, b_y)
+                elif self.can_attack:
+                    self.can_attack = False
+                    self.sprite.do(ac.FadeOut(1) + ac.MoveTo((100, 180), 1) + ac.FadeIn(1))
+                    self.life -= 1
+                    print(self.life)
+            fire_ball.visible = True
+            if fire_ball.position[0] == b_x:
+                enemy.ball_action = True
+                fire_ball.visible = False
+            
+
+            else: 
+                enemy.ball_action = False
+            
+
+            if enemy.ball_action:
+                
+                enemy.sprite.scale = 1.5
+                enemy.sprite.image = enemy.get_attack_animation()
+                fire_ball.do(ac.MoveBy((-1,0), 0.6) + ac.MoveBy((-500, 0), 1))
+                fire_ball.visible = True
+            if (b_x - x) < 300:
+                if self.sprite.image == self.anim_a1 and (b_x - x) < 100:
+                    
+                    enemy.flag = True
+                    if self.sprite.image == self.anim_a1 and (b_x - x) < 95:
+                        self.flag = True
+                        enemy.sprite.scale = 1.5
+                        enemy.sprite.image = enemy.get_burn_animation()
+                else:
+                    enemy.flag = False
+            else:
+                enemy.sprite.scale = 1.5
+                enemy.sprite.image = enemy.get_attack_animation()
+                self.flag = False
+                
+        else:
+            enemy.sprite.scale = 1.5
+            enemy.sprite._animation = enemy.anim_i
+
+        
+        
+            
+    def wolf_action(self, position, enemy, speed, r, l):
         self.x_y = self.sprite.position[0]
         x, y = self.sprite.position
         w_x, w_y = enemy.sprite.position
+        if self.sprite.position[0] < 120:
+            self.can_attack = True
         if enemy.sprite.visible  is not False:
             if (w_x-self.x_y) < position and (w_x-self.x_y) > 0:
                 enemy.sprite._animation = enemy.get_idle_animation()
-                enemy.sprite.scale_x = -1     
+                enemy.sprite.scale_x = l     
                 enemy.sprite.position = (w_x - speed, w_y)
             elif (w_x-self.x_y) <= 0:
-                enemy.sprite.scale_x = 1     
+                enemy.sprite.scale_x = r     
                 enemy.sprite.position = (w_x + speed, w_y)
             if self.sprite.image == self.anim_b and (w_x - x) <= 40 and (w_x - x) >= 0:
-                enemy.sprite.position = (w_x+80, w_y)
+                enemy.sprite.position = (w_x+100, w_y)
             if self.sprite.image == self.anim_b and (w_x - x) <= 0 and (w_x - x) >= -40:
-                enemy.sprite.position = (w_x-80, w_y)
+                enemy.sprite.position = (w_x-100, w_y)
         
             
             if (w_x - self.x_y) <= 80 and (w_x - self.x_y) >= -80:
                 enemy.flag = True
             elif (w_x - self.x_y) > 80 or (w_x - self.x_y) < -80:
                 enemy.flag = False
-            if y == 180 and (w_x - self.x_y) <= 10 and (w_x - self.x_y) >= 0:
+            if (w_x - self.x_y) <= 10 and (w_x - self.x_y) >= 0 and self.can_attack:
                 enemy.sprite.image = enemy.anim
                 self.x_y = self.sprite.position[0]
                 print(self.sprite.position[0], enemy.sprite.position[0])
-                self.sprite.position = (100, 180)
+                self.can_attack = False
+                self.sprite.do(ac.FadeOut(1) + ac.MoveTo((100, 180), 1) + ac.FadeIn(1))
                 self.life -= 1
                 
                 print(self.life)
 
 
     def update(self, dt):
-        f = self.wolf_action(200, self.white_wolf, 2)
-        f = self.wolf_action(200, self.blue_wolf, 3)
-        f = self.wolf_action(300, self.blue_wolf2, 3)
+        x, y = self.sprite.position
+        if self.run_l:
+            self.sprite.position = (x - 3, y)
+        elif self.run_r:
+            self.sprite.position = (x + 3, y)
+        Level1_Background.scroller_1.set_focus(self.sprite.position[0], self.sprite.position[1])
+        # first stack --------------------------------------------
+        self.wolf_action(200, self.white_wolf, 2, 1, -1)
+        self.wolf_action(200, self.blue_wolf, 3, 1, -1)
+        self.wolf_action(300, self.blue_wolf2, 3, 1, -1)
+        #---------------------------------------------------------
+        # second stack--------------------------------------------
+        self.wolf_action(300, self.hell_hound, 4, -1, 1)
+        self.wolf_action(200, self.white_wolf2, 2, 1, -1)
+        self.wolf_action(200, self.blue_wolf3, 3, 1, -1)
+        self.beast_action(300, self.hell_beast, self.ball)
+        #---------------------------------------------------------
         if self.life == 0:
             
             
