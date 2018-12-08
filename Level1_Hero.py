@@ -24,16 +24,16 @@ director.window.push_handlers(keyboard)
 class Mover(Move):
     def step(self,dt):
         super().step(dt)
+
         vel_x = (keyboard[key.RIGHT] - keyboard[key.LEFT]) * 180
         self.target.velocity = (vel_x, 0)
-        Level1_Background.scroller_1.set_focus(self.target.x, self.target.y)
+        
 
 class Level1_Hero(ScrollableLayer):
     is_event_handler = True
 
     def __init__(self):
         super().__init__()
-
         #hearts---------------------------------------------------------------------------
 
         heart1 = Sprite('res/maps/heart1.png')
@@ -48,7 +48,8 @@ class Level1_Hero(ScrollableLayer):
 
         #----------------------------------------------------------------------------------
         # first level monsters -------------------------------------------------
-        
+        self.run_r = False
+        self.run_l = False
         self.white_wolf = WhiteWolf()
         self.white_wolf2 = WhiteWolf()
         self.blue_wolf = BlueWolf()
@@ -115,15 +116,16 @@ class Level1_Hero(ScrollableLayer):
         self.life = 3
         self.sprite = Sprite(self.anim_i)
 
-        
+        self.can_attack = True
 
         self.sprite.position = (100, 180)
         self.sprite.scale = 2
         self.sprite.scale_x = 1
         self.sprite.velocity = (0,0)
+        self.attack = False
         self.flag = False
         self.x_y = 0
-        self.sprite.do(Mover())
+        
         #first stack ------------------------------------------------
         self.ball.visible = False
         self.add(self.blue_wolf)
@@ -144,6 +146,7 @@ class Level1_Hero(ScrollableLayer):
         if enemy.flag:
                 if enemy.lifes != 0:
                     enemy.lifes -= 1
+                    print(enemy.lifes)
                     
                 else:
                     enemy.sprite.position = (10000, -1000)
@@ -166,10 +169,12 @@ class Level1_Hero(ScrollableLayer):
 
     def on_key_press(self, k, m):
         if k == 65361:
+            self.run_l = True
             self.sprite.scale_x = -1
             self.sprite.image = self.anim_r
 
         if k == 65363:
+            self.run_r = True
             self.sprite.scale_x = 1
             self.sprite.image = self.anim_r
 
@@ -187,21 +192,32 @@ class Level1_Hero(ScrollableLayer):
             self.get_fire(self.hell_beast)
         
     def on_key_release(self, k, m):
-        x,y = self.sprite.position
+        if k == key.B:
+            self.sprite.image = self.anim_b
+            self.run_l = False
+            self.run_r = False
+
         if k == key.Z:
             self.sprite.image = self.anim_a1
+            self.run_l = False
+            self.run_r = False
         else:
             self.sprite.image = self.anim_i
+            self.run_l = False
+            self.run_r = False
 
     
     def beast_action(self, position, enemy, fire_ball):
         x, y = self.sprite.position
         b_x, b_y = enemy.sprite.position
         
-            
+        if self.sprite.position[0] < 120:
+            self.can_attack = True
 
         if fire_ball.position[0] < (b_x - 400):
             fire_ball.position = (b_x, b_y)
+
+            fire_ball.visible = False
         if (b_x - x) > 300:
             self.flag = False
 
@@ -212,13 +228,15 @@ class Level1_Hero(ScrollableLayer):
             if (fire_ball.position[0]-x) < 10:
                 if self.sprite.image == self.anim_a1:
                     fire_ball.position = (b_x, b_y)
-                else:
-                    self.sprite.position = (100, 180)
+                elif self.can_attack:
+                    self.can_attack = False
+                    self.sprite.do(ac.FadeOut(1) + ac.MoveTo((100, 180), 1) + ac.FadeIn(1))
                     self.life -= 1
                     print(self.life)
             fire_ball.visible = True
             if fire_ball.position[0] == b_x:
                 enemy.ball_action = True
+                fire_ball.visible = False
             
 
             else: 
@@ -232,7 +250,7 @@ class Level1_Hero(ScrollableLayer):
                 fire_ball.do(ac.MoveBy((-1,0), 0.4) + ac.MoveBy((-500, 0), 1))
                 fire_ball.visible = True
             if (b_x - x) < 300:
-                if self.sprite.image == self.anim_a1 and (b_x - x) < 80:
+                if self.sprite.image == self.anim_a1 and (b_x - x) < 100:
                     self.flag = True
                     enemy.flag = True
                     enemy.sprite.scale = 1.5
@@ -245,7 +263,6 @@ class Level1_Hero(ScrollableLayer):
                 self.flag = False
                 
         else:
-            fire_ball.visible = False
             enemy.sprite.scale = 1.5
             enemy.sprite._animation = enemy.anim_i
 
@@ -256,7 +273,8 @@ class Level1_Hero(ScrollableLayer):
         self.x_y = self.sprite.position[0]
         x, y = self.sprite.position
         w_x, w_y = enemy.sprite.position
-        
+        if self.sprite.position[0] < 120:
+            self.can_attack = True
         if enemy.sprite.visible  is not False:
             if (w_x-self.x_y) < position and (w_x-self.x_y) > 0:
                 enemy.sprite._animation = enemy.get_idle_animation()
@@ -275,16 +293,23 @@ class Level1_Hero(ScrollableLayer):
                 enemy.flag = True
             elif (w_x - self.x_y) > 80 or (w_x - self.x_y) < -80:
                 enemy.flag = False
-            if (w_x - self.x_y) <= 10 and (w_x - self.x_y) >= 0:
+            if (w_x - self.x_y) <= 10 and (w_x - self.x_y) >= 0 and self.can_attack:
                 enemy.sprite.image = enemy.anim
                 self.x_y = self.sprite.position[0]
                 print(self.sprite.position[0], enemy.sprite.position[0])
-                self.sprite.position = (100, 180)
+                self.can_attack = False
+                self.sprite.do(ac.FadeOut(1) + ac.MoveTo((100, 180), 1) + ac.FadeIn(1))
                 self.life -= 1
                 print(self.life)
 
 
     def update(self, dt):
+        x, y = self.sprite.position
+        if self.run_l:
+            self.sprite.position = (x - 3, y)
+        elif self.run_r:
+            self.sprite.position = (x + 3, y)
+        Level1_Background.scroller_1.set_focus(self.sprite.position[0], self.sprite.position[1])
         # first stack --------------------------------------------
         self.wolf_action(200, self.white_wolf, 2, 1, -1)
         self.wolf_action(200, self.blue_wolf, 3, 1, -1)
