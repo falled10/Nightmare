@@ -10,6 +10,7 @@ from cocos.menu import *
 from cocos.scenes.transitions import *
 from Menu_Background import MainScene
 import Sound
+import pyglet
 
 
 

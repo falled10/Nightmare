@@ -36,7 +36,7 @@ class Level1_Background(ScrollableLayer):
             
          if k == key.M:
              Sound.on_off()
-    
+        
     
 
 def get_newgame():

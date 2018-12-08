@@ -165,8 +165,7 @@ class Level1_Hero(ScrollableLayer):
                     enemy.visible = False
                     print('emeny`s dead')
 
-      
-
+    
     def on_key_press(self, k, m):
         if k == 65361:
             self.run_l = True
@@ -325,12 +324,19 @@ class Level1_Hero(ScrollableLayer):
         #---------------------------------------------------------
         if self.life == 0:
             import GameOver
+            
             self.life = 3
             director.push(ZoomTransition(GameOver.get_gameover(1)))
             
+            self.remove(self.sprite)
            
       
         
+
+
+        
+        
+
 
 
         
