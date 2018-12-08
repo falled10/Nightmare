@@ -14,6 +14,7 @@ import PauseScene
 import Sound
 
 
+
 scroller_1 = ScrollingManager()
 
 
@@ -43,8 +44,8 @@ class Level1_Background(ScrollableLayer):
             director.push(ZoomTransition(PauseScene.get_pause()))
             
          if k == key.M:
-             Sound.on_off()
-
+             Sound.mute_volume(0)
+             Level1_Hero.SwordSoundMute()
     
         
 """
@@ -78,6 +79,7 @@ def get_newgame():
     scroller_1.add(bg_layer)
     #scroller_1.add(heart)
     scroller_1.add(hero)
+    
     
    
     scene.add(scroller_1)

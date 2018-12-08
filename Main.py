@@ -8,5 +8,4 @@ def main():
     director.run(Menu.get_menu()) 
 
 if __name__ == '__main__':
-    
     main()

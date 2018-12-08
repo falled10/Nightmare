@@ -27,13 +27,13 @@ class Mover(Move):
         super().step(dt)
         vel_x = (keyboard[key.RIGHT] - keyboard[key.LEFT]) * 180
         self.target.velocity = (vel_x, 0)
-        Level1_Background.scroller_1.set_focus(self.target.x, self.target.y)
-
+        Level1_Background.scroller_1.set_focus(self.target.x, self.target.y)      
 class Level1_Hero(ScrollableLayer):
     is_event_handler = True
 
     def __init__(self):
         super().__init__()
+
         #----------------------------------------------------------------------------------
         self.white_wolf = WhiteWolf()
         self.blue_wolf = BlueWolf()
@@ -89,7 +89,16 @@ class Level1_Hero(ScrollableLayer):
         self.anim_b = image.Animation.from_image_sequence(self.img_grid_b[0:], 0.3, loop=True)
   
         #------------------------------------------------------------------
-    
+
+        #SwordSound
+        global SwordLoops, SwordAudio, PlayerForSwordSound
+        SwordAudio = pyglet.media.load('res/audio/str1.wav')
+        SwordLoops=pyglet.media.SourceGroup(SwordAudio.audio_format, None)
+        PlayerForSwordSound=pyglet.media.Player()
+        SwordLoops.queue(SwordAudio)
+        SwordLoops.loop = True
+        #------------------------------------------------------------------
+         
         self.life = 3
         self.sprite = Sprite(self.anim_i)
 
@@ -147,15 +156,24 @@ class Level1_Hero(ScrollableLayer):
             self.sprite.image = self.anim_b
 
         if k == key.Z:
+            #SwordSound
+            SwordLoops.loop=True
+            PlayerForSwordSound.queue(SwordLoops)
+            PlayerForSwordSound.play()
             
+            
+            #------------------------------------------------------------------ 
             self.get_flag(self.white_wolf)
             self.get_flag(self.blue_wolf)
             self.get_flag(self.blue_wolf2)
             print(self.white_wolf.lifes)
-            
+           
         
     def on_key_release(self, k, m):
         if k == key.Z:
+             #SwordSound
+            SwordLoops.loop=False
+            #------------------------------------------------------------------ 
             self.sprite.image = self.anim_a1
         else:
             self.sprite.image = self.anim_i
@@ -189,6 +207,7 @@ class Level1_Hero(ScrollableLayer):
                 print(self.sprite.position[0], enemy.sprite.position[0])
                 self.sprite.position = (100, 180)
                 self.life -= 1
+                
                 print(self.life)
 
 
@@ -201,8 +220,12 @@ class Level1_Hero(ScrollableLayer):
             
             self.life = 3
             director.push(ZoomTransition(GameOver.get_gameover(1)))
-           
             self.kill()
+    def SwordSoundMute():
+        if(PlayerForSwordSound.volume==1.0):
+            PlayerForSwordSound.volume=0.0
+        elif(PlayerForSwordSound.volume==0.0):
+            PlayerForSwordSound.volume=1.0
             
             
            
