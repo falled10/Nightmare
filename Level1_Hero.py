@@ -146,7 +146,7 @@ class Level1_Hero(ScrollableLayer):
         if enemy.flag:
                 if enemy.lifes != 0:
                     enemy.lifes -= 1
-                    print(enemy.lifes)
+                    print('Enemy lifes: ',enemy.lifes)
                     
                 else:
                     enemy.sprite.position = (10000, -1000)
@@ -198,9 +198,9 @@ class Level1_Hero(ScrollableLayer):
             self.run_r = False
 
         if k == key.Z:
-            self.sprite.image = self.anim_a1
             self.run_l = False
             self.run_r = False
+            self.sprite.image = self.anim_a1
         else:
             self.sprite.image = self.anim_i
             self.run_l = False
@@ -247,14 +247,16 @@ class Level1_Hero(ScrollableLayer):
                 
                 enemy.sprite.scale = 1.5
                 enemy.sprite.image = enemy.get_attack_animation()
-                fire_ball.do(ac.MoveBy((-1,0), 0.4) + ac.MoveBy((-500, 0), 1))
+                fire_ball.do(ac.MoveBy((-1,0), 0.6) + ac.MoveBy((-500, 0), 1))
                 fire_ball.visible = True
             if (b_x - x) < 300:
                 if self.sprite.image == self.anim_a1 and (b_x - x) < 100:
-                    self.flag = True
+                    
                     enemy.flag = True
-                    enemy.sprite.scale = 1.5
-                    enemy.sprite.image = enemy.get_burn_animation()
+                    if self.sprite.image == self.anim_a1 and (b_x - x) < 95:
+                        self.flag = True
+                        enemy.sprite.scale = 1.5
+                        enemy.sprite.image = enemy.get_burn_animation()
                 else:
                     enemy.flag = False
             else:
