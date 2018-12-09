@@ -20,7 +20,7 @@ class Level3_Background(ScrollableLayer):
     def __init__(self):
         super(Level3_Background, self).__init__()
 
-        bg = Sprite('res/maps/level3.png')
+        bg = Sprite('res/maps/Level3/level3.png')
 
         bg.position = bg.width // 2, bg.height // 2
 
@@ -29,7 +29,7 @@ class Level3_Background(ScrollableLayer):
 
         self.add(bg)
 
-        lvl3 = Sprite('res/maps/LVL3.png')
+        lvl3 = Sprite('res/maps/Level3/LVL3.png')
         lvl3.position = (420,500)
         lvl3.scale = 0.7
         blink = Blink(10,5)
