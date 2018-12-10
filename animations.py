@@ -10,10 +10,10 @@ anim_r = image.Animation.from_image_sequence(img_grid_r[0:], 0.1, loop=True)
 # ----------------------------------------------------------
         
 #attack1
-img_a1 = pyglet.image.load('res/animation/attack1/attack1sheet.png')
-img_grid_a1 = pyglet.image.ImageGrid(img_a1, 6, 1, item_width=50, item_height=37 )
+img_a1 = image.load('res/animation/attack1/attack1sheet.png')
+img_grid_a1 = image.ImageGrid(img_a1, 6, 1, item_width=50, item_height=37 )
 
-anim_a1 = pyglet.image.Animation.from_image_sequence(img_grid_a1[::-1], 0.05, loop=False)
+anim_a1 = image.Animation.from_image_sequence(img_grid_a1[::-1], 0.05, loop=False)
 #------------------------------------------------------------------
 
 #attack2
@@ -35,14 +35,6 @@ img_grid_i = image.ImageGrid(img_i, 1, 4, item_width=50, item_height=37 )
 anim_i = image.Animation.from_image_sequence(img_grid_i[0:], 0.3, loop=True)
 
 #_-----------------------------------------------------------------
-
-# jump
-img_j = image.load('res/animation/jump/jumpsheet.png')
-img_grid_j = image.ImageGrid(img_j, 1, 4, item_width=50, item_height=37)
-
-anim_j = image.Animation.from_image_sequence(img_grid_j[0:], 0.2, loop=True)
-
-#------------------------------------------------------------------
 
 # block
 img_b = image.load('res/animation/block/blocksheet.png')

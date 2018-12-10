@@ -5,6 +5,8 @@ import pyglet
 from cocos.scene import Scene
 from Menu_Background import MainScene
 import Sound
+from pyglet import font
+import fonts
 
 
 
@@ -12,23 +14,27 @@ class MainMenu(Menu):
     def __init__(self):
         super(MainMenu, self).__init__('Головне меню')
 
-        # TITLE
-        self.font_title['font_name'] = 'Arial'
-        self.font_title['bold'] = True
-        self.font_title['font_size'] = 60
-        self.font_title['color'] = (255, 69, 0, 255)
+        # TITLE   
+        self.font_title = {
+            'font_name': 'Arial Black',
+            'font_size': 60,
+            'color': (255, 69, 0, 255),
+            'bold': True,
+            'anchor_y': 'center',
+            'anchor_x': 'center',
+        }
         
 
         # ITEM
-        self.font_item['font_name'] = 'Motion Control'
+        self.font_item['font_name'] = 'Arial Black'
         self.font_item['color'] = (0, 0, 36, 255)
-        self.font_title['bold'] = True
+        self.font_item['bold'] = True
         self.font_item['font_size'] = 35
 
         # ITEM SELECTED
-        self.font_item_selected['font_name'] = 'Motion Control'
+        self.font_item_selected['font_name'] = 'Arial Black'
         self.font_item_selected['color'] = (140, 0, 0, 255)
-        self.font_title['bold'] = True
+        self.font_item['bold'] = True
         self.font_item_selected['font_size'] = 35
 
         
@@ -68,7 +74,7 @@ def get_menu():
     menu = MainMenu()
     main_bg = MainScene()
     scene = Scene()
-   
+    Sound.music.set_volume(0.5)
     Sound.play("res/audio/Menu.mp3")
 
     scene.add(main_bg)

@@ -68,7 +68,7 @@ class AboutScene(Scene):
         self.add(i)
 
         
-        label = Label('Hello', font_name = 'Action Man', bold = True,  font_size =50)
+        label = Label('Hello', font_name = 'Creepster', bold = True,  font_size =50, color = (0,255,0, 255))
         label.position = (200,200)
         self.add(label)
     

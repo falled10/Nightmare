@@ -139,8 +139,7 @@ class Level1_Hero(ScrollableLayer):
             SwordLoops.loop=True
             PlayerForSwordSound.queue(SwordLoops)
             # PlayerForSwordSound.play()
-            
-            
+
             #------------------------------------------------------------------ 
             self.get_flag(self.white_wolf)
             self.get_flag(self.blue_wolf)

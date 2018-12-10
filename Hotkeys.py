@@ -11,6 +11,7 @@ from cocos.scenes.transitions import *
 from cocos.text import *
 import Sound
 from cocos.actions import *
+import fonts
 
 
 
@@ -49,7 +50,7 @@ class HotkeyScene(Scene):
         bg = Sprite("res/keyboard/bg.jpg")
         bg.position = bg.width // 2, bg.height // 2
         self.add(bg)
-        manage = Label("Загальні", font_size = 30, bold = True, color = (0, 255, 0, 255))
+        manage = Label("Загальні", font_name = 'Creepster', font_size = 30, bold = True, color = (0, 255, 0, 255))
         manage.position = (60,560)
         self.add(manage)
         # ESC ==========================================================
@@ -81,7 +82,7 @@ class HotkeyScene(Scene):
         self.add(m)
         #===============================================================
 
-        movement = Label("Дії", font_size = 30, bold = True, color = (0, 255, 255, 255))
+        movement = Label("Дії", font_name = 'Foul Fiend', font_size = 30, bold = True, color = (0, 255, 255, 255))
         movement.position = (650,560)
         self.add(movement)
         # Move Right ===================================================
