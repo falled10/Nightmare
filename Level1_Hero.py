@@ -31,6 +31,7 @@ class Level1_Hero(ScrollableLayer):
         super().__init__()
 
         #Hearts---------------------------------------------------------------
+        self.is_dead = False
         self.heart1 = Hearts()
         self.heart2 = Hearts()
         self.heart3 = Hearts()
@@ -112,7 +113,7 @@ class Level1_Hero(ScrollableLayer):
         if enemy.flag:
                 if enemy.lifes != 0:
                     enemy.lifes -= 1
-                    
+                    print('Enemy lifes: ', enemy.lifes)
                     
                 else:
                     enemy.sprite.position = (10000, -1000)
@@ -122,46 +123,52 @@ class Level1_Hero(ScrollableLayer):
     
     def on_key_press(self, k, m):
         if k == 65361:
-            self.run_l = True
-            self.sprite.scale_x = -1
-            self.sprite.image = animations.anim_r
+            if not self.is_dead:
+                self.run_l = True
+                self.sprite.scale_x = -1
+                self.sprite.image = animations.anim_r
 
         if k == 65363:
-            self.run_r = True
-            self.sprite.scale_x = 1
-            self.sprite.image = animations.anim_r
+            if not self.is_dead:
+                self.run_r = True
+                self.sprite.scale_x = 1
+                self.sprite.image = animations.anim_r
 
         if k == key.B:
-            self.sprite.image = animations.anim_b
+            if not self.is_dead:
+                self.sprite.image = animations.anim_b
 
         if k == key.Z:
-            #SwordSound
-            SwordLoops.loop=True
-            PlayerForSwordSound.queue(SwordLoops)
-            # PlayerForSwordSound.play()
+            if not self.is_dead:
+                #SwordSound
+                SwordLoops.loop=True
+                PlayerForSwordSound.queue(SwordLoops)
+                # PlayerForSwordSound.play()
 
-            #------------------------------------------------------------------ 
-            self.get_flag(self.white_wolf)
-            self.get_flag(self.blue_wolf)
-            self.get_flag(self.blue_wolf2)
-            self.get_flag(self.hell_hound)
-            self.get_flag(self.white_wolf2)
-            self.get_flag(self.blue_wolf3)
-            self.get_fire(self.hell_beast)
+                #------------------------------------------------------------------ 
+                self.get_flag(self.white_wolf)
+                self.get_flag(self.blue_wolf)
+                self.get_flag(self.blue_wolf2)
+                self.get_flag(self.hell_hound)
+                self.get_flag(self.white_wolf2)
+                self.get_flag(self.blue_wolf3)
+                self.get_fire(self.hell_beast)
         
     def on_key_release(self, k, m):
         if k == key.B:
-            self.sprite.image = animations.anim_b
-            self.run_l = False
-            self.run_r = False
+            if not self.is_dead:
+                self.sprite.image = animations.anim_b
+                self.run_l = False
+                self.run_r = False
 
         if k == key.Z:
-             #SwordSound
-            SwordLoops.loop=False
-            #------------------------------------------------------------------ 
-            self.run_l = False
-            self.run_r = False
-            self.sprite.image = animations.anim_a1
+            if not self.is_dead:
+                #SwordSound
+                SwordLoops.loop=False
+                #------------------------------------------------------------------ 
+                self.run_l = False
+                self.run_r = False
+                self.sprite.image = animations.anim_a1
         else:
             self.sprite.image = animations.anim_i
             self.run_l = False
@@ -173,6 +180,7 @@ class Level1_Hero(ScrollableLayer):
         b_x, b_y = enemy.sprite.position
         
         if self.sprite.position[0] < 120:
+            self.is_dead = False
             self.can_attack = True
 
         if fire_ball.position[0] < (b_x - 400):
@@ -208,9 +216,10 @@ class Level1_Hero(ScrollableLayer):
                         self.heart1.do(Show() + Delay(2) + Hide())
                         self.heart2.do(Show() + Blink(10,2))
                     elif(self.life == 1):
+                        
                         self.sprite.do(FadeOut(1) + MoveTo((100, 180), 1) + FadeIn(1))
                         print("dead 0")
-                    
+                    self.is_dead = True
                     self.life -= 1
                     
                     print(self.life)
@@ -235,7 +244,7 @@ class Level1_Hero(ScrollableLayer):
                 if self.sprite.image == animations.anim_a1 and (b_x - x) < 100:
                     
                     enemy.flag = True
-                    if self.sprite.image == animations.anim_a1 and (b_x - x) < 95:
+                    if self.sprite.image == animations.anim_a1 and (b_x - x) < 100:
                         self.flag = True
                         enemy.sprite.scale = 1.5
                         enemy.sprite.image = enemy.get_burn_animation()
@@ -262,6 +271,7 @@ class Level1_Hero(ScrollableLayer):
         x, y = self.sprite.position
         w_x, w_y = enemy.sprite.position
         if self.sprite.position[0] < 120:
+            self.is_dead = False
             self.can_attack = True
         if enemy.sprite.visible  is not False:
             if (w_x-self.x_y) < position and (w_x-self.x_y) > 0:
@@ -285,6 +295,7 @@ class Level1_Hero(ScrollableLayer):
                 self.x_y = self.sprite.position[0]
                 print(self.sprite.position[0], enemy.sprite.position[0])
                 self.can_attack = False
+                self.is_dead = True
                 self.sprite.do(FadeOut(1) +MoveTo((100, 180), 1) + FadeIn(1))
                 self.life -= 1
                 
