@@ -1,9 +1,10 @@
 import cocos
-import cocos.actions as ac
+from cocos.actions import *
 import pyglet
 import time
 from cocos.director import director
 from collections import defaultdict
+from pyglet import image
 from pyglet.window import key
 from cocos.layer import ScrollableLayer
 from cocos.scenes.transitions import *
@@ -13,40 +14,30 @@ import Level1_Background
 from cocos.scene import Scene
 from cocos.scenes.transitions import *
 from Level1_Monsters import *
+from Hearts import Hearts
 import Sound
-
+import GameOver
+import animations
 
 
 director.window.pop_handlers()
 keyboard = key.KeyStateHandler()
 director.window.push_handlers(keyboard)
-
-class Mover(Move):
-    def step(self,dt):
-        super().step(dt)
-
-        vel_x = (keyboard[key.RIGHT] - keyboard[key.LEFT]) * 180
-        self.target.velocity = (vel_x, 0)
         
-
 class Level1_Hero(ScrollableLayer):
     is_event_handler = True
 
     def __init__(self):
         super().__init__()
-        #hearts---------------------------------------------------------------------------
 
-        heart1 = Sprite('res/maps/heart1.png')
-        heart1.position = (25,570)
-        self.add(heart1)
-        heart2 = Sprite('res/maps/heart2.png')
-        heart2.position = (70,570)
-        self.add(heart2)
-        heart3 = Sprite('res/maps/heart1.png')
-        heart3.position = (115,570)
-        self.add(heart3)
+        #Hearts---------------------------------------------------------------
+        self.heart1 = Hearts()
+        self.heart2 = Hearts()
+        self.heart3 = Hearts()
+        self.heart1.sprite.scale = 0.5
+        self.heart2.sprite.scale = 0.5
+        self.heart3.sprite.scale = 0.5
 
-        #----------------------------------------------------------------------------------
         # first level monsters -------------------------------------------------
         self.run_r = False
         self.run_l = False
@@ -63,58 +54,19 @@ class Level1_Hero(ScrollableLayer):
         self.white_wolf2.sprite.position = (1300, 160)
         self.blue_wolf2.sprite.position = (1100, 160)
         #----------------------------------------------------------------------
-        #run right --------------------------------------------------
-        self.img_r = pyglet.image.load('res/animation/run/adventurer-run3-sword-Sheet.png')
-        self.img_grid_r = pyglet.image.ImageGrid(self.img_r, 1, 6, item_width=50, item_height=37 )
-        self.anim_r = pyglet.image.Animation.from_image_sequence(self.img_grid_r[0:], 0.1, loop=True)
-        # ----------------------------------------------------------
         
-        #attack1
-        self.img_a1 = pyglet.image.load('res/animation/attack1/attack1sheet.png')
-        self.img_grid_a1 = pyglet.image.ImageGrid(self.img_a1, 6, 1, item_width=50, item_height=37 )
 
-        self.anim_a1 = pyglet.image.Animation.from_image_sequence(self.img_grid_a1[::-1], 0.05, loop=False)
+        #SwordSound
+        global SwordLoops, SwordAudio, PlayerForSwordSound
+        SwordAudio = pyglet.media.load('res/audio/str1.wav')
+        SwordLoops=pyglet.media.SourceGroup(SwordAudio.audio_format, None)
+        PlayerForSwordSound=pyglet.media.Player()
+        SwordLoops.queue(SwordAudio)
+        SwordLoops.loop = True
         #------------------------------------------------------------------
-
-        #attack2
-        self.img_a2 = pyglet.image.load('res/animation/attack2/attack2sheet.png')
-        self.img_grid_a2 = pyglet.image.ImageGrid(self.img_a2, 6, 1, item_width=50, item_height=37)
-        self.anim_a2 = pyglet.image.Animation.from_image_sequence(self.img_grid_a2[::-1], 0.1, loop=True)
-        #------------------------------------------------------------------
-
-        #attack3
-        self.img_a3 = pyglet.image.load('res/animation/attack3/attack3sheet.png')
-        self.img_grid_a3 = pyglet.image.ImageGrid(self.img_a3, 6, 1, item_width=50, item_height=37)
-        self.anim_a3 = pyglet.image.Animation.from_image_sequence(self.img_grid_a3[::-1], 0.1, loop=True)
-        #-------------------------------------------------------------------
-
-        # idle
-        self.img_i = pyglet.image.load('res/animation/idle/idlesheet.png')
-        self.img_grid_i = pyglet.image.ImageGrid(self.img_i, 1, 4, item_width=50, item_height=37 )
-
-        self.anim_i = pyglet.image.Animation.from_image_sequence(self.img_grid_i[0:], 0.3, loop=True)
-    
-        #_-----------------------------------------------------------------
-
-        # jump
-        self.img_j = pyglet.image.load('res/animation/jump/jumpsheet.png')
-        self.img_grid_j = pyglet.image.ImageGrid(self.img_j, 1, 4, item_width=50, item_height=37)
-
-        self.anim_j = pyglet.image.Animation.from_image_sequence(self.img_grid_j[0:], 0.2, loop=True)
-  
-        #------------------------------------------------------------------
-
-        # block
-        self.img_b = pyglet.image.load('res/animation/block/blocksheet.png')
-        self.img_grid_b = pyglet.image.ImageGrid(self.img_b, 3, 1, item_width=50, item_height=37)
-
-        self.anim_b = pyglet.image.Animation.from_image_sequence(self.img_grid_b[0:], 0.3, loop=True)
-  
-        #------------------------------------------------------------------
-    
-       
+        
         self.life = 3
-        self.sprite = Sprite(self.anim_i)
+        self.sprite = Sprite(animations.anim_i)
 
         self.can_attack = True
 
@@ -136,9 +88,11 @@ class Level1_Hero(ScrollableLayer):
         self.add(self.blue_wolf3)
         self.add(self.hell_beast)
         self.add(self.ball)
+        self.add(self.heart1)
+        self.add(self.heart2)
+        self.add(self.heart3)
         #-----------------------------------------------------------
         self.add(self.sprite)
-
         self.pressed = defaultdict(int)
         self.schedule(self.update)
 
@@ -170,18 +124,23 @@ class Level1_Hero(ScrollableLayer):
         if k == 65361:
             self.run_l = True
             self.sprite.scale_x = -1
-            self.sprite.image = self.anim_r
+            self.sprite.image = animations.anim_r
 
         if k == 65363:
             self.run_r = True
             self.sprite.scale_x = 1
-            self.sprite.image = self.anim_r
+            self.sprite.image = animations.anim_r
 
         if k == key.B:
-            self.sprite.image = self.anim_b
+            self.sprite.image = animations.anim_b
 
         if k == key.Z:
-            
+            #SwordSound
+            SwordLoops.loop=True
+            PlayerForSwordSound.queue(SwordLoops)
+            # PlayerForSwordSound.play()
+
+            #------------------------------------------------------------------ 
             self.get_flag(self.white_wolf)
             self.get_flag(self.blue_wolf)
             self.get_flag(self.blue_wolf2)
@@ -192,16 +151,19 @@ class Level1_Hero(ScrollableLayer):
         
     def on_key_release(self, k, m):
         if k == key.B:
-            self.sprite.image = self.anim_b
+            self.sprite.image = animations.anim_b
             self.run_l = False
             self.run_r = False
 
         if k == key.Z:
+             #SwordSound
+            SwordLoops.loop=False
+            #------------------------------------------------------------------ 
             self.run_l = False
             self.run_r = False
-            self.sprite.image = self.anim_a1
+            self.sprite.image = animations.anim_a1
         else:
-            self.sprite.image = self.anim_i
+            self.sprite.image = animations.anim_i
             self.run_l = False
             self.run_r = False
 
@@ -225,14 +187,34 @@ class Level1_Hero(ScrollableLayer):
             self.sprite.position = x - 5, y
         if (b_x - x) < position:
             if (fire_ball.position[0]-x) < 10:
-                if self.sprite.image == self.anim_a1 and self.sprite.scale_x == 1:
+                if self.sprite.image == animations.anim_a1 and self.sprite.scale_x == 1:
                     fire_ball.position = (b_x, b_y)
 
                 elif self.can_attack:
                     self.can_attack = False
-                    self.sprite.do(ac.FadeOut(1) + ac.MoveTo((100, 180), 1) + ac.FadeIn(1))
+                    if(self.life == 3):
+                        self.sprite.do(FadeOut(2) + MoveTo((100, 180), 2) + FadeIn(1))
+                        self.heart1.sprite.visible = True
+                        self.heart2.sprite.visible = True
+                        self.heart3.sprite.visible = True
+                        self.heart1.do(Show() + Delay(2) + Hide())
+                        self.heart2.do(Show() + Delay(2) + Hide())
+                        self.heart3.do(Show() + Blink(10,2))
+                    elif(self.life == 2):
+                        self.sprite.do(FadeOut(3) + MoveTo((100, 180), 2) + FadeIn(1))
+                        self.heart1.sprite.visible = True
+                        self.heart2.sprite.visible = True
+                        self.heart3.sprite.visible = True
+                        self.heart1.do(Show() + Delay(2) + Hide())
+                        self.heart2.do(Show() + Blink(10,2))
+                    elif(self.life == 1):
+                        self.sprite.do(FadeOut(1) + MoveTo((100, 180), 1) + FadeIn(1))
+                        print("dead 0")
+                    
                     self.life -= 1
+                    
                     print(self.life)
+                    
             fire_ball.visible = True
             if fire_ball.position[0] == b_x:
                 enemy.ball_action = True
@@ -247,13 +229,13 @@ class Level1_Hero(ScrollableLayer):
                 
                 enemy.sprite.scale = 1.5
                 enemy.sprite.image = enemy.get_attack_animation()
-                fire_ball.do(ac.MoveBy((-1,0), 0.6) + ac.MoveBy((-500, 0), 1))
+                fire_ball.do(MoveBy((-1,0), 0.6) + MoveBy((-500, 0), 1))
                 fire_ball.visible = True
             if (b_x - x) < 300:
-                if self.sprite.image == self.anim_a1 and (b_x - x) < 100:
+                if self.sprite.image == animations.anim_a1 and (b_x - x) < 100:
                     
                     enemy.flag = True
-                    if self.sprite.image == self.anim_a1 and (b_x - x) < 95:
+                    if self.sprite.image == animations.anim_a1 and (b_x - x) < 95:
                         self.flag = True
                         enemy.sprite.scale = 1.5
                         enemy.sprite.image = enemy.get_burn_animation()
@@ -263,10 +245,14 @@ class Level1_Hero(ScrollableLayer):
                 enemy.sprite.scale = 1.5
                 enemy.sprite.image = enemy.get_attack_animation()
                 self.flag = False
-                
+              
         else:
             enemy.sprite.scale = 1.5
             enemy.sprite._animation = enemy.anim_i
+            self.heart1.visible = False
+            self.heart2.visible = False
+            self.heart3.visible = False
+              
 
         
         
@@ -285,12 +271,11 @@ class Level1_Hero(ScrollableLayer):
             elif (w_x-self.x_y) <= 0:
                 enemy.sprite.scale_x = r     
                 enemy.sprite.position = (w_x + speed, w_y)
-            if self.sprite.image == self.anim_b and (w_x - x) <= 40 and (w_x - x) >= 0:
+            if self.sprite.image == animations.anim_b and (w_x - x) <= 40 and (w_x - x) >= 0:
                 enemy.sprite.position = (w_x+100, w_y)
-            if self.sprite.image == self.anim_b and (w_x - x) <= 0 and (w_x - x) >= -40:
+            if self.sprite.image == animations.anim_b and (w_x - x) <= 0 and (w_x - x) >= -40:
                 enemy.sprite.position = (w_x-100, w_y)
-        
-            
+
             if (w_x - self.x_y) <= 80 and (w_x - self.x_y) >= -80:
                 enemy.flag = True
             elif (w_x - self.x_y) > 80 or (w_x - self.x_y) < -80:
@@ -300,13 +285,18 @@ class Level1_Hero(ScrollableLayer):
                 self.x_y = self.sprite.position[0]
                 print(self.sprite.position[0], enemy.sprite.position[0])
                 self.can_attack = False
-                self.sprite.do(ac.FadeOut(1) + ac.MoveTo((100, 180), 1) + ac.FadeIn(1))
+                self.sprite.do(FadeOut(1) +MoveTo((100, 180), 1) + FadeIn(1))
                 self.life -= 1
+                
                 print(self.life)
 
 
     def update(self, dt):
         x, y = self.sprite.position
+        self.heart1.position = (x-20, y+40)
+        self.heart2.position = (x, y+40)
+        self.heart3.position = (x+20, y+40)
+
         if self.run_l:
             self.sprite.position = (x - 3, y)
         elif self.run_r:
@@ -324,12 +314,18 @@ class Level1_Hero(ScrollableLayer):
         self.beast_action(300, self.hell_beast, self.ball)
         #---------------------------------------------------------
         if self.life == 0:
-            import GameOver
-            
             self.life = 3
             director.push(ZoomTransition(GameOver.get_gameover(1)))
+            self.kill()
+
+"""
+    def SwordSoundMute():
+        if(PlayerForSwordSound.volume==1.0):
+            PlayerForSwordSound.volume=0.0
+        elif(PlayerForSwordSound.volume==0.0):
+            PlayerForSwordSound.volume=1.0
+"""        
             
-            self.remove(self.sprite)
            
       
         
