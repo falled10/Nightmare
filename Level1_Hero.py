@@ -225,8 +225,9 @@ class Level1_Hero(ScrollableLayer):
             self.sprite.position = x - 5, y
         if (b_x - x) < position:
             if (fire_ball.position[0]-x) < 10:
-                if self.sprite.image == self.anim_a1:
+                if self.sprite.image == self.anim_a1 and self.sprite.scale_x == 1:
                     fire_ball.position = (b_x, b_y)
+
                 elif self.can_attack:
                     self.can_attack = False
                     self.sprite.do(ac.FadeOut(1) + ac.MoveTo((100, 180), 1) + ac.FadeIn(1))
