@@ -4,7 +4,6 @@ from cocos.sprite import Sprite
 from cocos.actions import *
 from cocos.scene import Scene
 from Level1_Hero import Level1_Hero
-from Level1_Monsters import WhiteWolf
 from pyglet.window import key
 from cocos.director import director
 from cocos.scenes.transitions import *
@@ -55,7 +54,7 @@ def get_newgame():
     scene = Scene()
     bg_layer = Level1_Background()
     hero = Level1_Hero()
-    wolf = WhiteWolf()
+    
     
     
     Sound.play("res/audio/Level1.mp3")

@@ -31,32 +31,77 @@ class Level1_Hero(ScrollableLayer):
         super().__init__()
 
         #Hearts---------------------------------------------------------------
+        self.is_dead = False
         self.heart1 = Hearts()
         self.heart2 = Hearts()
         self.heart3 = Hearts()
-        self.heart1.sprite.scale = 0.5
-        self.heart2.sprite.scale = 0.5
-        self.heart3.sprite.scale = 0.5
+        self.heart1.scale = 0.5
+        self.heart2.scale = 0.5
+        self.heart3.scale = 0.5
+        self.heart1.visible = False
+        self.heart2.visible = False
+        self.heart3.visible = False
 
         # first level monsters -------------------------------------------------
         self.run_r = False
         self.run_l = False
-        self.white_wolf = WhiteWolf()
-        self.white_wolf2 = WhiteWolf()
-        self.blue_wolf = BlueWolf()
-        self.blue_wolf2 = BlueWolf()
-        self.hell_hound = HellHound()
-        self.blue_wolf3 = BlueWolf()
+        #Simple Wolf
+        self.white_wolf_1 = SimpleWolf()
+        self.white_wolf_2 = SimpleWolf()
+        self.white_wolf_3 = SimpleWolf()
+        self.white_wolf_4 = SimpleWolf()
+        self.gray_wolf_1 =  SimpleWolf()
+        self.gray_wolf_2 =  SimpleWolf()
+        self.gray_wolf_3 =  SimpleWolf()
+        self.gray_wolf_4 =  SimpleWolf()
+        
+
+        #Middle Wolf
+        self.blue_wolf_1 =  MiddleWolf()
+        self.blue_wolf_2 =  MiddleWolf()
+        self.blue_wolf_3 =  MiddleWolf()
+        self.blue_wolf_3 =  MiddleWolf()
+        self.black_wolf_1 = MiddleWolf()
+        self.black_wolf_2 = MiddleWolf()
+        self.black_wolf_3 = MiddleWolf()
+        self.black_wolf_4 = MiddleWolf()
+
+        #Hell Hound
+        self.hell_hound_1 = HellHound()
+        self.hell_hound_2 = HellHound()
+
+        #Hell Beast
         self.hell_beast = HellBeast()
         self.ball = self.hell_beast.fire_ball
-        self.hell_beast.sprite.position = (1500, 200)
-        self.blue_wolf3.sprite.position = (1350, 160)
-        self.white_wolf2.sprite.position = (1300, 160)
-        self.blue_wolf2.sprite.position = (1100, 160)
+
+        self.hell_beast_1 = HellBeast()
+        self.ball_1 = self.hell_beast_1.fire_ball
+        
+        #FirstStack
+        self.white_wolf_1.sprite.position = (850,160)
+        self.white_wolf_1.sprite.scale_x = -1     
+        self.gray_wolf_1.sprite.position = (900,160)
+        self.gray_wolf_1.sprite.color = (105,105,105)
+        self.gray_wolf_1.sprite.scale_x = -1
+        self.white_wolf_2.sprite.position = (950,160)
+
+        #SecondStack
+        self.blue_wolf_1.sprite.position = (1200,160)
+        self.blue_wolf_2.sprite.position = (1250,160)
+
+        self.black_wolf_1.sprite.position = (1450,180)
+        self.black_wolf_1.lifes = 3
+        self.black_wolf_1.sprite.color = (0,0,0)
+        self.black_wolf_1.sprite.scale_x = -1
+        self.black_wolf_1.sprite.scale = 2.5
+
+        #ThirdStack
+        self.hell_hound_1.sprite.position = (1600,160)
+        
+        self.hell_beast.sprite.position = (1700, 200)
         #----------------------------------------------------------------------
         
 
-     
         #------------------------------------------------------------------
         
         self.life = 3
@@ -74,14 +119,21 @@ class Level1_Hero(ScrollableLayer):
         
         #first stack ------------------------------------------------
         self.ball.visible = False
-        self.add(self.blue_wolf)
-        self.add(self.blue_wolf2)
-        self.add(self.white_wolf)
-        self.add(self.hell_hound)
-        self.add(self.white_wolf2)
-        self.add(self.blue_wolf3)
+        #FirstStack
+        self.add(self.white_wolf_1)
+        self.add(self.white_wolf_2)
+        self.add(self.gray_wolf_1)
+        
+        #SecondStack
+        self.add(self.blue_wolf_1)
+        self.add(self.blue_wolf_2)
+        self.add(self.black_wolf_1)
+        self.add(self.hell_hound_1)
+        #Hell Beast
         self.add(self.hell_beast)
         self.add(self.ball)
+
+        #Hearts
         self.add(self.heart1)
         self.add(self.heart2)
         self.add(self.heart3)
@@ -106,7 +158,7 @@ class Level1_Hero(ScrollableLayer):
         if enemy.flag:
                 if enemy.lifes != 0:
                     enemy.lifes -= 1
-                    
+                    print('Enemy lifes: ', enemy.lifes)
                     
                 else:
                     enemy.sprite.position = (10000, -1000)
@@ -116,42 +168,49 @@ class Level1_Hero(ScrollableLayer):
     
     def on_key_press(self, k, m):
         if k == 65361:
-            self.run_l = True
-            self.sprite.scale_x = -1
-            self.sprite.image = animations.anim_r
+            if not self.is_dead:
+                self.run_l = True
+                self.sprite.scale_x = -1
+                self.sprite.image = animations.anim_r
 
         if k == 65363:
-            self.run_r = True
-            self.sprite.scale_x = 1
-            self.sprite.image = animations.anim_r
+            if not self.is_dead:
+                self.run_r = True
+                self.sprite.scale_x = 1
+                self.sprite.image = animations.anim_r
 
         if k == key.B:
-            self.sprite.image = animations.anim_b
+            if not self.is_dead:
+                self.sprite.image = animations.anim_b
 
         if k == key.Z:
-            
+            if not self.is_dead:
+                #FirstStack
+                self.get_flag(self.white_wolf_1)
+                self.get_flag(self.white_wolf_2)
+                self.get_flag(self.gray_wolf_1)
 
-            #------------------------------------------------------------------ 
-            self.get_flag(self.white_wolf)
-            self.get_flag(self.blue_wolf)
-            self.get_flag(self.blue_wolf2)
-            self.get_flag(self.hell_hound)
-            self.get_flag(self.white_wolf2)
-            self.get_flag(self.blue_wolf3)
-            self.get_fire(self.hell_beast)
+                #SecondStack
+                self.get_flag(self.blue_wolf_1)
+                self.get_flag(self.blue_wolf_2)
+                self.get_flag(self.black_wolf_1)
+                self.get_flag(self.hell_hound_1)
+
+                #HellBeast
+                self.get_fire(self.hell_beast)
         
     def on_key_release(self, k, m):
         if k == key.B:
-            self.sprite.image = animations.anim_b
-            self.run_l = False
-            self.run_r = False
+            if not self.is_dead:
+                self.sprite.image = animations.anim_b
+                self.run_l = False
+                self.run_r = False
 
         if k == key.Z:
-            
-            #------------------------------------------------------------------ 
-            self.run_l = False
-            self.run_r = False
-            self.sprite.image = animations.anim_a1
+            if not self.is_dead:
+                self.run_l = False
+                self.run_r = False
+                self.sprite.image = animations.anim_a1
         else:
             self.sprite.image = animations.anim_i
             self.run_l = False
@@ -163,6 +222,7 @@ class Level1_Hero(ScrollableLayer):
         b_x, b_y = enemy.sprite.position
         
         if self.sprite.position[0] < 120:
+            self.is_dead = False
             self.can_attack = True
 
         if fire_ball.position[0] < (b_x - 400):
@@ -177,8 +237,9 @@ class Level1_Hero(ScrollableLayer):
             self.sprite.position = x - 5, y
         if (b_x - x) < position:
             if (fire_ball.position[0]-x) < 10:
-                if self.sprite.image == animations.anim_a1:
+                if self.sprite.image == animations.anim_a1 and self.sprite.scale_x == 1:
                     fire_ball.position = (b_x, b_y)
+
                 elif self.can_attack:
                     self.can_attack = False
                     if(self.life == 3):
@@ -197,9 +258,10 @@ class Level1_Hero(ScrollableLayer):
                         self.heart1.do(Show() + Delay(2) + Hide())
                         self.heart2.do(Show() + Blink(10,2))
                     elif(self.life == 1):
+                        
                         self.sprite.do(FadeOut(1) + MoveTo((100, 180), 1) + FadeIn(1))
                         print("dead 0")
-                    
+                    self.is_dead = True
                     self.life -= 1
                     
                     print(self.life)
@@ -208,23 +270,17 @@ class Level1_Hero(ScrollableLayer):
             if fire_ball.position[0] == b_x:
                 enemy.ball_action = True
                 fire_ball.visible = False
-            
-
             else: 
                 enemy.ball_action = False
-            
-
-            if enemy.ball_action:
-                
+            if enemy.ball_action: 
                 enemy.sprite.scale = 1.5
                 enemy.sprite.image = enemy.get_attack_animation()
                 fire_ball.do(MoveBy((-1,0), 0.6) + MoveBy((-500, 0), 1))
                 fire_ball.visible = True
             if (b_x - x) < 300:
                 if self.sprite.image == animations.anim_a1 and (b_x - x) < 100:
-                    
                     enemy.flag = True
-                    if self.sprite.image == animations.anim_a1 and (b_x - x) < 95:
+                    if self.sprite.image == animations.anim_a1 and (b_x - x) < 100:
                         self.flag = True
                         enemy.sprite.scale = 1.5
                         enemy.sprite.image = enemy.get_burn_animation()
@@ -238,32 +294,27 @@ class Level1_Hero(ScrollableLayer):
         else:
             enemy.sprite.scale = 1.5
             enemy.sprite._animation = enemy.anim_i
-            self.heart1.visible = False
-            self.heart2.visible = False
-            self.heart3.visible = False
-              
-
-        
-        
-            
+                
     def wolf_action(self, position, enemy, speed, r, l):
         self.x_y = self.sprite.position[0]
         x, y = self.sprite.position
         w_x, w_y = enemy.sprite.position
         if self.sprite.position[0] < 120:
+            self.is_dead = False
             self.can_attack = True
         if enemy.sprite.visible  is not False:
-            if (w_x-self.x_y) < position and (w_x-self.x_y) > 0:
-                enemy.sprite._animation = enemy.get_idle_animation()
-                enemy.sprite.scale_x = l     
-                enemy.sprite.position = (w_x - speed, w_y)
-            elif (w_x-self.x_y) <= 0:
-                enemy.sprite.scale_x = r     
-                enemy.sprite.position = (w_x + speed, w_y)
-            if self.sprite.image == animations.anim_b and (w_x - x) <= 40 and (w_x - x) >= 0:
-                enemy.sprite.position = (w_x+100, w_y)
-            if self.sprite.image == animations.anim_b and (w_x - x) <= 0 and (w_x - x) >= -40:
-                enemy.sprite.position = (w_x-100, w_y)
+            if not self.is_dead:
+                if (w_x-self.x_y) < position and (w_x-self.x_y) > 0:
+                    enemy.sprite._animation = enemy.get_idle_animation()
+                    enemy.sprite.scale_x = l     
+                    enemy.sprite.position = (w_x - speed, w_y)
+                elif (w_x-self.x_y) <= 0:
+                    enemy.sprite.scale_x = r     
+                    enemy.sprite.position = (w_x + speed, w_y)
+                if self.sprite.image == animations.anim_b and (w_x - x) <= 40 and (w_x - x) >= 0:
+                    enemy.sprite.position = (w_x+100, w_y)
+                if self.sprite.image == animations.anim_b and (w_x - x) <= 0 and (w_x - x) >= -40:
+                    enemy.sprite.position = (w_x-100, w_y)
 
             if (w_x - self.x_y) <= 80 and (w_x - self.x_y) >= -80:
                 enemy.flag = True
@@ -274,9 +325,28 @@ class Level1_Hero(ScrollableLayer):
                 self.x_y = self.sprite.position[0]
                 print(self.sprite.position[0], enemy.sprite.position[0])
                 self.can_attack = False
-                self.sprite.do(FadeOut(1) +MoveTo((100, 180), 1) + FadeIn(1))
+                self.is_dead = True
+                if(self.life == 3):
+                    self.sprite.do(FadeOut(2) + MoveTo((100, 180), 2) + FadeIn(1))
+                    self.heart1.sprite.visible = True
+                    self.heart2.sprite.visible = True
+                    self.heart3.sprite.visible = True
+                    self.heart1.do(Show() + Delay(2) + Hide())
+                    self.heart2.do(Show() + Delay(2) + Hide())
+                    self.heart3.do(Show() + Blink(10,2))
+                elif(self.life == 2):
+                    self.sprite.do(FadeOut(3) + MoveTo((100, 180), 2) + FadeIn(1))
+                    self.heart1.sprite.visible = True
+                    self.heart2.sprite.visible = True
+                    self.heart3.sprite.visible = True
+                    self.heart1.do(Show() + Delay(2) + Hide())
+                    self.heart2.do(Show() + Blink(10,2))
+                elif(self.life == 1):
+                    self.sprite.do(FadeOut(1) + MoveTo((100, 180), 1) + FadeIn(1))
+                    print("dead 0")
+                self.is_dead = True
                 self.life -= 1
-                
+                    
                 print(self.life)
 
 
@@ -292,14 +362,16 @@ class Level1_Hero(ScrollableLayer):
             self.sprite.position = (x + 3, y)
         Level1_Background.scroller_1.set_focus(self.sprite.position[0], self.sprite.position[1])
         # first stack --------------------------------------------
-        self.wolf_action(200, self.white_wolf, 2, 1, -1)
-        self.wolf_action(200, self.blue_wolf, 3, 1, -1)
-        self.wolf_action(300, self.blue_wolf2, 3, 1, -1)
+        self.wolf_action(200, self.white_wolf_1, 2, 1, -1)
+        self.wolf_action(200, self.white_wolf_2, 2, 1, -1)
+        self.wolf_action(200, self.gray_wolf_1, 2, 1, -1)
         #---------------------------------------------------------
-        # second stack--------------------------------------------
-        self.wolf_action(300, self.hell_hound, 4, -1, 1)
-        self.wolf_action(200, self.white_wolf2, 2, 1, -1)
-        self.wolf_action(200, self.blue_wolf3, 3, 1, -1)
+        # second stack -------------------------------------------
+        self.wolf_action(200, self.blue_wolf_1, 3, 1, -1)
+        self.wolf_action(200, self.blue_wolf_2, 3, 1, -1)
+        self.wolf_action(300, self.black_wolf_1, 3.5, 1, -1)
+        self.wolf_action(200, self.hell_hound_1, 4, -1, 1)
+        # fourth stack--------------------------------------------
         self.beast_action(300, self.hell_beast, self.ball)
         #---------------------------------------------------------
         if self.life == 0:
