@@ -28,7 +28,7 @@ class PauseScene(Menu):
 
         # ITEM
         self.font_item['font_name'] = 'Motion Control'
-        self.font_item['color'] = (0, 0, 36, 255)
+        self.font_item['color'] = (0, 150, 115, 255)
         self.font_title['bold'] = True
         self.font_item['font_size'] = 35
 

@@ -12,6 +12,7 @@ from cocos.text import *
 import Sound
 from cocos.actions import *
 from pyglet.window import key
+import fonts
 
 
 
@@ -25,7 +26,7 @@ class About(Menu):
 
         # ITEM SELECTED
         self.font_item_selected['font_name'] = 'Motion Control'
-        self.font_item_selected['color'] = (0, 100, 0, 255)
+        self.font_item_selected['color'] = (10, 165, 85, 255)
         self.font_title['bold'] = True
         self.font_item_selected['font_size'] = 35
 
@@ -33,7 +34,7 @@ class About(Menu):
 
         items.append(MenuItem('Назад', self.on_menu))
         items[0].y -= 250
-        items[0].x += 30
+        items[0].x += 10
 
         self.create_menu(items, shake(), shake_back())
     
@@ -47,36 +48,30 @@ class AboutScene(Scene):
 
     def __init__(self):
         super().__init__()
-        bg = Sprite("res/keyboard/bg.jpg")
+        bg = Sprite("res/keyboard/MyBG.jpg")
         bg.position = bg.width // 2, bg.height // 2
         self.add(bg)
 
-        title = Label("Над грою працювали: ", font_size = 40,bold = True, color = (0, 255, 0, 255))
-        title.position = (120, 550)
+        title = Label("Над грою працювали: ", font_size = 40,bold = True, color = (10, 165, 85, 255))
+        title.position = (120, 450)
         self.add(title)
 
-        y = Label("Кулик Юрій", font_size = 35,bold = True, color = (0, 255, 0, 255))
-        y.position = (200, 500)
+        y = Label("Кулик Юрій", font_size = 35,bold = True, color = (10, 165, 85, 255))
+        y.position = (260, 380)
         self.add(y)
 
-        o = Label("Андріїв Олег", font_size = 35,bold = True, color = (0, 255, 0, 255))
-        o.position = (200, 420)
+        o = Label("Андріїв Олег", font_size = 35,bold = True, color = (10, 165, 85, 255))
+        o.position = (260, 310)
         self.add(o)
 
-        i = Label("Перегінець Іван", font_size = 35,bold = True, color = (0, 255, 0, 255))
-        i.position = (200, 340)
+        i = Label("Перегінець Іван", font_size = 35,bold = True, color = (10, 165, 85, 255))
+        i.position = (260, 240)
         self.add(i)
 
-        
-        label = Label('Hello', font_name = 'KreepTown', bold = True,  font_size =50, color = (0,255,0, 255))
-        label.position = (200,200)
-        self.add(label)
-
-        manage = Label("xxxxxx", font_name = 'KreepTown', font_size = 30, bold = True, color = (0, 255, 0, 255))
-        manage.position = (60,560)
-        self.add(manage)
-    
-      
+        #  label = Label('Example', font_name = 'KreepTown', font_size =50, bold = True, color = (0,255,0, 255))
+        # label.position = (200,200)
+        # self.add(label)
+            
 def get_about():
   
     scene = Scene()
