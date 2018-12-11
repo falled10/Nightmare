@@ -178,18 +178,20 @@ class Level3_Hero(ScrollableLayer):
                     enemy.sprite.position = (g_x + speed, g_y)
 
 
-        
-        
-        
-
-
     def update(self, dt):
-        
         x, y = self.sprite.position
+        if(x <=20 ):
+            self.run_l = False
+            self.run_r = False
+            self.sprite.position = (30,180)
         self.ghost_action(200,self.ghost, 3)
         if self.run_l:
             self.sprite.position = (x - 3, y)
         elif self.run_r:
             self.sprite.position = (x + 3, y)
         Level3_Background.scroller_3.set_focus(self.sprite.position[0], self.sprite.position[1])
+        if self.life == 0:
+            self.life = 3
+            director.push(ZoomTransition(GameOver.get_gameover(3)))
+            self.kill()
        

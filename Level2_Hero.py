@@ -72,9 +72,11 @@ class Level2_Hero(ScrollableLayer):
         self.green_hound_1.sprite.position = (550,400)
         self.green_hound_1.sprite.color = (0,255,0)
         self.green_hound_1.sprite.scale_x = -1
+        self.green_hound_1.lifes = 3
 
         self.green_hound_2.sprite.position = (650,400)
         self.green_hound_2.sprite.color = (0,255,0)
+        self.green_hound_2.lifes = 3
 
         self.hell_beast.sprite.position =  (1000,420)
         self.hell_beast.sprite.color = (0,255,0)
@@ -85,10 +87,11 @@ class Level2_Hero(ScrollableLayer):
         self.red_hound_1.sprite.position = (1350,400)
         self.red_hound_1.sprite.color = (255,0,0)
         self.red_hound_1.sprite.scale_x = -1
+        self.red_hound_1.lifes = 3
 
         self.red_hound_2.sprite.position = (1450,400)
         self.red_hound_2.sprite.color = (255,0,0)
-        
+        self.red_hound_2.lifes = 3
 
         #third
         self.nightmare_1.sprite.position = (1700,420)
@@ -99,12 +102,13 @@ class Level2_Hero(ScrollableLayer):
         #fourth
         self.nightmare_2.sprite.position = (2100,420)
         self.nightmare_2.sprite.color = (0,255,0)
-        self.skeleton.sprite.position = (400, 420)
+        self.skeleton.sprite.position = (2300, 420)
         self.skeleton.sprite.scale = 2
         self.skeleton.sprite.scale_x = -1
         
 
         #--------------------------------------------------------------------------
+        self.skeleton_is_alive = True
         self.run_r = False
         self.run_l = False
         self.attacks = False
@@ -191,6 +195,8 @@ class Level2_Hero(ScrollableLayer):
                         print('Enemy lifes: ', enemy.lifes)
                         
                     else:
+                        self.skeleton_is_alive = False
+                        self.remove(enemy)
                         enemy.sprite.position = (10000, -1000)
                         enemy.visible = False
                         print('emeny`s dead')
@@ -486,7 +492,7 @@ class Level2_Hero(ScrollableLayer):
     def skeleton_action(self, position, enemy, speed, l, r):
         
         x, y = self.sprite.position
-        asdf = x
+        
         w_x, w_y = enemy.sprite.position
         if x <120:
             w_y = 390
@@ -515,9 +521,30 @@ class Level2_Hero(ScrollableLayer):
         if not enemy.first_death:
             if w_y == 391 and enemy.lifes >= 0 and (w_x-x) < 50 and (w_x - x) >= -50 and not self.is_dead:
                 self.is_dead = True
-                self.sprite.do(FadeOut(1) + MoveTo((100, 410), 1) + FadeIn(1))
-                self.mirror_sprite.do(FadeOut(1) + MoveTo((100, 320), 1) + FadeIn(1))
-                self.life -= 2
+                if(self.life == 3):
+                    self.sprite.do(FadeOut(2) + MoveTo((100, 410), 2) + FadeIn(1))
+                    self.mirror_sprite.do(FadeOut(2) + MoveTo((100, 320), 2) + FadeIn(1))
+                    self.heart1.sprite.visible = True
+                    self.heart2.sprite.visible = True
+                    self.heart3.sprite.visible = True
+                    self.heart1.do(Show() + Delay(2) + Hide())
+                    self.heart2.do(Show() + Delay(2) + Hide())
+                    self.heart3.do(Show() + Blink(10,2))
+                elif(self.life == 2):
+                    self.sprite.do(FadeOut(3) + MoveTo((100, 410), 2) + FadeIn(1))
+                    self.mirror_sprite.do(FadeOut(2) + MoveTo((100, 320), 2) + FadeIn(1))
+                    self.heart1.sprite.visible = True
+                    self.heart2.sprite.visible = True
+                    self.heart3.sprite.visible = True
+                    self.heart1.do(Show() + Delay(2) + Hide())
+                    self.heart2.do(Show() + Blink(10,2))
+                elif(self.life == 1):
+                    self.sprite.do(FadeOut(1) + MoveTo((100, 410), 1) + FadeIn(1))
+                    self.mirror_sprite.do(FadeOut(2) + MoveTo((100, 320), 2) + FadeIn(1))
+                    print("dead 0")
+                self.is_dead = True
+                self.life -= 1
+                    
                 print(self.life)
 
             if not self.is_dead:
@@ -555,13 +582,20 @@ class Level2_Hero(ScrollableLayer):
 
 
     def update(self, dt):
+        x,y = self.sprite.position
+        print(x)
+        xm, ym = self.mirror_sprite.position
+        if(x <=20 ):
+            self.run_l = False
+            self.run_r = False
+            self.sprite.position = (30,410)
+            self.mirror_sprite.position = (30,320)
         if self.life == 0:
             self.life = 3
             director.push(ZoomTransition(GameOver.get_gameover(2)))
             self.kill()
         self.skeleton_action(200, self.skeleton, 1, -1, 1)
-        x,y = self.sprite.position
-        xm, ym = self.mirror_sprite.position
+       
         self.heart1.position = (x-20, y+40)
         self.heart2.position = (x, y+40)
         self.heart3.position = (x+20, y+40)
@@ -573,16 +607,31 @@ class Level2_Hero(ScrollableLayer):
             self.mirror_sprite.position = (xm +3, ym)
 
         Level2_Background.scroller_2.set_focus(self.sprite.position[0], self.sprite.position[1])
+        '''
         # first stack --------------------------------------------
-        #self.wolf_action(200, self.red_wolf_1, 2, 1, -1)
-        #self.beast_action(300,self.hell_beast, self.ball)
+        self.wolf_action(200, self.green_hound_1, 3, -1, 1)
+        self.wolf_action(200, self.green_hound_2, 3, -1, 1)
+        self.beast_action(300,self.hell_beast, self.ball)
+        # second stack -------------------------------------------
+        self.wolf_action(200, self.red_hound_1, 3, -1, 1)
+        self.wolf_action(200, self.red_hound_2, 3, -1, 1)
+        # third stack --------------------------------------------
+        self.beast_action(300, self.hell_fire_beast, self.ball_f)
+        self.wolf_action(200, self.nightmare_1, 2.5, -1, 1)
 
-        #xz
-        self.skeleton_action(200, self.skeleton, 1, -1,1)
-       # self.beast_action(300, self.hell_fire_beast, self.ball_f)
+        #fourth --------------------------------------------------
+        self.wolf_action(200, self.nightmare_2, 2.5, -1, 1) '''
+        self.skeleton_action(200, self.skeleton, 1, -1, 1)
+        
 
         if self.life == 0:
             import GameOver
             self.life = 3
             director.push(ZoomTransition(GameOver.get_gameover(2)))
             self.kill()
+        if(self.sprite.position > (2755,y) and self.skeleton_is_alive == False):
+            import Level3_Background
+            director.push(SlideInTTransition(Level3_Background.get_newgame()))
+        elif(x >= 2755):
+            self.sprite.position = (2750,410)
+            self.mirror_sprite.position = (2750,320)

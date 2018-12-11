@@ -12,8 +12,6 @@ class HellFireBeast(ScrollableLayer):
         self.anim_b = pyglet.image.Animation.from_image_sequence(self.img_grid_b[0:], 0.1   , loop=True)
         self.fire_ball = Sprite(self.anim_b)
         self.fire_ball.scale = 2
-        
-
         self.ball_action = False
 
         #animation idle
@@ -66,6 +64,7 @@ class Nightmare(ScrollableLayer):
         img = pyglet.image.load('res/animation/level2_monsters/nightmare/nightmare-galloping.png')
         img_grid = pyglet.image.ImageGrid(img, 1, 4, item_width=144, item_height=96)
         anim = pyglet.image.Animation.from_image_sequence(img_grid[0:], 0.2, loop=True)
+        return anim
 
 class GreenSkeleton(ScrollableLayer):
     def __init__(self):

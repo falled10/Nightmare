@@ -11,7 +11,7 @@ class SimpleWolf(ScrollableLayer):
         #animation
         self.img = pyglet.image.load('res/animation/level1_monsters/wolf1/wolf-runing-cycle.png')
         self.img_grid = pyglet.image.ImageGrid(self.img, 1, 4, item_width=54, item_height=31)
-        self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[1:2], 0.2, loop=True)
+        self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[3:4], 0.2, loop=True)
         self.lifes = 1  
         self.flag = False
         self.sprite = Sprite(self.anim)
@@ -96,7 +96,7 @@ class HellBeast(ScrollableLayer):
         self.img_i = pyglet.image.load('res/animation/level1_monsters/hell_beast/hell-beast-idle.png')
         self.img_grid_i = pyglet.image.ImageGrid(self.img_i, 1, 6, item_width=55, item_height=67)
         self.anim_i = pyglet.image.Animation.from_image_sequence(self.img_grid_i[0:], 0.2, loop=True)
-        self.lifes = 2
+        self.lifes = 3
         self.flag = False
         self.sprite = Sprite(self.anim_i)
         self.sprite.position = (1200, 200)

@@ -41,7 +41,7 @@ class Level3_Background(ScrollableLayer):
             director.push(ZoomTransition(PauseScene.get_pause()))
         
         if k == key.M:
-             Sound.on_off()
+             Sound.mute_volume(0)
         #це можна видалити, я просто тестив геймовер, цю штуку треба буде поставити коли життів 0 буде в Level3_Hero
         """if k == key.SPACE:
             import GameOver

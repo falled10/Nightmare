@@ -25,7 +25,7 @@ class MainMenu(Menu):
         }
         # ITEM
         self.font_item['font_name'] = 'Arial Black'
-        self.font_item['color'] = (0, 0, 36, 255)
+        self.font_item['color'] = (0, 150, 115, 255)
         self.font_item['bold'] = True
         self.font_item['font_size'] = 35
 

@@ -1,4 +1,3 @@
-import cocos
 from cocos.actions import *
 import pyglet
 import time
@@ -438,6 +437,10 @@ class Level1_Hero(ScrollableLayer):
 
     def update(self, dt):
         x, y = self.sprite.position
+        if(x <=20 ):
+            self.run_l = False
+            self.run_r = False
+            self.sprite.position = (30,180)
         self.heart1.position = (x-20, y+40)
         self.heart2.position = (x, y+40)
         self.heart3.position = (x+20, y+40)
@@ -479,6 +482,7 @@ class Level1_Hero(ScrollableLayer):
         if(self.sprite.position > (3090,y)):
             import Level2_Background
             director.push(SlideInTTransition(Level2_Background.get_newgame()))
+        
 
 
    
