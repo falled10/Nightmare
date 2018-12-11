@@ -57,12 +57,15 @@ class GameOver(Menu):
     def on_retry(self):
         if(game_over_flag == 1):
             import Level1_Background
+            Sound.stop()
             director.push(SlideInTTransition(Level1_Background.get_newgame()))
         if(game_over_flag == 2):
             import Level2_Background
+            Sound.stop()
             director.push(SlideInTTransition(Level2_Background.get_newgame()))
         if(game_over_flag == 3):
             import Level3_Background
+            Sound.stop()
             director.push(SlideInTTransition(Level3_Background.get_newgame()))
        
     def on_help(self):

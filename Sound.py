@@ -34,4 +34,7 @@ def on_off():
 
 def resume():
     music.unpause()
+
+def stop():
+    music.stop()
       

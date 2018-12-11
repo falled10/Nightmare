@@ -71,6 +71,7 @@ class Level1_Hero(ScrollableLayer):
         self.hell_beast = HellBeast()
         self.ball = self.hell_beast.fire_ball
         
+        #
         #FirstStack
         self.white_wolf_1.sprite.position = (850,160)
         self.white_wolf_1.sprite.scale_x = -1   
@@ -383,7 +384,7 @@ class Level1_Hero(ScrollableLayer):
         if enemy.sprite.visible  is not False:
             if not self.is_dead:
                 if (w_x-self.x_y) < position and (w_x-self.x_y) > 0:
-                    enemy.sprite._animation = enemy.get_idle_animation()
+                    enemy.sprite._animation = enemy.get_run_animation()
                     enemy.sprite.scale_x = l     
                     enemy.sprite.position = (w_x - speed, w_y)
                 elif (w_x-self.x_y) <= 0:

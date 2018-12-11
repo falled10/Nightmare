@@ -1,4 +1,3 @@
-import cocos
 import pyglet
 from pyglet import image
         
@@ -19,7 +18,7 @@ anim_a1 = image.Animation.from_image_sequence(img_grid_a1[::-1], 0.05, loop=Fals
 #attack2
 img_a2 = image.load('res/animation/attack2/attack2sheet.png')
 img_grid_a2 = image.ImageGrid(img_a2, 6, 1, item_width=50, item_height=37)
-anim_a2 = image.Animation.from_image_sequence(img_grid_a2[::-1], 0.1, loop=True)
+anim_a2 = image.Animation.from_image_sequence(img_grid_a2[::-1], 0.05, loop=False)
 #------------------------------------------------------------------
 
 #attack3

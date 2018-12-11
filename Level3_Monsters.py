@@ -21,12 +21,13 @@ class Ghost(ScrollableLayer):
         self.img = pyglet.image.load('res/animation/level3_monsters/ghost/ghost-idle.png')
         self.img_grid = pyglet.image.ImageGrid(self.img, 1, 7, item_width=64, item_height=80)
         self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[0:], 0.2, loop=True)
-        self.lifes = 1  
+        self.lifes = 5 
         self.flag = False
         self.sprite = Sprite(self.anim)
         self.sprite.scale = 1.4
         self.x = 0
         self.can_attack = False
+        self.can_action = True
         self.add(self.sprite)
 
     def get_appears(self):
