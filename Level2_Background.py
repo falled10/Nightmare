@@ -39,11 +39,7 @@ class Level2_Background(ScrollableLayer):
             director.push(ZoomTransition(PauseScene.get_pause()))
 
         if k == key.M:
-             Sound.on_off()
-        #це можна видалити, я просто тестив геймовер, цю штуку треба буде поставити коли життів 0 буде в Level2_Hero
-        """if k == key.SPACE:
-            import GameOver
-            director.push(ZoomTransition(GameOver.get_gameover(2)))"""
+            Sound.mute_volume(0)
     
 
 def get_newgame():
