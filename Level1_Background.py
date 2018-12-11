@@ -30,7 +30,7 @@ class Level1_Background(ScrollableLayer):
         lvl1 = Sprite('res/maps/Level1/LVL1.png')
         lvl1.position = (420,500)
         lvl1.scale = 0.7
-        blink = Blink(8,3)
+        blink = Blink(10,3)
         lvl1.do(blink)
         self.px_width = bg.width
         self.px_height = bg.height

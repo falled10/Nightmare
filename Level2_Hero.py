@@ -83,9 +83,7 @@ class Level2_Hero(ScrollableLayer):
             self.mirror_sprite._animation = animations.anim_r
                     
         if k == key.Z:
-            self.sprite._animation = animations.anim_a1
-
-            self.mirror_sprite._animation = animations.anim_a1
+            print("z")
 
         if k == key.X:
             self.sprite._animation = animations.anim_a2
@@ -95,9 +93,10 @@ class Level2_Hero(ScrollableLayer):
         
     def on_key_release(self, k, m):
         if k == key.Z:
-            self.run_l = False
-            self.run_r = False
-            self.sprite.image = animations.anim_a1
+            if not self.is_dead:
+                self.run_l = False
+                self.run_r = False
+                self.sprite.image = animations.anim_a1
         else:
             self.sprite.image = animations.anim_i
             self.run_l = False

@@ -446,7 +446,7 @@ class Level1_Hero(ScrollableLayer):
         elif self.run_r:
             self.sprite.position = (x + 3, y)
         Level1_Background.scroller_1.set_focus(self.sprite.position[0], self.sprite.position[1])
-        """
+        
         # first stack --------------------------------------------
         self.wolf_action(200, self.white_wolf_1, 2, 1, -1)
         self.wolf_action(210, self.white_wolf_2, 2, 1, -1)
@@ -470,7 +470,7 @@ class Level1_Hero(ScrollableLayer):
         self.wolf_action(200, self.blue_wolf_4, 3, 1, -1)
         self.beast_action(300, self.hell_beast, self.ball)
         #---------------------------------------------------------
-        """
+        
         if self.life == 0:
             self.life = 3
             director.push(ZoomTransition(GameOver.get_gameover(1)))

@@ -1,16 +1,7 @@
-import cocos
-import cocos.actions as ac
 import pyglet
-from cocos.director import director
-from collections import defaultdict
-from pyglet.window import key
 from cocos.layer import ScrollableLayer
-from cocos.scenes.transitions import *
-from cocos.actions import Move
 from cocos.sprite import Sprite
-import Level1_Background
-from cocos.scene import Scene
-from cocos.scenes.transitions import *
+
 
 
 class SimpleWolf(ScrollableLayer):
