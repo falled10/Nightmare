@@ -274,17 +274,18 @@ class Level1_Hero(ScrollableLayer):
             self.is_dead = False
             self.can_attack = True
         if enemy.sprite.visible  is not False:
-            if (w_x-self.x_y) < position and (w_x-self.x_y) > 0:
-                enemy.sprite._animation = enemy.get_idle_animation()
-                enemy.sprite.scale_x = l     
-                enemy.sprite.position = (w_x - speed, w_y)
-            elif (w_x-self.x_y) <= 0:
-                enemy.sprite.scale_x = r     
-                enemy.sprite.position = (w_x + speed, w_y)
-            if self.sprite.image == animations.anim_b and (w_x - x) <= 40 and (w_x - x) >= 0:
-                enemy.sprite.position = (w_x+100, w_y)
-            if self.sprite.image == animations.anim_b and (w_x - x) <= 0 and (w_x - x) >= -40:
-                enemy.sprite.position = (w_x-100, w_y)
+            if not self.is_dead:
+                if (w_x-self.x_y) < position and (w_x-self.x_y) > 0:
+                    enemy.sprite._animation = enemy.get_idle_animation()
+                    enemy.sprite.scale_x = l     
+                    enemy.sprite.position = (w_x - speed, w_y)
+                elif (w_x-self.x_y) <= 0:
+                    enemy.sprite.scale_x = r     
+                    enemy.sprite.position = (w_x + speed, w_y)
+                if self.sprite.image == animations.anim_b and (w_x - x) <= 40 and (w_x - x) >= 0:
+                    enemy.sprite.position = (w_x+100, w_y)
+                if self.sprite.image == animations.anim_b and (w_x - x) <= 0 and (w_x - x) >= -40:
+                    enemy.sprite.position = (w_x-100, w_y)
 
             if (w_x - self.x_y) <= 80 and (w_x - self.x_y) >= -80:
                 enemy.flag = True
