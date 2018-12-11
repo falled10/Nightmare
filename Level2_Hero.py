@@ -72,7 +72,7 @@ class Level2_Hero(ScrollableLayer):
             self.sprite.image = animations.anim_r
 
             self.mirror_sprite.scale_x = 1
-            self.mirror_sprite._animation = animations.anim_r
+            self.mirror_sprite.image = animations.anim_r
 
         if k == 65363:
             self.run_r = True
@@ -80,17 +80,13 @@ class Level2_Hero(ScrollableLayer):
             self.sprite.image = animations.anim_r
 
             self.mirror_sprite.scale_x = -1
-            self.mirror_sprite._animation = animations.anim_r
+            self.mirror_sprite.image = animations.anim_r
                     
         if k == key.Z:
-            self.sprite._animation = animations.anim_a1
-
-            self.mirror_sprite._animation = animations.anim_a1
+            pass
 
         if k == key.X:
-            self.sprite._animation = animations.anim_a2
-
-            self.mirror_sprite._animation = animations.anim_a2
+            pass
 
         
     def on_key_release(self, k, m):
@@ -98,13 +94,18 @@ class Level2_Hero(ScrollableLayer):
             self.run_l = False
             self.run_r = False
             self.sprite.image = animations.anim_a1
-        else:
-            self.sprite.image = animations.anim_i
+
+            self.mirror_sprite.image = animations.anim_a1
+        elif k == key.X:
             self.run_l = False
             self.run_r = False
-        self.sprite._animation = animations.anim_i
-
-        self.mirror_sprite._animation = animations.anim_i
+            self.sprite.image = animations.anim_a2
+            self.mirror_sprite.image = animations.anim_a2
+        else:
+            self.sprite.image = animations.anim_i
+            self.mirror_sprite.image = animations.anim_i
+            self.run_l = False
+            self.run_r = False
 
 
     def update(self, dt):
