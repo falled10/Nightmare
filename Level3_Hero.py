@@ -31,37 +31,91 @@ class Level3_Hero(ScrollableLayer):
 
     def __init__(self):
         super().__init__()
-        self.ghost = Ghost()
 
-        self.ghost.sprite.position = (500, 200)
+        self.is_dead = False
+     
+        self.run_r = False
+        self.run_l = False
+        
+    
+        
+        
+        self.life = 3
         self.sprite = Sprite(animations.anim_i)
+
+        self.can_attack = True
+
         self.sprite.position = (100, 180)
         self.sprite.scale = 2
         self.sprite.scale_x = 1
         self.sprite.velocity = (0,0)
-        self.sprite.do(Mover())
+        self.attack = False
+        self.flag = False
+        self.x_y = 0
         
         self.add(self.sprite)
-        self.add(self.ghost)
         self.pressed = defaultdict(int)
         self.schedule(self.update)
 
-    def on_key_press(self, k, m):
-        print(k)
+    
+    
+    def get_flag(self, enemy):
+        if enemy.flag:
+                if enemy.lifes != 0:
+                    enemy.lifes -= 1
+                    print('Enemy lifes: ', enemy.lifes)
+                    
+                else:
+                    enemy.sprite.position = (10000, -1000)
+                    enemy.visible = False
+                    print('emeny`s dead')
 
+    '''
+    we can`t attack or block and run in the same time 
+    '''
+    def on_key_press(self, k, m):
         if k == 65361:
-            self.sprite.scale_x = -1
-            self.sprite._animation = animations.anim_r
+            if not self.is_dead:
+                self.run_l = True
+                self.sprite.scale_x = -1
+                self.sprite.image = animations.anim_r
 
         if k == 65363:
-            self.sprite.scale_x = 1
-            self.sprite._animation = animations.anim_r
+            if not self.is_dead:
+                self.run_r = True
+                self.sprite.scale_x = 1
+                self.sprite.image = animations.anim_r
+
+        if k == key.B:
+            if not self.is_dead:
+                self.sprite.image = animations.anim_b
 
         if k == key.Z:
-            self.sprite._animation = animations.anim_a1
-            
+            if not self.is_dead:
+                pass
+                '''
+                get flag add logic for our hero`s hit, when our hero attacks enemy
+                enemy lost his 1 or more lifes
+                if enemy has 0 lifes his position equals (10000, -1000) and his visible = False
+                '''
+               
+        
     def on_key_release(self, k, m):
-        self.sprite._animation = animations.anim_i
+        if k == key.B:
+            if not self.is_dead:
+                self.sprite.image = animations.anim_b
+                self.run_l = False
+                self.run_r = False
+
+        if k == key.Z:
+            if not self.is_dead:
+                self.run_l = False
+                self.run_r = False
+                self.sprite.image = animations.anim_a1
+        else:
+            self.sprite.image = animations.anim_i
+            self.run_l = False
+            self.run_r = False
 
 
     def ghost_action(self, position, enemy, speed):
