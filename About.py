@@ -12,7 +12,7 @@ from cocos.text import *
 import Sound
 from cocos.actions import *
 from pyglet.window import key
-import fonts
+
 
 
 
@@ -68,9 +68,13 @@ class AboutScene(Scene):
         self.add(i)
 
         
-        label = Label('Hello', font_name = 'Creepster', bold = True,  font_size =50, color = (0,255,0, 255))
+        label = Label('Hello', font_name = 'KreepTown', bold = True,  font_size =50, color = (0,255,0, 255))
         label.position = (200,200)
         self.add(label)
+
+        manage = Label("xxxxxx", font_name = 'KreepTown', font_size = 30, bold = True, color = (0, 255, 0, 255))
+        manage.position = (60,560)
+        self.add(manage)
     
       
 def get_about():

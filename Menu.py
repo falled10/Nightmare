@@ -16,7 +16,7 @@ class MainMenu(Menu):
 
         # TITLE   
         self.font_title = {
-            'font_name': 'Arial Black',
+            'font_name': 'Peace Sans',
             'font_size': 60,
             'color': (255, 69, 0, 255),
             'bold': True,

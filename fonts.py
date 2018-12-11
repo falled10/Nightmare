@@ -2,6 +2,6 @@ import pyglet
 from pyglet import font     
         
 
-font.add_file('res/fonts/Creepster-Regular.ttf')
-font.add_file('res/fonts/KreepTown.otf') # norm
-font.add_file('res/fonts/Foul Fiend.ttf') #1
+
+font.add_file('res/fonts/peace_sans.otf') #Peace Sans
+font.add_file('res/fonts/peace_sans.otf')

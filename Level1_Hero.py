@@ -49,20 +49,14 @@ class Level1_Hero(ScrollableLayer):
         self.blue_wolf3 = BlueWolf()
         self.hell_beast = HellBeast()
         self.ball = self.hell_beast.fire_ball
-        self.hell_beast.sprite.position = (500, 200)
+        self.hell_beast.sprite.position = (1500, 200)
         self.blue_wolf3.sprite.position = (1350, 160)
         self.white_wolf2.sprite.position = (1300, 160)
         self.blue_wolf2.sprite.position = (1100, 160)
         #----------------------------------------------------------------------
         
 
-        #SwordSound
-        global SwordLoops, SwordAudio, PlayerForSwordSound
-        SwordAudio = pyglet.media.load('res/audio/str1.wav')
-        SwordLoops=pyglet.media.SourceGroup(SwordAudio.audio_format, None)
-        PlayerForSwordSound=pyglet.media.Player()
-        SwordLoops.queue(SwordAudio)
-        SwordLoops.loop = True
+     
         #------------------------------------------------------------------
         
         self.life = 3
@@ -135,10 +129,7 @@ class Level1_Hero(ScrollableLayer):
             self.sprite.image = animations.anim_b
 
         if k == key.Z:
-            #SwordSound
-            SwordLoops.loop=True
-            PlayerForSwordSound.queue(SwordLoops)
-            # PlayerForSwordSound.play()
+            
 
             #------------------------------------------------------------------ 
             self.get_flag(self.white_wolf)
@@ -156,8 +147,7 @@ class Level1_Hero(ScrollableLayer):
             self.run_r = False
 
         if k == key.Z:
-             #SwordSound
-            SwordLoops.loop=False
+            
             #------------------------------------------------------------------ 
             self.run_l = False
             self.run_r = False
@@ -317,13 +307,7 @@ class Level1_Hero(ScrollableLayer):
             director.push(ZoomTransition(GameOver.get_gameover(1)))
             self.kill()
 
-"""
-    def SwordSoundMute():
-        if(PlayerForSwordSound.volume==1.0):
-            PlayerForSwordSound.volume=0.0
-        elif(PlayerForSwordSound.volume==0.0):
-            PlayerForSwordSound.volume=1.0
-"""        
+   
             
            
       

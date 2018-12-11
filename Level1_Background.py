@@ -45,25 +45,9 @@ class Level1_Background(ScrollableLayer):
             
          if k == key.M:
              Sound.mute_volume(0)
-             Level1_Hero.SwordSoundMute()
+             
     
-        
-"""
-class Hearts(ScrollableLayer):
-    is_event_handler = True  #: enable director.window events
 
-    def __init__(self):
-        super(Hearts, self).__init__()
-        c = director.get_window_size()
-        heart = Sprite('res/maps/heart.png')
-        print(director.window.width)
-        heart.position
-        heart._set_y(400)
-
-        
-
-        self.add(heart)
-"""
 
 
 def get_newgame():
@@ -72,12 +56,12 @@ def get_newgame():
     bg_layer = Level1_Background()
     hero = Level1_Hero()
     wolf = WhiteWolf()
-    #heart = Hearts()
+    
     
     Sound.play("res/audio/Level1.mp3")
 
     scroller_1.add(bg_layer)
-    #scroller_1.add(heart)
+   
     scroller_1.add(hero)
     
     
