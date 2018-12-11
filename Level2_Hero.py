@@ -15,6 +15,9 @@ from Hearts import Hearts
 import animations
 from Level1_Monsters import *
 from Level2_Monsters import *
+from Level2_Monsters import *
+import GameOver
+
 
 director.window.pop_handlers()
 keyboard = key.KeyStateHandler()
@@ -27,6 +30,8 @@ class Level2_Hero(ScrollableLayer):
 
     def __init__(self):
         super().__init__()
+        
+        
          #Hearts---------------------------------------------------------------
         self.is_dead = False
         self.heart1 = Hearts()
@@ -58,7 +63,9 @@ class Level2_Hero(ScrollableLayer):
         self.ball = self.hell_beast.fire_ball
         self.ball_f = self.hell_fire_beast.fire_ball  
         #------------------------------------------------------------------------
-
+        
+        #Skeleton
+        self.skeleton = GreenSkeleton()
 
         #FirstStack---------------------------------------------------------------
 
@@ -92,12 +99,15 @@ class Level2_Hero(ScrollableLayer):
         #fourth
         self.nightmare_2.sprite.position = (2100,420)
         self.nightmare_2.sprite.color = (0,255,0)
+        self.skeleton.sprite.position = (400, 420)
+        self.skeleton.sprite.scale = 2
+        self.skeleton.sprite.scale_x = -1
         
 
         #--------------------------------------------------------------------------
         self.run_r = False
         self.run_l = False
-
+        self.attacks = False
         self.run_r = False
         self.run_l = False
         self.life = 3
@@ -139,7 +149,7 @@ class Level2_Hero(ScrollableLayer):
 
         #FourthStack
         self.add(self.nightmare_2)
-
+        self.add(self.skeleton)
         #Hearts
         self.add(self.heart1)
         self.add(self.heart2)
@@ -172,6 +182,18 @@ class Level2_Hero(ScrollableLayer):
                     enemy.sprite.position = (10000, -1000)
                     enemy.visible = False
                     print('emeny`s dead')
+
+    def get_skeleton_flag(self, enemy):
+        if not enemy.first_death:
+            if enemy.flag:
+                    if enemy.lifes != 0:
+                        enemy.lifes -= 1
+                        print('Enemy lifes: ', enemy.lifes)
+                        
+                    else:
+                        enemy.sprite.position = (10000, -1000)
+                        enemy.visible = False
+                        print('emeny`s dead')
     '''
     we can`t attack or block and run in the same time 
     '''
@@ -184,6 +206,11 @@ class Level2_Hero(ScrollableLayer):
 
                 self.mirror_sprite.scale_x = 1
                 self.mirror_sprite.image = animations.anim_r
+
+        if k == key.B:
+            if not self.is_dead:
+                self.sprite.image = animations.anim_b
+
 
         if k == 65363:
             if not self.is_dead:
@@ -215,20 +242,19 @@ class Level2_Hero(ScrollableLayer):
 
                 #FourthStack
                 self.get_flag(self.nightmare_2)
-               
+                self.get_skeleton_flag(self.skeleton)
                 '''
                 get flag add logic for our hero`s hit, when our hero attacks enemy
                 enemy lost his 1 or more lifes
                 if enemy has 0 lifes his position equals (10000, -1000) and his visible = False
                 '''
-
         if k == key.X:
             if not self.is_dead:
                 #FirstStack
                 self.get_flag(self.green_hound_1)
                 self.get_flag(self.green_hound_2)
                 self.get_fire(self.hell_beast) 
-
+                
                 #SecondStack
                 self.get_flag(self.red_hound_1)
                 self.get_flag(self.red_hound_2)
@@ -239,7 +265,7 @@ class Level2_Hero(ScrollableLayer):
 
                 #FourthStack
                 self.get_flag(self.nightmare_2)
-
+                self.get_skeleton_flag(self.skeleton)
                 '''
                 get flag add logic for our hero`s hit, when our hero attacks enemy
                 enemy lost his 1 or more lifes
@@ -457,7 +483,83 @@ class Level2_Hero(ScrollableLayer):
                 self.life -= 1
                     
                 print(self.life)
+    def skeleton_action(self, position, enemy, speed, l, r):
+        
+        x, y = self.sprite.position
+        asdf = x
+        w_x, w_y = enemy.sprite.position
+        if x <120:
+            w_y = 390
+            self.is_dead = False
+        
+        if self.sprite.image == animations.anim_b and (w_x - x) <= 40 and (w_x - x) >= 0:
+            enemy.sprite.position = (w_x+180, w_y)
+            w_x += 180
+
+
+        if self.sprite.image == animations.anim_b and (w_x - x) <= 0 and (w_x - x) >= -40:
+            enemy.sprite.position = (w_x-180, w_y)
+            w_x -= 180
+    
+
+        if enemy.lifes < 3:
+            enemy.first_death = True
+            enemy.sprite._animation = enemy.get_death()
+            if (w_x - x) > 200 or (w_x - x) < -200:
+                enemy.can_reinc = True
+                
+        if enemy.can_reinc:
+            enemy.first_death = False
+            enemy.sprite._animation = enemy.anim   
+
+        if not enemy.first_death:
+            if w_y == 391 and enemy.lifes >= 0 and (w_x-x) < 50 and (w_x - x) >= -50 and not self.is_dead:
+                self.is_dead = True
+                self.sprite.do(FadeOut(1) + MoveTo((100, 410), 1) + FadeIn(1))
+                self.mirror_sprite.do(FadeOut(1) + MoveTo((100, 320), 1) + FadeIn(1))
+                self.life -= 2
+                print(self.life)
+
+            if not self.is_dead:
+                if (w_x - x) < position and (w_x - x) >= 0:
+                    if (w_x-x) < 50 and (w_x - x) >= 0:
+                        
+                        enemy.flag = True
+                        enemy.sprite._animation = enemy.get_attack()
+                        enemy.sprite.do(Delay(0.8) + MoveTo((w_x, w_y+1), 0))
+                        
+                    else:
+                        enemy.flag = False
+                        enemy.sprite.scale_x = -1
+                        enemy.sprite._animation = enemy.get_walk()
+                        enemy.sprite.scale = 2
+                        enemy.sprite.position = (w_x - speed, 390)
+
+                elif (w_x - x) <= 0 and (w_x - x) > -position:
+                    if (w_x-x) > -50 and (w_x - x) <= 0:
+                        enemy.flag = True
+                        enemy.sprite._animation = enemy.get_attack()
+                        enemy.sprite.do(Delay(0.8) + MoveTo((w_x, w_y+1), 0))
+                    else:
+                        enemy.sprite.scale_x = 1
+                        enemy.sprite._animation = enemy.get_walk()
+                        enemy.sprite.scale = 2
+                        enemy.sprite.position = (w_x + speed, 390)
+                    
+                else:
+                    enemy.flag = False
+                    enemy.sprite.position = (w_x, 410)
+                    enemy.sprite._animation = enemy.anim
+
+                
+
+
     def update(self, dt):
+        if self.life == 0:
+            self.life = 3
+            director.push(ZoomTransition(GameOver.get_gameover(2)))
+            self.kill()
+        self.skeleton_action(200, self.skeleton, 1, -1, 1)
         x,y = self.sprite.position
         xm, ym = self.mirror_sprite.position
         self.heart1.position = (x-20, y+40)
@@ -476,8 +578,8 @@ class Level2_Hero(ScrollableLayer):
         #self.beast_action(300,self.hell_beast, self.ball)
 
         #xz
-        #self.wolf_action(200, self.nightmare_1, 3, -1, 1)
-        self.beast_action(300, self.hell_fire_beast, self.ball_f)
+        self.skeleton_action(200, self.skeleton, 1, -1,1)
+       # self.beast_action(300, self.hell_fire_beast, self.ball_f)
 
         if self.life == 0:
             import GameOver
