@@ -31,6 +31,8 @@ class Level3_Hero(ScrollableLayer):
 
     def __init__(self):
         super().__init__()
+        self.ghost = Ghost()
+        self.ghost.sprite.position = (500, 200)
 
         self.is_dead = False
      
@@ -44,7 +46,7 @@ class Level3_Hero(ScrollableLayer):
         self.sprite = Sprite(animations.anim_i)
 
         self.can_attack = True
-
+        
         self.sprite.position = (100, 180)
         self.sprite.scale = 2
         self.sprite.scale_x = 1
@@ -53,6 +55,7 @@ class Level3_Hero(ScrollableLayer):
         self.flag = False
         self.x_y = 0
         
+        self.add(self.ghost)
         self.add(self.sprite)
         self.pressed = defaultdict(int)
         self.schedule(self.update)
@@ -119,16 +122,74 @@ class Level3_Hero(ScrollableLayer):
 
 
     def ghost_action(self, position, enemy, speed):
+
+        if enemy.lifes == 0:
+            enemy.sprite.position = (10000, -1000)
+            enemy.visible = False
+
+        if self.sprite.position[0] < 120:
+            self.is_dead = False
+            self.can_attack = True
+        
         g_x, g_y = enemy.sprite.position
         x, y = self.sprite.position
 
-        if (g_x - x) < position and (g_x - x) > 0:
-            enemy.sprite.position = (g_x - speed, g_y)
-        elif (g_x - x) <= 0:
-            self.sprite.scale_x = -1
-            enemy.sprite.position = (g_x + speed, g_y)
+        
+        '''
+        enemy start move when we are in radius of enemy vision front or behind us
+        '''
+        if not self.is_dead:
+            if (g_x - x) < position and (g_x - x) > 0:
+                if (g_x - x) < 40 and self.sprite.image == animations.anim_a1:
+                    enemy.lifes -=1
+                    print('Enemy lifes: ', enemy.lifes)
+                    enemy.can_action = False
+                    enemy.sprite._animation = enemy.get_vanish()
+                    enemy.sprite.position = (g_x - 200, g_y)
+                    enemy.flag = False
+                elif (g_x - x) < 20:
+                    enemy.sprite._animation = enemy.get_shriek()
+                    self.life -= 1
+                    self.is_dead = True
+                    self.sprite.do(ac.FadeOut(1) + ac.MoveTo((100, 180), 1) + ac.FadeIn(1))
+                    print(self.life)
+                else:
+                    enemy.sprite._animation = enemy.anim
+                    enemy.sprite.scale_x = 1
+                    enemy.sprite.position = (g_x - speed, g_y)
+                
+            elif (g_x - x) <= 0 and (g_x - x) > -position:
+                if (g_x - x) > -40 and self.sprite.image == animations.anim_a1:
+                    enemy.lifes -= 1
+                    print('Enemy lifes: ', enemy.lifes)
+                    enemy.sprite._animation = enemy.get_vanish()
+                    enemy.sprite.position = (g_x + 200, g_y)
+                    enemy.flag = False
+                elif (g_x - x) > -20:
+                    enemy.sprite._animation = enemy.get_shriek()   
+                    self.life -= 1
+                    self.is_dead = True
+                    self.sprite.do(ac.FadeOut(1) + ac.MoveTo((100, 180), 1) + ac.FadeIn(1))
+                    
+                    print(self.life)
+                else:
+                    enemy.sprite._animation = enemy.anim
+                    enemy.sprite.scale_x = -1
+                    enemy.sprite.position = (g_x + speed, g_y)
+
+
+        
+        
+        
 
 
     def update(self, dt):
-        self.ghost_action(300,self.ghost, 3)
+        
+        x, y = self.sprite.position
+        self.ghost_action(200,self.ghost, 3)
+        if self.run_l:
+            self.sprite.position = (x - 3, y)
+        elif self.run_r:
+            self.sprite.position = (x + 3, y)
+        Level3_Background.scroller_3.set_focus(self.sprite.position[0], self.sprite.position[1])
        
