@@ -43,3 +43,4 @@ img_grid_b = image.ImageGrid(img_b, 3, 1, item_width=50, item_height=37)
 anim_b = image.Animation.from_image_sequence(img_grid_b[0:], 0.3, loop=True)
 
 #------------------------------------------------------------------
+
