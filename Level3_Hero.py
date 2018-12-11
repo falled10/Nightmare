@@ -11,6 +11,7 @@ from cocos.sprite import Sprite
 import Level3_Background
 from cocos.scene import Scene
 from cocos.scenes.transitions import *
+from Level3_Monsters import *
 
 
 director.window.pop_handlers()
@@ -29,6 +30,8 @@ class Level3_Hero(ScrollableLayer):
 
     def __init__(self):
         super().__init__()
+        self.ghost = Ghost()
+
         #run right --------------------------------------------------
         self.img_r = image.load('res/animation/run/adventurer-run3-sword-Sheet.png')
         self.img_grid_r = image.ImageGrid(self.img_r, 1, 6, item_width=50, item_height=37 )
@@ -36,7 +39,7 @@ class Level3_Hero(ScrollableLayer):
         # ----------------------------------------------------------
         
         #attack1
-        self.img_a1 = image.load('res/animation/attack1/Attacksheet.png')
+        self.img_a1 = image.load('res/animation/attack1/attack1sheet.png')
         self.img_grid_a1 = image.ImageGrid(self.img_a1, 1, 5, item_width=50, item_height=37 )
         self.anim_a1 = image.Animation.from_image_sequence(self.img_grid_a1[0:], 0.1, loop=True)
         #_-----------------------------------------------------------------
@@ -47,17 +50,16 @@ class Level3_Hero(ScrollableLayer):
         self.anim_i = image.Animation.from_image_sequence(self.img_grid_i[0:], 0.3, loop=True)
         #_-----------------------------------------------------------------
 
-
+        self.ghost.sprite.position = (500, 200)
         self.sprite = Sprite(self.anim_i)
         self.sprite.position = (100, 180)
         self.sprite.scale = 2
         self.sprite.scale_x = 1
         self.sprite.velocity = (0,0)
-        
         self.sprite.do(Mover())
         
         self.add(self.sprite)
-        
+        self.add(self.ghost)
         self.pressed = defaultdict(int)
         self.schedule(self.update)
 
@@ -79,6 +81,17 @@ class Level3_Hero(ScrollableLayer):
         self.sprite._animation = self.anim_i
 
 
+    def ghost_action(self, position, enemy, speed):
+        g_x, g_y = enemy.sprite.position
+        x, y = self.sprite.position
+
+        if (g_x - x) < position and (g_x - x) > 0:
+            enemy.sprite.position = (g_x - speed, g_y)
+        elif (g_x - x) <= 0:
+            self.sprite.scale_x = -1
+            enemy.sprite.position = (g_x + speed, g_y)
+
+
     def update(self, dt):
-        pass
+        self.ghost_action(300,self.ghost, 3)
        
