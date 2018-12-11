@@ -120,7 +120,9 @@ class Level1_Hero(ScrollableLayer):
                     enemy.visible = False
                     print('emeny`s dead')
 
-    
+    '''
+    we can`t attack or block and run in the same time 
+    '''
     def on_key_press(self, k, m):
         if k == 65361:
             if not self.is_dead:
@@ -146,12 +148,19 @@ class Level1_Hero(ScrollableLayer):
                 # PlayerForSwordSound.play()
 
                 #------------------------------------------------------------------ 
+
+                '''
+                get flag add logic for our hero`s hit, when our hero attacks enemy
+                enemy lost his 1 or more lifes
+                if enemy has 0 lifes his position equals (10000, -1000) and his visible = False
+                '''
                 self.get_flag(self.white_wolf)
                 self.get_flag(self.blue_wolf)
                 self.get_flag(self.blue_wolf2)
                 self.get_flag(self.hell_hound)
                 self.get_flag(self.white_wolf2)
                 self.get_flag(self.blue_wolf3)
+                # get fire is just like get flag but for beast enemy
                 self.get_fire(self.hell_beast)
         
     def on_key_release(self, k, m):
@@ -179,18 +188,26 @@ class Level1_Hero(ScrollableLayer):
         x, y = self.sprite.position
         b_x, b_y = enemy.sprite.position
         
+        '''
+        when our hero is in start of level then is dead = false
+        and he can be attack
+        '''
         if self.sprite.position[0] < 120:
             self.is_dead = False
             self.can_attack = True
 
+        # when fire ball is too far from enemy then he turn back to enemy
         if fire_ball.position[0] < (b_x - 400):
             fire_ball.position = (b_x, b_y)
 
             fire_ball.visible = False
+        # if our hero is too far from enemy then flag = false
         if (b_x - x) > 300:
             self.flag = False
 
-        
+        '''
+        when our flag = true we start move back from enemy until flag = false
+        '''
         if self.flag:
             self.sprite.position = x - 5, y
         if (b_x - x) < position:
@@ -200,6 +217,7 @@ class Level1_Hero(ScrollableLayer):
 
                 elif self.can_attack:
                     self.can_attack = False
+                    # logic for visible heart
                     if(self.life == 3):
                         self.sprite.do(FadeOut(2) + MoveTo((100, 180), 2) + FadeIn(1))
                         self.heart1.sprite.visible = True
@@ -219,11 +237,18 @@ class Level1_Hero(ScrollableLayer):
                         
                         self.sprite.do(FadeOut(1) + MoveTo((100, 180), 1) + FadeIn(1))
                         print("dead 0")
+                    '''
+                    when enemy attacks our hero, our hero lost his 1 lifes and flag is_dead = True
+                    is_dead needs for logic when we dead our enemies stop they actions
+                    '''
                     self.is_dead = True
                     self.life -= 1
                     
                     print(self.life)
-                    
+            '''
+            when our hero is not in radius visible beast, beast`s ball is not visible
+            when enemy starts attack fire ball is visible 
+            '''       
             fire_ball.visible = True
             if fire_ball.position[0] == b_x:
                 enemy.ball_action = True
@@ -233,13 +258,21 @@ class Level1_Hero(ScrollableLayer):
             else: 
                 enemy.ball_action = False
             
-
+            '''
+            ball action is true when our hero is in visible of enemy
+            when ball action is true ball start move by 500 pixels in 1 seconds
+            '''
             if enemy.ball_action:
                 
                 enemy.sprite.scale = 1.5
                 enemy.sprite.image = enemy.get_attack_animation()
                 fire_ball.do(MoveBy((-1,0), 0.6) + MoveBy((-500, 0), 1))
                 fire_ball.visible = True
+            '''
+            when our hero is in visible of enemy and if our hero starts attack beast
+            beast start burn and our hero move out of enemy
+            self.flag means that we can attack our enemy
+            '''
             if (b_x - x) < 300:
                 if self.sprite.image == animations.anim_a1 and (b_x - x) < 100:
                     
@@ -270,9 +303,20 @@ class Level1_Hero(ScrollableLayer):
         self.x_y = self.sprite.position[0]
         x, y = self.sprite.position
         w_x, w_y = enemy.sprite.position
+        '''
+        when our hero is in start of level then is dead = false
+        and he can be attack
+        '''
         if self.sprite.position[0] < 120:
             self.is_dead = False
             self.can_attack = True
+
+        '''
+        if enemy`s visible is not false he can do his actions
+        and if our hero is not dead
+        enemy start move to our hero when he is in visible of enemy
+        and stop moving and attack when our hero die
+        '''
         if enemy.sprite.visible  is not False:
             if not self.is_dead:
                 if (w_x-self.x_y) < position and (w_x-self.x_y) > 0:
@@ -282,15 +326,22 @@ class Level1_Hero(ScrollableLayer):
                 elif (w_x-self.x_y) <= 0:
                     enemy.sprite.scale_x = r     
                     enemy.sprite.position = (w_x + speed, w_y)
+                '''
+                when our hero makes block, enemy move away from hero by 100px
+                '''
                 if self.sprite.image == animations.anim_b and (w_x - x) <= 40 and (w_x - x) >= 0:
                     enemy.sprite.position = (w_x+100, w_y)
                 if self.sprite.image == animations.anim_b and (w_x - x) <= 0 and (w_x - x) >= -40:
                     enemy.sprite.position = (w_x-100, w_y)
-
+            
             if (w_x - self.x_y) <= 80 and (w_x - self.x_y) >= -80:
                 enemy.flag = True
             elif (w_x - self.x_y) > 80 or (w_x - self.x_y) < -80:
                 enemy.flag = False
+            '''
+            if our hero can be attack and if enemy is too close to our hero
+            then hero lost his 1 lifes and move to start level
+            '''
             if (w_x - self.x_y) <= 10 and (w_x - self.x_y) >= 0 and self.can_attack:
                 enemy.sprite.image = enemy.anim
                 self.x_y = self.sprite.position[0]
