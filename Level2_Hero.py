@@ -134,14 +134,13 @@ class Level2_Hero(ScrollableLayer):
         self.mirror_sprite.scale_x = -1
         self.mirror_sprite.velocity = (0,0)
         
-        #first stack ------------------------------------------------
-        self.ball_f.visible = False
-        self.ball.visible = False
+        
         #FirstStack
         self.add(self.green_hound_1)
         self.add(self.green_hound_2)
         self.add(self.hell_beast)
         self.add(self.ball)
+        self.ball.visible = False
 
         #SecondStack
         self.add(self.red_hound_1)
@@ -151,6 +150,7 @@ class Level2_Hero(ScrollableLayer):
         self.add(self.nightmare_1)
         self.add(self.hell_fire_beast)
         self.add(self.ball_f)
+        self.ball_f.visible = False
 
         #FourthStack
         self.add(self.nightmare_2)

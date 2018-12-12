@@ -21,8 +21,8 @@ class About(Menu):
         super(About, self).__init__()
 
         # ITEM SELECTED
-        self.font_item_selected['font_name'] = 'Motion Control'
-        self.font_item_selected['color'] = (10, 165, 85, 255)
+        self.font_item_selected['font_name'] = 'Roboto'
+        self.font_item_selected['color'] = (230,80,145,225)
         self.font_title['bold'] = True
         self.font_item_selected['font_size'] = 35
 
@@ -48,19 +48,19 @@ class AboutScene(Scene):
         bg.position = bg.width // 2, bg.height // 2
         self.add(bg)
 
-        title = Label("Над грою працювали: ", font_size = 40,bold = True, color = (10, 165, 85, 255))
+        title = Label("Над грою працювали: ",font_name='Roboto', font_size = 40,bold = True, color = (230,80,145,225))
         title.position = (120, 450)
         self.add(title)
 
-        y = Label("Кулик Юрій", font_size = 35,bold = True, color = (10, 165, 85, 255))
+        y = Label("Кулик Юрій",font_name='Roboto', font_size = 35,bold = True, color = (230,80,145,225))
         y.position = (260, 380)
         self.add(y)
 
-        o = Label("Андріїв Олег", font_size = 35,bold = True, color = (10, 165, 85, 255))
+        o = Label("Андріїв Олег",font_name='Roboto', font_size = 35,bold = True, color = (230,80,145,225))
         o.position = (260, 310)
         self.add(o)
 
-        i = Label("Перегінець Іван", font_size = 35,bold = True, color = (10, 165, 85, 255))
+        i = Label("Перегінець Іван",font_name='Roboto', font_size = 35,bold = True, color = (230,80,145,225))
         i.position = (260, 240)
         self.add(i)
 
