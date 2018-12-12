@@ -13,6 +13,7 @@ class SimpleWolf(ScrollableLayer):
         self.img_grid = pyglet.image.ImageGrid(self.img, 1, 4, item_width=54, item_height=31)
         self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[3:4], 0.2, loop=True)
         self.lifes = 1  
+        self.l = 1
         self.flag = False
         self.sprite = Sprite(self.anim)
         self.sprite.scale = 1.4
@@ -38,6 +39,7 @@ class MiddleWolf(ScrollableLayer):
         self.img_grid = pyglet.image.ImageGrid(self.img, 1, 4, item_width=54, item_height=31)
         self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[1:2], 0.2, loop=True)
         self.lifes = 2
+        self.l = 2
         self.flag = False
         self.sprite = Sprite(self.anim)
         self.sprite.scale = 1.4
@@ -63,6 +65,7 @@ class HellHound(ScrollableLayer):
         self.img_grid_i = pyglet.image.ImageGrid(self.img_i, 1, 6, item_width=64, item_height=31)
         self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid_i[0:], 0.2, loop=True)
         self.lifes = 2
+        self.l = 2
         self.flag = False
         self.sprite = Sprite(self.anim)
         self.sprite.scale = 1.8
@@ -97,6 +100,7 @@ class HellBeast(ScrollableLayer):
         self.img_grid_i = pyglet.image.ImageGrid(self.img_i, 1, 6, item_width=55, item_height=67)
         self.anim_i = pyglet.image.Animation.from_image_sequence(self.img_grid_i[0:], 0.2, loop=True)
         self.lifes = 3
+        self.l = 3
         self.flag = False
         self.sprite = Sprite(self.anim_i)
         self.sprite.position = (1200, 200)

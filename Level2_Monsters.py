@@ -19,6 +19,7 @@ class HellFireBeast(ScrollableLayer):
         self.img_grid_i = pyglet.image.ImageGrid(self.img_i, 1, 6, item_width=55, item_height=67)
         self.anim_i = pyglet.image.Animation.from_image_sequence(self.img_grid_i[0:], 0.2, loop=True)
         self.lifes = 2
+        self.l = 2
         self.flag = False
         self.sprite = Sprite(self.anim_i)
         self.sprite.position = (1200, 200)
@@ -51,6 +52,7 @@ class Nightmare(ScrollableLayer):
         self.img_grid_i = pyglet.image.ImageGrid(self.img_i, 1, 4, item_width=128, item_height=96)
         self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid_i[0:], 0.2, loop=True)
         self.lifes = 3
+        self.l = 3
         self.flag = False
         self.sprite = Sprite(self.anim)
         self.sprite.scale = 1
@@ -74,7 +76,8 @@ class GreenSkeleton(ScrollableLayer):
         self.img = pyglet.image.load('res/animation/level2_monsters/Undead Sprite Pack/SHEETS/undead_idle_sheet.png')
         self.img_grid = pyglet.image.ImageGrid(self.img, 1, 18, item_width=48, item_height=32)
         self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[0:], 0.1, loop=True)
-        self.lifes = 5
+        self.lifes = 7
+        self.l = 7
         self.first_death = False
         self.can_reinc = False
         self.flag = False

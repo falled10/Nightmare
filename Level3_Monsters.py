@@ -22,6 +22,7 @@ class Ghost(ScrollableLayer):
         self.img_grid = pyglet.image.ImageGrid(self.img, 1, 7, item_width=64, item_height=80)
         self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[0:], 0.2, loop=True)
         self.lifes = 5 
+        self.l = 5
         self.flag = False
         self.sprite = Sprite(self.anim)
         self.sprite.scale = 1.4
@@ -48,4 +49,27 @@ class Ghost(ScrollableLayer):
         img = pyglet.image.load('res/animation/level3_monsters/ghost/ghost-shriek.png')
         img_grid = pyglet.image.ImageGrid(img, 1, 4, item_width=64, item_height=80 )
         anim = pyglet.image.Animation.from_image_sequence(img_grid[0:], 0.2, loop=True)
+        return anim
+
+
+class DemonBoss(ScrollableLayer):
+    def __init__(self):
+        super(DemonBoss, self).__init__()
+        self.img = pyglet.image.load('res/animation/level3_monsters/demon boss/demon-idle.png')
+        self.img_grid = pyglet.image.ImageGrid(self.img, 1, 6, item_width=160, item_height=144)
+        self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[0:], 0.1, loop=True)
+        self.lifes = 5 
+        self.flag = False
+        self.sprite = Sprite(self.anim)
+        self.sprite.scale = 1.4
+        self.x = 0
+        self.can_attack = False
+        self.can_action = True
+        self.add(self.sprite)
+
+
+    def get_attack(self):
+        img = pyglet.image.load('res/animation/level3_monsters/demon boss/demon-attack.png')
+        img_grid = pyglet.image.ImageGrid(img, 1, 11, item_width=240, item_height=192 )
+        anim = pyglet.image.Animation.from_image_sequence(img_grid[0:], 0.1, loop=True)
         return anim

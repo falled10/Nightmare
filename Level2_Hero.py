@@ -508,7 +508,7 @@ class Level2_Hero(ScrollableLayer):
             w_x -= 180
     
 
-        if enemy.lifes < 3:
+        if enemy.lifes < 4:
             enemy.first_death = True
             enemy.sprite._animation = enemy.get_death()
             if (w_x - x) > 200 or (w_x - x) < -200:

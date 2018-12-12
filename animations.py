@@ -24,7 +24,7 @@ anim_a2 = image.Animation.from_image_sequence(img_grid_a2[::-1], 0.05, loop=Fals
 #attack3
 img_a3 = image.load('res/animation/attack3/attack3sheet.png')
 img_grid_a3 = image.ImageGrid(img_a3, 6, 1, item_width=50, item_height=37)
-anim_a3 = image.Animation.from_image_sequence(img_grid_a3[::-1], 0.1, loop=True)
+anim_a3 = image.Animation.from_image_sequence(img_grid_a3[::-1], 0.1, loop=False)
 #-------------------------------------------------------------------
 
 # idle
