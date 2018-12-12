@@ -452,6 +452,8 @@ class Level3_Hero(ScrollableLayer):
         #check if hero is in radius view of boss
         if (b_x - x) < 80:
             enemy.flag = True
+        if (b_x - x) < 80:
+            
             self.boss_flag = True
             
         elif (b_x - x) > position:

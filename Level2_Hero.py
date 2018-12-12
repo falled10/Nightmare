@@ -126,6 +126,7 @@ class Level2_Hero(ScrollableLayer):
         self.attack = False
         self.flag = False
         self.x_y = 0
+        self.sprite.color = (0, 0, 0)
 
         self.mirror_sprite = Sprite(animations.anim_i)
         self.mirror_sprite.position = (100, 320)
