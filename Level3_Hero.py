@@ -22,112 +22,107 @@ director.window.pop_handlers()
 keyboard = key.KeyStateHandler()
 director.window.push_handlers(keyboard)
 
-class Mover(Move):
-    def step(self,dt):
-        super().step(dt)
-        vel_x = (keyboard[key.RIGHT] - keyboard[key.LEFT]) * 180
-        self.target.velocity = (vel_x, 0)
-        Level3_Background.scroller_3.set_focus(self.target.x, self.target.y)
-
 class Level3_Hero(ScrollableLayer):
     is_event_handler = True
 
     def __init__(self):
         super().__init__()
         self.axe_skeleton = AxeSkeleton()
-        self.axe_skeleton.sprite.position = (300, 180)
+        self.axe_skeleton.sprite.position = (30000, 180)
         self.axe_skeleton.sprite.scale = 3
         self.add(self.axe_skeleton)
 
 
 
         # boss monsters --------------------------------
-        self.ghost_1 = Ghost()
-        self.ghost_1.sprite.visible = False
-        self.add(self.ghost_1)
+        self.axe_skeleton_b = AxeSkeleton()
+        self.axe_skeleton_b.sprite.visible = False
+        self.axe_skeleton_b .sprite.scale = 3
+        self.add(self.axe_skeleton_b )
 
-        self.skeleton = GreenSkeleton()
-        self.skeleton.sprite.visible = False
-        self.add(self.skeleton)
+        self.ghost_b = Ghost()
+        self.ghost_b.sprite.visible = False
+        self.add(self.ghost_b)
 
-        self.blue_wolf = MiddleWolf()
-        self.blue_wolf.sprite.visible = False
-        self.add(self.blue_wolf)
+        self.blue_wolf_b = MiddleWolf()
+        self.blue_wolf_b.sprite.visible = False
+        self.add(self.blue_wolf_b)
 
-        self.hell_hound = HellHound()
-        self.hell_hound.sprite.visible = False
-        self.add(self.hell_hound)
+        self.hell_hound_b = HellHound()
+        self.hell_hound_b.sprite.visible = False
+        self.add(self.hell_hound_b)
 
-        self.green_hound = HellHound()
-        self.green_hound.sprite.color = (0,255,0)
-        self.green_hound.lifes = 3
-        self.green_hound.l = 3
-        self.green_hound.sprite.visible = False
-        self.add(self.green_hound)
+        self.green_hound_b = HellHound()
+        self.green_hound_b.sprite.color = (0,255,0)
+        self.green_hound_b.lifes = 3
+        self.green_hound_b.l = 3
+        self.green_hound_b.sprite.visible = False
+        self.add(self.green_hound_b)
 
-        self.red_hound = HellHound()
-        self.red_hound.sprite.color = (255,0,0)
-        self.red_hound.lifes = 3
-        self.red_hound.l = 3
-        self.red_hound.sprite.visible = False
-        self.add(self.red_hound)
+        self.red_hound_b = HellHound()
+        self.red_hound_b.sprite.color = (255,0,0)
+        self.red_hound_b.lifes = 3
+        self.red_hound_b.l = 3
+        self.red_hound_b.sprite.visible = False
+        self.add(self.red_hound_b)
 
-        self.nightmare = Nightmare()
-        self.nightmare.sprite.visible = False
-        self.add(self.nightmare)
+        self.nightmare_b = Nightmare()
+        self.nightmare_b.sprite.visible = False
+        self.add(self.nightmare_b)
 
-        self.red_nightmare =Nightmare()
-        self.red_nightmare.sprite.color = (255,0,0)
-        self.red_nightmare.lifes = 4
-        self.red_nightmare.l = 4
-        self.red_nightmare.sprite.visible = False
-        self.add(self.red_nightmare)
+        self.red_nightmare_b = Nightmare()
+        self.red_nightmare_b.sprite.color = (255,0,0)
+        self.red_nightmare_b.lifes = 4
+        self.red_nightmare_b.l = 4
+        self.red_nightmare_b.sprite.visible = False
+        self.add(self.red_nightmare_b)
 
-        self.green_nightmare = Nightmare()
-        self.green_nightmare.sprite.color = (0, 255, 0)
-        self.green_nightmare.lifes = 4
-        self.green_nightmare.l = 4
-        self.green_nightmare.sprite.visible = False
-        self.add(self.green_nightmare)
+        self.green_nightmare_b = Nightmare()
+        self.green_nightmare_b.sprite.color = (0, 255, 0)
+        self.green_nightmare_b.lifes = 4
+        self.green_nightmare_b.l = 4
+        self.green_nightmare_b.sprite.visible = False
+        self.add(self.green_nightmare_b)
 
-        self.hell_beast = HellBeast()
-        self.hell_beast.sprite.visible = False
-        self.hell_ball = self.hell_beast.fire_ball
-        self.hell_ball.visible = False
-        self.add(self.hell_beast)
-        self.add(self.hell_ball)
+        self.hell_beast_b = HellBeast()
+        self.hell_beast_b.sprite.visible = False
+        self.hell_ball_b = self.hell_beast_b.fire_ball
+        self.hell_ball_b.visible = False
+        self.add(self.hell_beast_b)
+        self.add(self.hell_ball_b)
 
-        self.green_hell_beast = HellBeast()
-        self.green_hell_beast.sprite.color = (0, 255, 0)
-        self.green_hell_beast.sprite.visible = False
-        self.green_hell_beast.lifes = 3
-        self.green_hell_ball = self.hell_beast.fire_ball
-        self.green_hell_ball.color = (0, 255, 0)
-        self.green_hell_ball.visible = False
-        self.add(self.green_hell_beast)
-        self.add(self.green_hell_ball)
+        self.green_hell_beast_b = HellBeast()
+        self.green_hell_beast_b.sprite.color = (0, 255, 0)
+        self.green_hell_beast_b.sprite.visible = False
+        self.green_hell_beast_b.lifes = 3
+        self.green_hell_ball_b = self.green_hell_beast_b.fire_ball
+        self.green_hell_ball_b.color = (0, 255, 0)
+        self.green_hell_ball_b.visible = False
+        self.add(self.green_hell_beast_b)
+        self.add(self.green_hell_ball_b)
         # --------------------------------------------------------------
     
 
 
-        self.list_of_monsters = [ 
-            self.blue_wolf, 
-            self.hell_hound,
-            self.hell_beast,
-            self.red_hound,
-            self.green_hound,
-            self.nightmare,
-            self.red_nightmare,
-            self.green_nightmare,
-            self.green_hell_beast,
-            self.skeleton,
+        self.list_of_monsters = [     
+            self.axe_skeleton_b,
+            self.blue_wolf_b, 
+            self.hell_hound_b,
+            self.hell_beast_b,
+            self.red_hound_b,
+            self.green_hound_b,
+            self.nightmare_b,
+            self.red_nightmare_b,
+            self.green_nightmare_b,
+            self.green_hell_beast_b,
+            self.ghost_b,
             ]
 
         
         self.boss = DemonBoss()
-        self.boss.sprite.position = (500, 200)
+        self.boss.sprite.position = (1000, 200)
         self.ghost = Ghost()
-        self.ghost.sprite.position = (1000, 200)
+        self.ghost.sprite.position = (2000, 200)
 
         self.is_dead = False
      
@@ -142,7 +137,7 @@ class Level3_Hero(ScrollableLayer):
 
         self.can_attack = True
         
-        self.sprite.position = (100, 180)
+        self.sprite.position = (100, 210)
         self.sprite.scale = 2
         self.sprite.scale_x = 1
         self.sprite.velocity = (0,0)
@@ -216,19 +211,22 @@ class Level3_Hero(ScrollableLayer):
 
         if k == key.Z:
             if not self.is_dead:
-                self.get_skeleton_flag(self.axe_skeleton,1)
+                #BOSS    
                 self.get_flag(self.boss,1)
-                self.get_flag(self.ghost_1,1)
-                self.get_fire(self.hell_beast,1)
-                self.get_flag(self.blue_wolf,1)
-                self.get_flag(self.hell_hound,1)
-                self.get_flag(self.red_hound,1)
-                self.get_flag(self.red_nightmare,1)
-                self.get_fire(self.green_hell_beast,1)
-                self.get_flag(self.nightmare,1)
-                self.get_flag(self.green_nightmare,1)
-                self.get_flag(self.green_hound,1)
-                self.get_skeleton_flag(self.skeleton,1)
+                self.get_skeleton_flag(self.axe_skeleton_b,1)
+                self.get_flag(self.ghost_b,1)
+                self.get_flag(self.blue_wolf_b,1)
+                self.get_fire(self.hell_beast_b,1)  
+                self.get_flag(self.hell_hound_b,1)
+                self.get_flag(self.red_hound_b,1)
+                self.get_flag(self.green_hound_b,1)
+                self.get_flag(self.nightmare_b,1)
+                self.get_flag(self.red_nightmare_b,1)
+                self.get_flag(self.green_nightmare_b,1)
+                self.get_fire(self.green_hell_beast_b,1)
+               
+                
+                
                 '''
                 get flag add logic for our hero`s hit, when our hero attacks enemy
                 enemy lost his 1 or more lifes
@@ -237,34 +235,34 @@ class Level3_Hero(ScrollableLayer):
 
         if k == key.X:
             if not self.is_dead:
-                self.get_skeleton_flag(self.axe_skeleton,1.5)
+                #BOSS    
                 self.get_flag(self.boss,1.5)
-                self.get_flag(self.ghost_1,1.5)
-                self.get_fire(self.hell_beast,1.5)
-                self.get_flag(self.blue_wolf,1.5)
-                self.get_flag(self.hell_hound,1.5)
-                self.get_flag(self.red_hound,1.5)
-                self.get_flag(self.red_nightmare,1.5)
-                self.get_fire(self.green_hell_beast,1.5)
-                self.get_flag(self.nightmare,1.5)
-                self.get_flag(self.green_nightmare,1.5)
-                self.get_flag(self.green_hound,1.5)
-                self.get_skeleton_flag(self.skeleton,1.5)
+                self.get_skeleton_flag(self.axe_skeleton_b,1.5)
+                self.get_flag(self.ghost_b,1.5)
+                self.get_flag(self.blue_wolf_b,1.5)
+                self.get_fire(self.hell_beast_b,1.5)  
+                self.get_flag(self.hell_hound_b,1.5)
+                self.get_flag(self.red_hound_b,1.5)
+                self.get_flag(self.green_hound_b,1.5)
+                self.get_flag(self.nightmare_b,1.5)
+                self.get_flag(self.red_nightmare_b,1.5)
+                self.get_flag(self.green_nightmare_b,1.5)
+                self.get_fire(self.green_hell_beast_b,1.5)
         if k == key.C:
             if not self.is_dead:
-                self.get_skeleton_flag(self.axe_skeleton,2)
+                #BOSS    
                 self.get_flag(self.boss,2)
-                self.get_flag(self.ghost_1,2)
-                self.get_fire(self.hell_beast,2)
-                self.get_flag(self.blue_wolf,2)
-                self.get_flag(self.hell_hound,2)
-                self.get_flag(self.red_hound,2)
-                self.get_flag(self.red_nightmare,2)
-                self.get_fire(self.green_hell_beast,2)
-                self.get_flag(self.nightmare,2)
-                self.get_flag(self.green_nightmare,2)
-                self.get_flag(self.green_hound,2)
-                self.get_skeleton_flag(self.skeleton,2)
+                self.get_skeleton_flag(self.axe_skeleton_b,2)
+                self.get_flag(self.ghost_b,2)
+                self.get_flag(self.blue_wolf_b,2)
+                self.get_fire(self.hell_beast_b,2)  
+                self.get_flag(self.hell_hound_b,2)
+                self.get_flag(self.red_hound_b,2)
+                self.get_flag(self.green_hound_b,2)
+                self.get_flag(self.nightmare_b,2)
+                self.get_flag(self.red_nightmare_b,2)
+                self.get_flag(self.green_nightmare_b,2)
+                self.get_fire(self.green_hell_beast_b,2)
 
         
                
@@ -471,7 +469,8 @@ class Level3_Hero(ScrollableLayer):
             
             monster = random.choice(self.list_of_monsters)
             monster.sprite.position = (b_x-200, b_y)
-            self.hell_ball.position = self.hell_beast.sprite.position
+            self.hell_ball_b.position = self.hell_beast_b.sprite.position
+            self.green_hell_ball_b.position = self.green_hell_beast_b.sprite.position
             monster.lifes = monster.l
             monster.sprite.visible = True
         
@@ -561,6 +560,7 @@ class Level3_Hero(ScrollableLayer):
                     enemy.sprite._animation = enemy.anim
                     enemy.sprite.scale_x = -1
                     enemy.sprite.position = (g_x + speed, g_y)
+
     def skeleton_action(self, position, enemy, speed, l, r):
         
         x, y = self.sprite.position
@@ -640,45 +640,49 @@ class Level3_Hero(ScrollableLayer):
                     enemy.sprite._animation = enemy.anim
 
     def update(self, dt):
+        #BOSS
+        if self.axe_skeleton_b.sprite.visible:
+            self.skeleton_action(350, self.axe_skeleton_b, 1, -1, 1)
+        if self.blue_wolf_b.sprite.visible:
+            self.wolf_action(350, self.blue_wolf_b, 2, 1, -1)
+        if self.hell_hound_b.sprite.visible:
+            self.wolf_action(350, self.hell_hound_b, 2, 1, -1)
+        if self.hell_beast_b.sprite.visible:
+            self.beast_action(300, self.hell_beast_b, self.hell_ball_b)  
+        if self.red_hound_b.sprite.visible:
+            self.wolf_action(350, self.red_hound_b, 3, -1, 1)
+        if self.green_hound_b.sprite.visible:
+            self.wolf_action(350, self.green_hound_b, 3, -1, 1)
+        if self.nightmare_b.sprite.visible:
+            self.wolf_action(350, self.nightmare_b, 3, -1, 1)
+        if self.red_nightmare_b.sprite.visible:
+            self.wolf_action(350, self.red_nightmare_b, 3, -1, 1)
+        if self.green_nightmare_b.sprite.visible:
+            self.wolf_action(350, self.green_nightmare_b, 3, -1, 1)
+        if self.green_hell_beast_b.sprite.visible:
+            self.beast_action(300, self.green_hell_beast_b, self.green_hell_ball_b)
+        if self.ghost_b.sprite.visible:
+            self.ghost_action(350,self.ghost_b, 2)
+        
+        #first stack
+
         self.skeleton_action(100, self.axe_skeleton, 1, -1, 1)
-        if self.ghost_1.sprite.visible:
-            self.ghost_action(350,self.ghost_1, 2)
-        if self.red_hound.sprite.visible:
-            self.wolf_action(350, self.red_hound, 3, -1, 1)
-        if self.green_hound.sprite.visible:
-            self.wolf_action(350, self.green_hound, 3, -1, 1)
-        if self.nightmare.sprite.visible:
-            self.wolf_action(350, self.nightmare, 3, -1, 1)
-        if self.red_nightmare.sprite.visible:
-            self.wolf_action(350, self.red_nightmare, 3, -1, 1)
-        if self.green_nightmare.sprite.visible:
-            self.wolf_action(350, self.green_nightmare, 3, -1, 1)
-        if self.green_hell_beast.sprite.visible:
-            self.beast_action(150, self.green_hell_beast, self.green_hell_ball)
-        if self.skeleton.sprite.visible:
-            self.skeleton_action(350, self.skeleton, 1, -1, 1)
-        if self.hell_beast.sprite.visible:
-            self.beast_action(150, self.hell_beast, self.hell_ball)
-        if self.blue_wolf.sprite.visible:
-            self.wolf_action(350, self.blue_wolf, 2, 1, -1)
-        if self.hell_hound.sprite.visible:
-            self.wolf_action(350, self.hell_hound, 2, 1, -1)
-
-        self.boss_action(350, self.boss)
-
+        #self.boss_action(350, self.boss)
+        #self.ghost_action(200,self.ghost, 3)
 
         x, y = self.sprite.position
         if(x <=20 ):
             self.run_l = False
             self.run_r = False
             self.sprite.position = (30,180)
-        self.ghost_action(200,self.ghost, 3)
+       
         if self.run_l:
             self.sprite.position = (x - 3, y)
         elif self.run_r:
             self.sprite.position = (x + 3, y)
         Level3_Background.scroller_3.set_focus(self.sprite.position[0], self.sprite.position[1])
         if self.life == 0:
+            import GameOver
             self.life = 3
             director.push(ZoomTransition(GameOver.get_gameover(3)))
             self.kill()
