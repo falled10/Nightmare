@@ -209,6 +209,7 @@ class Level3_Hero(ScrollableLayer):
 
         if k == key.Z:
             if not self.is_dead:
+                self.get_flag(self.boss)
                 self.get_flag(self.ghost_1)
                 self.get_fire(self.hell_beast)
                 self.get_flag(self.blue_wolf)
@@ -450,9 +451,11 @@ class Level3_Hero(ScrollableLayer):
         
         #check if hero is in radius view of boss
         if (b_x - x) < 80:
+            enemy.flag = True
             self.boss_flag = True
             
         elif (b_x - x) > position:
+            enemy.flag = False
             self.boss_flag = False
        
 
