@@ -9,22 +9,22 @@ class SimpleWolf(ScrollableLayer):
         super(SimpleWolf, self).__init__()
 
         #animation
-        self.img = pyglet.image.load('res/animation/level1_monsters/wolf1/wolf-runing-cycle.png')
-        self.img_grid = pyglet.image.ImageGrid(self.img, 1, 4, item_width=54, item_height=31)
-        self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[3:4], 0.2, loop=True)
+        self.img = pyglet.image.load('res/animation/level1_monsters/wolf1/WolfRun.png')
+        self.img_grid = pyglet.image.ImageGrid(self.img, 1, 8, item_width=153, item_height=96)
+        self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[0:1], 0.2, loop=True)
         self.lifes = 1  
         self.l = 1
         self.flag = False
         self.sprite = Sprite(self.anim)
-        self.sprite.scale = 1.4
+        self.sprite.scale = 0.8
         self.sprite.position = (800, 160)
         self.x = 0
         self.add(self.sprite)
 
 
     def get_run_animation(self):
-        img = pyglet.image.load('res/animation/level1_monsters/wolf1/wolf-runing-cycle.png')
-        img_grid = pyglet.image.ImageGrid(img, 1, 4, item_width=54, item_height=31)
+        img = pyglet.image.load('res/animation/level1_monsters/wolf1/WolfRun.png')
+        img_grid = pyglet.image.ImageGrid(img, 1, 8, item_width=153, item_height=96)
         anim = pyglet.image.Animation.from_image_sequence(img_grid[0:], 0.2, loop=True)
         return anim
 

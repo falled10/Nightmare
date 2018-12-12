@@ -21,7 +21,7 @@ class Help(Menu):
         super(Help, self).__init__('Допомога')
 
        # TITLE
-        self.font_title['font_name'] = 'Vodafone Rg'
+        self.font_title['font_name'] = 'Peace Sans'
         self.font_title['bold'] = True
         self.font_title['font_size'] = 60
         self.font_title['color'] = (255, 69, 0, 255)

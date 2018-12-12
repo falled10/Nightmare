@@ -21,19 +21,19 @@ class PauseScene(Menu):
         super(PauseScene, self).__init__('Пауза')
 
        # TITLE
-        self.font_title['font_name'] = 'Motion Control'
+        self.font_title['font_name'] = 'Peace Sans'
         self.font_title['bold'] = True
         self.font_title['font_size'] = 60
         self.font_title['color'] = (255, 69, 0, 255)
 
         # ITEM
-        self.font_item['font_name'] = 'Motion Control'
+        self.font_item['font_name'] = 'Vodafone Rg'
         self.font_item['color'] = (0, 150, 115, 255)
         self.font_title['bold'] = True
         self.font_item['font_size'] = 35
 
         # ITEM SELECTED
-        self.font_item_selected['font_name'] = 'Motion Control'
+        self.font_item_selected['font_name'] = 'Vodafone Rg'
         self.font_item_selected['color'] = (140, 0, 0, 255)
         self.font_title['bold'] = True
         self.font_item_selected['font_size'] = 35
