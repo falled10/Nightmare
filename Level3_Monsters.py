@@ -13,6 +13,47 @@ from cocos.scene import Scene
 from cocos.scenes.transitions import *
 
 
+class AxeSkeleton(ScrollableLayer):
+    def __init__(self):
+        super(AxeSkeleton, self).__init__()
+        #animation
+        self.img = pyglet.image.load('res/animation/level3_monsters/Skeleton/Sprite Sheets/Skeleton Idle.png')
+        self.img_grid = pyglet.image.ImageGrid(self.img, 1, 11, item_width=24, item_height=32)
+        self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[0:], 0.1, loop=True)
+        self.lifes = 7
+        self.l = 7
+        self.first_death = False
+        self.can_reinc = False
+        self.flag = False
+        self.sprite = Sprite(self.anim)
+        self.sprite.scale = 1.4
+        self.x = 0
+        self.can_attack = False
+        self.can_action = True
+        self.add(self.sprite)
+
+    def get_walk(self):
+        img = pyglet.image.load('res/animation/level3_monsters/Skeleton/Sprite Sheets/Skeleton Walk.png')
+        img_grid = pyglet.image.ImageGrid(img, 1, 13, item_width=22, item_height=33 )
+        anim = pyglet.image.Animation.from_image_sequence(img_grid[0:], 0.1, loop=True)
+        return anim
+
+
+    def get_attack(self):
+        img = pyglet.image.load('res/animation/level3_monsters/Skeleton/Sprite Sheets/Skeleton Attack.png')
+        img_grid = pyglet.image.ImageGrid(img, 1, 18, item_width=43, item_height=37 )
+        anim = pyglet.image.Animation.from_image_sequence(img_grid[0:], 0.05, loop=True)
+        return anim
+
+    
+    def get_death(self):
+        img = pyglet.image.load('res/animation/level3_monsters/Skeleton/Sprite Sheets/Skeleton Dead.png')
+        img_grid = pyglet.image.ImageGrid(img, 1, 13, item_width=33, item_height=32 )
+        anim = pyglet.image.Animation.from_image_sequence(img_grid[12:13], 0.2, loop=True)
+        return anim
+
+
+
 class Ghost(ScrollableLayer):
     def __init__(self):
         super(Ghost, self).__init__()
@@ -58,7 +99,7 @@ class DemonBoss(ScrollableLayer):
         self.img = pyglet.image.load('res/animation/level3_monsters/demon boss/demon-idle.png')
         self.img_grid = pyglet.image.ImageGrid(self.img, 1, 6, item_width=160, item_height=144)
         self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[0:], 0.1, loop=True)
-        self.lifes = 5 
+        self.lifes = 24 
         self.flag = False
         self.sprite = Sprite(self.anim)
         self.sprite.scale = 1.4

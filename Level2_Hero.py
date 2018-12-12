@@ -165,10 +165,10 @@ class Level2_Hero(ScrollableLayer):
         self.pressed = defaultdict(int)
         self.schedule(self.update)
 
-    def get_fire(self, enemy):
+    def get_fire(self, enemy,hp):
         if enemy.flag:
                 if enemy.lifes != 0:
-                    enemy.lifes -= 1
+                    enemy.lifes -= hp
                     print('Enemy lifes: ',enemy.lifes)
                     
                 else:
@@ -177,10 +177,10 @@ class Level2_Hero(ScrollableLayer):
                     print('emeny`s dead')
                     self.flag = False
     
-    def get_flag(self, enemy):
+    def get_flag(self, enemy,hp):
         if enemy.flag:
                 if enemy.lifes != 0:
-                    enemy.lifes -= 1
+                    enemy.lifes -= hp
                     print('Enemy lifes: ', enemy.lifes)
                     
                 else:
@@ -188,11 +188,11 @@ class Level2_Hero(ScrollableLayer):
                     enemy.visible = False
                     print('emeny`s dead')
 
-    def get_skeleton_flag(self, enemy):
+    def get_skeleton_flag(self, enemy,hp):
         if not enemy.first_death:
             if enemy.flag:
                     if enemy.lifes != 0:
-                        enemy.lifes -= 1
+                        enemy.lifes -= hp
                         print('Enemy lifes: ', enemy.lifes)
                         
                     else:
@@ -235,21 +235,21 @@ class Level2_Hero(ScrollableLayer):
         if k == key.Z:
             if not self.is_dead:
                 #FirstStack
-                self.get_flag(self.green_hound_1)
-                self.get_flag(self.green_hound_2)
-                self.get_fire(self.hell_beast)
+                self.get_flag(self.green_hound_1,1)
+                self.get_flag(self.green_hound_2,1)
+                self.get_fire(self.hell_beast,1)
 
                 #SecondStack
-                self.get_flag(self.red_hound_1)
-                self.get_flag(self.red_hound_2)
+                self.get_flag(self.red_hound_1,1)
+                self.get_flag(self.red_hound_2,1)
                 
                 #ThirdStack
-                self.get_flag(self.nightmare_1)
-                self.get_fire(self.hell_fire_beast)
+                self.get_flag(self.nightmare_1,1)
+                self.get_fire(self.hell_fire_beast,1)
 
                 #FourthStack
-                self.get_flag(self.nightmare_2)
-                self.get_skeleton_flag(self.skeleton)
+                self.get_flag(self.nightmare_2,1)
+                self.get_skeleton_flag(self.skeleton,1)
                 '''
                 get flag add logic for our hero`s hit, when our hero attacks enemy
                 enemy lost his 1 or more lifes
@@ -258,21 +258,20 @@ class Level2_Hero(ScrollableLayer):
         if k == key.X:
             if not self.is_dead:
                 #FirstStack
-                self.get_flag(self.green_hound_1)
-                self.get_flag(self.green_hound_2)
-                self.get_fire(self.hell_beast) 
+                self.get_flag(self.green_hound_1, 1.5)
+                self.get_flag(self.green_hound_2,1.5)
+                self.get_fire(self.hell_beast,1.5) 
                 
                 #SecondStack
-                self.get_flag(self.red_hound_1)
-                self.get_flag(self.red_hound_2)
-
+                self.get_flag(self.red_hound_1,1.5)
+                self.get_flag(self.red_hound_2,1.5)
                 #ThirdStack
-                self.get_flag(self.nightmare_1)
-                self.get_fire(self.hell_fire_beast)
+                self.get_flag(self.nightmare_1,1.5)
+                self.get_fire(self.hell_fire_beast,1.5)
 
                 #FourthStack
-                self.get_flag(self.nightmare_2)
-                self.get_skeleton_flag(self.skeleton)
+                self.get_flag(self.nightmare_2,1.5)
+                self.get_skeleton_flag(self.skeleton,1.5)
                 '''
                 get flag add logic for our hero`s hit, when our hero attacks enemy
                 enemy lost his 1 or more lifes

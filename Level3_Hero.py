@@ -34,6 +34,13 @@ class Level3_Hero(ScrollableLayer):
 
     def __init__(self):
         super().__init__()
+        self.axe_skeleton = AxeSkeleton()
+        self.axe_skeleton.sprite.position = (300, 180)
+        self.axe_skeleton.sprite.scale = 3
+        self.add(self.axe_skeleton)
+
+
+
         # boss monsters --------------------------------
         self.ghost_1 = Ghost()
         self.ghost_1.sprite.visible = False
@@ -150,11 +157,11 @@ class Level3_Hero(ScrollableLayer):
         self.pressed = defaultdict(int)
         self.schedule(self.update)
 
-    def get_skeleton_flag(self, enemy):
+    def get_skeleton_flag(self, enemy, hp):
         if not enemy.first_death:
             if enemy.flag:
-                    if enemy.lifes != 0:
-                        enemy.lifes -= 1
+                    if enemy.lifes >= 0:
+                        enemy.lifes -= hp
                         print('Enemy lifes: ', enemy.lifes)
                         
                     else:
@@ -165,10 +172,10 @@ class Level3_Hero(ScrollableLayer):
                         print('emeny`s dead')
 
     
-    def get_fire(self, enemy):
+    def get_fire(self, enemy,hp):
         if enemy.flag:
-                if enemy.lifes != 0:
-                    enemy.lifes -= 1
+                if enemy.lifes >= 0:
+                    enemy.lifes -= hp
                     print('beast lifes: ',enemy.lifes)
                     
                 else:
@@ -177,10 +184,10 @@ class Level3_Hero(ScrollableLayer):
                     self.flag = False
     
     
-    def get_flag(self, enemy):
+    def get_flag(self, enemy, hp):
         if enemy.flag:
-                if enemy.lifes != 0:
-                    enemy.lifes -= 1
+                if enemy.lifes >= 0:
+                    enemy.lifes -= hp
                     print('Enemy lifes: ', enemy.lifes)
                     
                 else:
@@ -209,23 +216,55 @@ class Level3_Hero(ScrollableLayer):
 
         if k == key.Z:
             if not self.is_dead:
-                self.get_flag(self.boss)
-                self.get_flag(self.ghost_1)
-                self.get_fire(self.hell_beast)
-                self.get_flag(self.blue_wolf)
-                self.get_flag(self.hell_hound)
-                self.get_flag(self.red_hound)
-                self.get_flag(self.red_nightmare)
-                self.get_fire(self.green_hell_beast)
-                self.get_flag(self.nightmare)
-                self.get_flag(self.green_nightmare)
-                self.get_flag(self.green_hound)
-                self.get_skeleton_flag(self.skeleton)
+                self.get_skeleton_flag(self.axe_skeleton,1)
+                self.get_flag(self.boss,1)
+                self.get_flag(self.ghost_1,1)
+                self.get_fire(self.hell_beast,1)
+                self.get_flag(self.blue_wolf,1)
+                self.get_flag(self.hell_hound,1)
+                self.get_flag(self.red_hound,1)
+                self.get_flag(self.red_nightmare,1)
+                self.get_fire(self.green_hell_beast,1)
+                self.get_flag(self.nightmare,1)
+                self.get_flag(self.green_nightmare,1)
+                self.get_flag(self.green_hound,1)
+                self.get_skeleton_flag(self.skeleton,1)
                 '''
                 get flag add logic for our hero`s hit, when our hero attacks enemy
                 enemy lost his 1 or more lifes
                 if enemy has 0 lifes his position equals (10000, -1000) and his visible = False
                 '''
+
+        if k == key.X:
+            if not self.is_dead:
+                self.get_skeleton_flag(self.axe_skeleton,1.5)
+                self.get_flag(self.boss,1.5)
+                self.get_flag(self.ghost_1,1.5)
+                self.get_fire(self.hell_beast,1.5)
+                self.get_flag(self.blue_wolf,1.5)
+                self.get_flag(self.hell_hound,1.5)
+                self.get_flag(self.red_hound,1.5)
+                self.get_flag(self.red_nightmare,1.5)
+                self.get_fire(self.green_hell_beast,1.5)
+                self.get_flag(self.nightmare,1.5)
+                self.get_flag(self.green_nightmare,1.5)
+                self.get_flag(self.green_hound,1.5)
+                self.get_skeleton_flag(self.skeleton,1.5)
+        if k == key.C:
+            if not self.is_dead:
+                self.get_skeleton_flag(self.axe_skeleton,2)
+                self.get_flag(self.boss,2)
+                self.get_flag(self.ghost_1,2)
+                self.get_fire(self.hell_beast,2)
+                self.get_flag(self.blue_wolf,2)
+                self.get_flag(self.hell_hound,2)
+                self.get_flag(self.red_hound,2)
+                self.get_flag(self.red_nightmare,2)
+                self.get_fire(self.green_hell_beast,2)
+                self.get_flag(self.nightmare,2)
+                self.get_flag(self.green_nightmare,2)
+                self.get_flag(self.green_hound,2)
+                self.get_skeleton_flag(self.skeleton,2)
 
         
                
@@ -452,12 +491,15 @@ class Level3_Hero(ScrollableLayer):
         #check if hero is in radius view of boss
         if (b_x - x) < 80:
             enemy.flag = True
+
+        if (b_x - x) > 120:
+            enemy.flag = False
         if (b_x - x) < 80:
             
             self.boss_flag = True
             
         elif (b_x - x) > position:
-            enemy.flag = False
+            
             self.boss_flag = False
        
 
@@ -525,7 +567,7 @@ class Level3_Hero(ScrollableLayer):
         
         w_x, w_y = enemy.sprite.position
         if x <120:
-            w_y = 390
+            w_y = 180
             self.is_dead = False
         
         if self.sprite.image == animations.anim_b and (w_x - x) <= 40 and (w_x - x) >= 0:
@@ -549,15 +591,15 @@ class Level3_Hero(ScrollableLayer):
             enemy.sprite._animation = enemy.anim   
 
         if not enemy.first_death:
-            if w_y == 391 and enemy.lifes >= 0 and (w_x-x) < 50 and (w_x - x) >= -50 and not self.is_dead:
+            if w_y == 181 and enemy.lifes >= 0 and (w_x-x) < 50 and (w_x - x) >= -50 and not self.is_dead:
                 self.is_dead = True
                 if(self.life == 3):
-                    self.sprite.do(FadeOut(2) + MoveTo((100, 410), 2) + FadeIn(1))
+                    self.sprite.do(FadeOut(2) + MoveTo((100, 180), 2) + FadeIn(1))
                 elif(self.life == 2):
-                    self.sprite.do(FadeOut(3) + MoveTo((100, 410), 2) + FadeIn(1))
+                    self.sprite.do(FadeOut(3) + MoveTo((100, 180), 2) + FadeIn(1))
 
                 elif(self.life == 1):
-                    self.sprite.do(FadeOut(1) + MoveTo((100, 410), 1) + FadeIn(1))
+                    self.sprite.do(FadeOut(1) + MoveTo((100, 180), 1) + FadeIn(1))
                     print("dead 0")
                 self.is_dead = True
                 self.life -= 1
@@ -569,6 +611,7 @@ class Level3_Hero(ScrollableLayer):
                     if (w_x-x) < 50 and (w_x - x) >= 0:
                         
                         enemy.flag = True
+                        enemy.sprite.scale = 2.7
                         enemy.sprite._animation = enemy.get_attack()
                         enemy.sprite.do(Delay(0.8) + MoveTo((w_x, w_y+1), 0))
                         
@@ -576,26 +619,28 @@ class Level3_Hero(ScrollableLayer):
                         enemy.flag = False
                         enemy.sprite.scale_x = -1
                         enemy.sprite._animation = enemy.get_walk()
-                        enemy.sprite.scale = 2
-                        enemy.sprite.position = (w_x - speed, 390)
+                        enemy.sprite.scale = 2.7
+                        enemy.sprite.position = (w_x - speed, 180)
 
                 elif (w_x - x) <= 0 and (w_x - x) > -position:
                     if (w_x-x) > -50 and (w_x - x) <= 0:
                         enemy.flag = True
+                        enemy.sprite.scale = 2.7
                         enemy.sprite._animation = enemy.get_attack()
                         enemy.sprite.do(Delay(0.8) + MoveTo((w_x, w_y+1), 0))
                     else:
                         enemy.sprite.scale_x = 1
                         enemy.sprite._animation = enemy.get_walk()
-                        enemy.sprite.scale = 2
-                        enemy.sprite.position = (w_x + speed, 390)
+                        enemy.sprite.scale = 2.7
+                        enemy.sprite.position = (w_x + speed, 180)
                     
                 else:
                     enemy.flag = False
-                    enemy.sprite.position = (w_x, 410)
+                    enemy.sprite.position = (w_x, 180)
                     enemy.sprite._animation = enemy.anim
 
     def update(self, dt):
+        self.skeleton_action(100, self.axe_skeleton, 1, -1, 1)
         if self.ghost_1.sprite.visible:
             self.ghost_action(350,self.ghost_1, 2)
         if self.red_hound.sprite.visible:
