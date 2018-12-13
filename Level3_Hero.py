@@ -525,7 +525,7 @@ class Level3_Hero(ScrollableLayer):
     
     def boss_action(self, position, enemy):
         # get coords of hero and enemy
-        xm, ym =self.mirror_sprite.position 
+        xm, ym = self.mirror_sprite.position 
         x, y = self.sprite.position
         b_x, b_y = enemy.sprite.position
 
@@ -549,7 +549,7 @@ class Level3_Hero(ScrollableLayer):
             enemy.sprite.scale = 1.5
             enemy.sprite._animation = enemy.get_attack()
             self.sprite.position = (x - 5, y)
-            self.mirror_sprite = (xm-5, ym)
+            self.mirror_sprite.position = (xm-5, ym)
         elif not self.boss_flag:
             enemy.sprite.scale = 1.5
             enemy.sprite._animation = enemy.anim
@@ -796,9 +796,6 @@ class Level3_Hero(ScrollableLayer):
             self.run_r = False
             self.sprite.position = (30,215)
             self.mirror_sprite.position = (30,125)
-            self.heart1.position = (x-20, y+40)
-            self.heart2.position = (x, y+40)
-            self.heart3.position = (x+20, y+40)
             self.ghost_action(200,self.ghost, 3)
         if self.run_l:
             self.sprite.position = (x - 3, y)
@@ -806,6 +803,11 @@ class Level3_Hero(ScrollableLayer):
         elif self.run_r:
             self.sprite.position = (x + 3, y)
             self.mirror_sprite.position = (xm +3, ym)
+
+        self.heart1.position = (x-20, y+40)
+        self.heart2.position = (x, y+40)
+        self.heart3.position = (x+20, y+40)
+        
         Level3_Background.scroller_3.set_focus(self.sprite.position[0], self.sprite.position[1])
         if self.life == 0:
             self.life = 3
