@@ -45,8 +45,6 @@ class Level1_Hero(ScrollableLayer):
         #Simple Wolf
         self.white_wolf_1 = SimpleWolf()
         self.white_wolf_2 = SimpleWolf()
-        self.white_wolf_3 = SimpleWolf()
-        self.white_wolf_4 = SimpleWolf()
 
         self.gray_wolf_1 =  SimpleWolf()
         self.gray_wolf_2 =  SimpleWolf()
@@ -90,7 +88,7 @@ class Level1_Hero(ScrollableLayer):
         self.blue_wolf_2.sprite.position = (1250,160)
 
         self.black_wolf_1.sprite.position = (1450,180)
-        self.black_wolf_1.lifes = 3
+        self.black_wolf_1.lifes = 4
         self.black_wolf_1.sprite.color = (0,0,0)
         self.black_wolf_1.sprite.scale_x = -1
         self.black_wolf_1.sprite.scale = 2.5
@@ -287,7 +285,6 @@ class Level1_Hero(ScrollableLayer):
             if (fire_ball.position[0]-x) < 10:
                 if self.sprite.image == animations.anim_a1 and self.sprite.scale_x == 1:
                     fire_ball.position = (b_x, b_y)
-
                 elif self.can_attack:
                     self.can_attack = False
                     # logic for visible heart
@@ -452,26 +449,26 @@ class Level1_Hero(ScrollableLayer):
         Level1_Background.scroller_1.set_focus(self.sprite.position[0], self.sprite.position[1])
         
         # first stack --------------------------------------------
-        self.wolf_action(200, self.white_wolf_1, 2, 1, -1)
-        self.wolf_action(210, self.white_wolf_2, 2, 1, -1)
-        self.wolf_action(220, self.gray_wolf_1, 2, 1, -1)
-        self.wolf_action(230, self.gray_wolf_2, 2, 1, -1)
+        self.wolf_action(200, self.white_wolf_1, 2, -1, 1)
+        self.wolf_action(210, self.white_wolf_2, 2, -1, 1)
+        self.wolf_action(220, self.gray_wolf_1, 2, -1, 1)
+        self.wolf_action(230, self.gray_wolf_2, 2, -1, 1)
         #---------------------------------------------------------
         # second stack -------------------------------------------
-        self.wolf_action(200, self.blue_wolf_1, 3, 1, -1)
-        self.wolf_action(200, self.blue_wolf_2, 3, 1, -1)
-        self.wolf_action(300, self.black_wolf_1, 3, 1, -1)
+        self.wolf_action(200, self.blue_wolf_1, 3, -1, 1)
+        self.wolf_action(200, self.blue_wolf_2, 3, -1, 1)
+        self.wolf_action(300, self.black_wolf_1, 3, -1, 1)
         
         # third stack--------------------------------------------
         self.wolf_action(250, self.hell_hound_1, 4, -1, 1)
-        self.wolf_action(200, self.gray_wolf_3, 2, 1, -1)
-        self.wolf_action(200, self.blue_wolf_3, 3, 1, -1)
+        self.wolf_action(200, self.gray_wolf_3, 2, -1, 1)
+        self.wolf_action(200, self.blue_wolf_3, 3, -1, 1)
         
 
         # fourth stack-------------------------------------------
         self.wolf_action(250, self.hell_hound_2, 4, -1, 1)
-        self.wolf_action(200, self.gray_wolf_4, 2, 1, -1)
-        self.wolf_action(200, self.blue_wolf_4, 3, 1, -1)
+        self.wolf_action(200, self.gray_wolf_4, 2, -1, 1)
+        self.wolf_action(200, self.blue_wolf_4, 3, -1, 1)
         self.beast_action(300, self.hell_beast, self.ball)
         #---------------------------------------------------------
         

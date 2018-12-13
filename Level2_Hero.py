@@ -578,12 +578,8 @@ class Level2_Hero(ScrollableLayer):
                     enemy.sprite.position = (w_x, 410)
                     enemy.sprite._animation = enemy.anim
 
-                
-
-
     def update(self, dt):
         x,y = self.sprite.position
-        print(x)
         xm, ym = self.mirror_sprite.position
         if(x <=20 ):
             self.run_l = False
