@@ -74,7 +74,7 @@ class GreenSkeleton(ScrollableLayer):
 
         #animation
         self.img = pyglet.image.load('res/animation/level2_monsters/Undead Sprite Pack/SHEETS/undead_idle_sheet.png')
-        self.img_grid = pyglet.image.ImageGrid(self.img, 1, 18, item_width=48, item_height=32)
+        self.img_grid = pyglet.image.ImageGrid(self.img, 1, 18, item_width=48, item_height=31)
         self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[0:], 0.1, loop=True)
         self.lifes = 7
         self.l = 7
@@ -104,6 +104,6 @@ class GreenSkeleton(ScrollableLayer):
     
     def get_death(self):
         img = pyglet.image.load('res/animation/level2_monsters/Undead Sprite Pack/SHEETS/undead_death_sheet.png')
-        img_grid = pyglet.image.ImageGrid(img, 1, 13, item_width=72, item_height=32 )
+        img_grid = pyglet.image.ImageGrid(img, 1, 13, item_width=72, item_height=31 )
         anim = pyglet.image.Animation.from_image_sequence(img_grid[12:13], 0.2, loop=True)
         return anim

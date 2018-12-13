@@ -2,11 +2,21 @@ import cocos
 from cocos.actions import *
 import pyglet
 from pyglet import image
+from cocos.scene import Scene
+from cocos.layer import Layer
+from cocos.scenes.transitions import *
+from cocos.director import director
+from cocos.text import Label
+from cocos.actions import *
+from pyglet.window import key
 
 
-class MainLayer(cocos.layer.Layer):
+class MainLayer(Layer):
     def __init__(self):
         super(MainLayer, self).__init__()
+        skip = Label("Натисніть ПРОБІЛ, щоб пропустити", position = (100,550), color = (255,0,0, 255), font_size = 25, bold = True)
+        skip.do(Blink (20,20))
+        self.add(skip)
         self.img_h = pyglet.image.load('res/animation/level1_monsters/hell_hound/hell-hound-run.png')
         self.img_grid_h = pyglet.image.ImageGrid(self.img_h, 1, 5, item_width=67, item_height=31)
         self.anim_h = pyglet.image.Animation.from_image_sequence(self.img_grid_h[0:], 0.2, loop=True)
@@ -29,7 +39,7 @@ class MainLayer(cocos.layer.Layer):
 
         self.hero_1 = cocos.sprite.Sprite(self.anim)
         self.hero_1.scale = 2.2
-        self.hero_1.position = (100, 190)
+        self.hero_1.position = (300, 180)
         self.add(self.hero_1)
 
         self.img_1 = pyglet.image.load('res/animation/catscene/girl/Idle_Png/idle_sheet.png')
@@ -47,7 +57,7 @@ class MainLayer(cocos.layer.Layer):
         self.anim_2 = pyglet.image.Animation.from_image_sequence(self.img_grid_2[0:], 0.2, loop=True)
 
         self.hero_3 = cocos.sprite.Sprite(self.anim_2)
-        self.hero_3.position = (100, 190)
+        self.hero_3.position = (100, 180)
         self.hero_3.scale = 2.2
         self.add(self.hero_3)
 
@@ -55,8 +65,7 @@ class MainLayer(cocos.layer.Layer):
         self.img_3 = pyglet.image.load('res/animation/level3_monsters/demon boss/demon-idle.png')
         self.img_grid_3 = pyglet.image.ImageGrid(self.img_3, 1, 6, item_width=160, item_height=144 )
         self.anim_3 = pyglet.image.Animation.from_image_sequence(self.img_grid_3[0:], 0.1, loop=True)
-
-
+        
         self.demon = cocos.sprite.Sprite(self.anim_3)
         self.demon.position = (400, 500)
         self.demon.scale = 1.4
@@ -65,17 +74,13 @@ class MainLayer(cocos.layer.Layer):
         self.hell_hound.do(MoveTo((1000, 180), 11))
         self.hero_3.do(MoveBy((170, 0), 3) + Delay(9.5) + MoveBy((1000, 0), 7.5))
 
-        self.hero_1.do(MoveBy((300,0), 3) + Delay(8.5) + FadeOut(0.5))
+        self.hero_1.do(MoveBy((100,0), 3) + Delay(8.5) + FadeOut(0.5))
         self.hero_2.do(MoveBy((250,0), 3) + Delay(8.5) + FadeOut(0.5))
 
         self.portal.do(FadeOut(0) + MoveTo((700, 300), 5) + FadeIn(1) + Delay(7.5) + FadeOut(0.5))
         self.demon.do(FadeOut(0) + MoveTo((700, 350), 5) + FadeIn(4) + Delay(1) + MoveTo((550, 250), 1) + Delay(2) + MoveTo((550, 1000), 1))
 
-              
-
         self.schedule(self.update)
-
-
 
     def get_girl_walk(self):
         img_2 = pyglet.image.load('res/animation/catscene/girl/Walk_Png/walk_sheet.png')
@@ -126,6 +131,10 @@ class MainLayer(cocos.layer.Layer):
 
 
     def update(self, dt):
+        x,y = self.hell_hound.position
+        if( x > 800):
+            import Level1_Background          
+            director.push(SlideInTTransition(Level1_Background.get_newgame()))
         if self.hell_hound.position[0] > self.hero_3.position[0] - 10:
             self.hell_hound.position = (-100, 180)
             self.hell_hound.do(MoveTo((1000, 180), 6.7))
@@ -164,19 +173,29 @@ class MainLayer(cocos.layer.Layer):
 
 
 
-class BackgroundLayer(cocos.layer.Layer):
+class BackgroundLayer(Layer):
+    is_event_handler = True 
     def __init__(self):
         super(BackgroundLayer, self).__init__()
         bg = cocos.sprite.Sprite('res/maps/Level1/level1.png')
         bg.position = bg.width // 2, bg.height // 2
         self.add(bg)
+    def on_key_press(self, k, m):
+         if k == key.SPACE:
+            import Level1_Background 
+            director.push(SlideInTTransition(Level1_Background.get_newgame()))
+
+         if k == key.M:
+             import Sound
+             Sound.mute_volume(0)
         
 
 
-if __name__ == '__main__':
-    cocos.director.director.init(width=800, height=600, caption="Nightmare")
+def get_cut_scene():
+
+    scene = Scene()
     layer = MainLayer()
     bgLayer = BackgroundLayer()
-    scene = cocos.scene.Scene(bgLayer) 
+    scene.add(bgLayer)
     scene.add(layer)   
-    cocos.director.director.run(scene)
+    return scene

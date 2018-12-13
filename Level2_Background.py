@@ -29,7 +29,7 @@ class Level2_Background(ScrollableLayer):
         lvl2 = Sprite('res/maps/Level2/LVL2.png')
         lvl2.position = (420,500)
         lvl2.scale = 0.7
-        blink = Blink(10,5)
+        blink = Blink(10,3)
         lvl2.do(blink)
         self.add(bg)
         self.add(lvl2)
@@ -39,7 +39,7 @@ class Level2_Background(ScrollableLayer):
             director.push(ZoomTransition(PauseScene.get_pause()))
 
         if k == key.M:
-            Sound.mute_volume(0)
+            Sound.on_off()
     
 
 def get_newgame():

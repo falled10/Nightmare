@@ -43,7 +43,7 @@ class Level1_Background(ScrollableLayer):
             director.push(ZoomTransition(PauseScene.get_pause()))
             
          if k == key.M:
-             Sound.mute_volume(0)
+             Sound.on_off()
              
     
 
@@ -55,16 +55,12 @@ def get_newgame():
     bg_layer = Level1_Background()
     hero = Level1_Hero()
     
-    
-    
     Sound.play("res/audio/Level1.mp3")
 
     scroller_1.add(bg_layer)
    
     scroller_1.add(hero)
     
-    
-   
     scene.add(scroller_1)
 
     return scene

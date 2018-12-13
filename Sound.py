@@ -27,10 +27,10 @@ def mute_volume(m):
     music.set_volume(m)
 
 def on_off():
-    if(music.get_volume()==1):
+    if(music.get_volume()>0):
         music.set_volume(0)
     elif(music.get_volume()==0):
-        music.set_volume(1)
+        music.set_volume(0.5)
 
 def resume():
     music.unpause()

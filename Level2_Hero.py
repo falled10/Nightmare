@@ -99,12 +99,15 @@ class Level2_Hero(ScrollableLayer):
         self.hell_fire_beast.sprite.position = (1900,430)
         self.hell_fire_beast.sprite.color = (255,0,0)
         self.hell_fire_beast.fire_ball.color = (255,0,0)
+
         #fourth
-        self.nightmare_2.sprite.position = (2100,420)
+        self.nightmare_2.sprite.position = (2150,420)
         self.nightmare_2.sprite.color = (0,255,0)
-        self.skeleton.sprite.position = (2300, 420)
+
+        self.skeleton.sprite.position = (2500, 420)
         self.skeleton.sprite.scale = 2
         self.skeleton.sprite.scale_x = -1
+        self.skeleton.sprite.color = (255,0,0)
         
 
         #--------------------------------------------------------------------------
@@ -575,7 +578,7 @@ class Level2_Hero(ScrollableLayer):
                     
                 else:
                     enemy.flag = False
-                    enemy.sprite.position = (w_x, 410)
+                    enemy.sprite.position = (w_x, 405)
                     enemy.sprite._animation = enemy.anim
 
     def update(self, dt):
@@ -590,7 +593,7 @@ class Level2_Hero(ScrollableLayer):
             self.life = 3
             director.push(ZoomTransition(GameOver.get_gameover(2)))
             self.kill()
-        self.skeleton_action(200, self.skeleton, 1, -1, 1)
+        
        
         self.heart1.position = (x-20, y+40)
         self.heart2.position = (x, y+40)
@@ -617,7 +620,7 @@ class Level2_Hero(ScrollableLayer):
 
         #fourth --------------------------------------------------
         self.wolf_action(200, self.nightmare_2, 2.5, -1, 1) '''
-        self.skeleton_action(200, self.skeleton, 1, -1, 1)
+        self.skeleton_action(300, self.skeleton, 2, -1, 1)
         
 
         if self.life == 0:

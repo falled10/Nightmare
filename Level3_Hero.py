@@ -43,13 +43,13 @@ class Level3_Hero(ScrollableLayer):
         
         #FirstStack
         self.axe_skeleton_1 = AxeSkeleton()
-        self.axe_skeleton_1.sprite.position = (700, 225)
+        self.axe_skeleton_1.sprite.position = (500, 225)
         self.axe_skeleton_1.sprite.scale = 3
         self.axe_skeleton_1.sprite.scale_x = -1
         self.add(self.axe_skeleton_1)
 
         self.ghost_1 = Ghost()
-        self.ghost_1.sprite.position = (700, 200)
+        self.ghost_1.sprite.position = (700, 220)
 
         self.axe_skeleton_2 = AxeSkeleton()
         self.axe_skeleton_2.sprite.position = (900, 225)
@@ -59,21 +59,41 @@ class Level3_Hero(ScrollableLayer):
 
         #SecondStack
         self.hell_hound = HellHound()
-        self.hell_hound.sprite.position = (1300,225)
+        self.hell_hound.sprite.position = (1300,210)
         self.hell_hound.sprite.color = (0,204,204)
 
         self.blue_hell_beast = HellBeast()
-        self.blue_hell_beast.sprite.position = (1000,225)
+        self.blue_hell_beast.sprite.position = (1500,230)
         self.blue_hell_beast.sprite.color = (0, 204, 204)
         self.blue_hell_ball = self.blue_hell_beast.fire_ball
         self.blue_hell_ball.visible = False
         self.blue_hell_ball.color = (0, 204, 204)
 
         self.nightmare = Nightmare()
-        self.nightmare.sprite.position = (1700,225)
+        self.nightmare.sprite.position = (1800,220)
         self.nightmare.sprite.color = (0,204,204)
 
         
+        #ThirdStack
+        self.axe_skeleton_3 = AxeSkeleton()
+        self.axe_skeleton_3.sprite.position = (2100, 225)
+        self.axe_skeleton_3.sprite.scale = 3
+        self.axe_skeleton_3.sprite.scale_x = -1
+        self.add(self.axe_skeleton_3)
+
+        self.ghost_2 = Ghost()
+        self.ghost_2.sprite.position = (2300, 220)
+
+        self.axe_skeleton_4 = AxeSkeleton()
+        self.axe_skeleton_4.sprite.position = (2450, 225)
+        self.axe_skeleton_4.sprite.scale = 3
+        self.axe_skeleton_4.sprite.scale_x = -1
+        self.add(self.axe_skeleton_4)
+
+        #FourthStack
+        self.boss = DemonBoss()
+        self.boss.sprite.position = (2950, 225)
+
 
         # boss monsters --------------------------------
         self.axe_skeleton_b = AxeSkeleton()
@@ -163,9 +183,6 @@ class Level3_Hero(ScrollableLayer):
             self.green_hell_beast_b,
             self.ghost_b,
             ]
-
-        self.boss = DemonBoss()
-        self.boss.sprite.position = (1000, 200)
         
         self.run_r = False
         self.run_l = False
@@ -202,6 +219,9 @@ class Level3_Hero(ScrollableLayer):
         self.add(self.nightmare)
 
         #ThirdStack
+        self.add(self.axe_skeleton_3)
+        self.add(self.ghost_2)
+        self.add(self.axe_skeleton_4)
 
         #FourthStack
         self.add(self.boss)
@@ -633,10 +653,6 @@ class Level3_Hero(ScrollableLayer):
             
             self.boss_flag = False
        
-
-
-
-
     def ghost_action(self, position, enemy, speed):
 
         if enemy.lifes == 0:
@@ -808,7 +824,7 @@ class Level3_Hero(ScrollableLayer):
                         enemy.sprite.scale_x = -1
                         enemy.sprite._animation = enemy.get_walk()
                         enemy.sprite.scale = 2.7
-                        enemy.sprite.position = (w_x - speed, w_y)
+                        enemy.sprite.position = (w_x - speed, 225)
 
                 elif (w_x - x) <= 0 and (w_x - x) > -position:
                     if (w_x-x) > -50 and (w_x - x) <= 0:
@@ -820,11 +836,11 @@ class Level3_Hero(ScrollableLayer):
                         enemy.sprite.scale_x = 1
                         enemy.sprite._animation = enemy.get_walk()
                         enemy.sprite.scale = 2.7
-                        enemy.sprite.position = (w_x + speed, w_y)
+                        enemy.sprite.position = (w_x + speed, 225)
                     
                 else:
                     enemy.flag = False
-                    enemy.sprite.position = (w_x, w_y)
+                    enemy.sprite.position = (w_x, 225)
                     enemy.sprite._animation = enemy.anim
 
     def update(self, dt):
@@ -853,13 +869,20 @@ class Level3_Hero(ScrollableLayer):
             self.ghost_action(350,self.ghost_b, 2)
         
         #first stack
-
-        self.skeleton_action(100, self.axe_skeleton_1, 1, -1, 1)
-
+        self.skeleton_action(100, self.axe_skeleton_1, 2, -1, 1)
+        self.ghost_action(200,self.ghost_1, 3)
+        self.skeleton_action(100, self.axe_skeleton_2, 2, -1, 1)
         #second stack
-        self.beast_action(300, self.blue_hell_beast, self.blue_hell_ball)  
-        #self.boss_action(350, self.boss)
-        #self.ghost_action(200,self.ghost, 3)
+        self.wolf_action(200, self.hell_hound, 3, -1,1)
+        self.beast_action(300, self.blue_hell_beast, self.blue_hell_ball)
+        self.wolf_action(350, self.nightmare, 3, -1, 1)  
+        #third stack
+        self.skeleton_action(100, self.axe_skeleton_3, 2, -1, 1)
+        self.ghost_action(200,self.ghost_2, 3)
+        self.skeleton_action(100, self.axe_skeleton_4, 2, -1, 1)
+        #fourth stack
+        self.boss_action(350, self.boss)
+        
 
         x, y = self.sprite.position
         xm, ym = self.mirror_sprite.position

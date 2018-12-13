@@ -18,7 +18,7 @@ class AxeSkeleton(ScrollableLayer):
         super(AxeSkeleton, self).__init__()
         #animation
         self.img = pyglet.image.load('res/animation/level3_monsters/Skeleton/Sprite Sheets/Skeleton Idle.png')
-        self.img_grid = pyglet.image.ImageGrid(self.img, 1, 11, item_width=24, item_height=32)
+        self.img_grid = pyglet.image.ImageGrid(self.img, 1, 11, item_width=24, item_height=31)
         self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[0:], 0.1, loop=True)
         self.lifes = 7
         self.l = 7
@@ -48,7 +48,7 @@ class AxeSkeleton(ScrollableLayer):
     
     def get_death(self):
         img = pyglet.image.load('res/animation/level3_monsters/Skeleton/Sprite Sheets/Skeleton Dead.png')
-        img_grid = pyglet.image.ImageGrid(img, 1, 13, item_width=33, item_height=32 )
+        img_grid = pyglet.image.ImageGrid(img, 1, 13, item_width=33, item_height=31 )
         anim = pyglet.image.Animation.from_image_sequence(img_grid[12:13], 0.2, loop=True)
         return anim
 

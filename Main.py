@@ -3,7 +3,7 @@ import Menu
 
 
 def main():
-    director.init(width=800, height=600, caption="Nightmare")
+    director.init(width=800, height=600, caption="Nightmare", fullscreen = False)
    
     director.run(Menu.get_menu()) 
 
