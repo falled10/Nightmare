@@ -53,8 +53,8 @@ class MainMenu(Menu):
 
     def on_new_game(self):
         import CutScene
-        import Level2_Background
-        director.push(SlideInTTransition(Level2_Background.get_newgame()))
+        import Level3_Background
+        director.push(SlideInTTransition(Level3_Background.get_newgame()))
         #director.push(SlideInTTransition(CutScene.get_cut_scene()))
 
     def on_help(self):

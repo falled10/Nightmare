@@ -129,14 +129,14 @@ class Level2_Hero(ScrollableLayer):
         self.attack = False
         self.flag = False
         self.x_y = 0
-        self.sprite.color = (0, 0, 0)
+        
 
         self.mirror_sprite = Sprite(animations.anim_i)
         self.mirror_sprite.position = (100, 320)
         self.mirror_sprite.scale = -2
         self.mirror_sprite.scale_x = -1
         self.mirror_sprite.velocity = (0,0)
-        
+        self.mirror_sprite.color = (0, 0, 0)
         
         #FirstStack
         self.add(self.green_hound_1)
@@ -194,7 +194,7 @@ class Level2_Hero(ScrollableLayer):
     def get_skeleton_flag(self, enemy,hp):
         if not enemy.first_death:
             if enemy.flag:
-                    if enemy.lifes != 0:
+                    if enemy.lifes >= 0:
                         enemy.lifes -= hp
                         print('Enemy lifes: ', enemy.lifes)
                         

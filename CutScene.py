@@ -17,9 +17,9 @@ class MainLayer(Layer):
         skip = Label("Натисніть ПРОБІЛ, щоб пропустити", position = (100,550), color = (255,0,0, 255), font_size = 25, bold = True)
         skip.do(Blink (20,20))
         self.add(skip)
-        self.img_h = pyglet.image.load('res/animation/level1_monsters/hell_hound/hell-hound-run.png')
-        self.img_grid_h = pyglet.image.ImageGrid(self.img_h, 1, 5, item_width=67, item_height=31)
-        self.anim_h = pyglet.image.Animation.from_image_sequence(self.img_grid_h[0:], 0.2, loop=True)
+        self.img_h = image.load('res/animation/level1_monsters/hell_hound/hell-hound-run.png')
+        self.img_grid_h = image.ImageGrid(self.img_h, 1, 5, item_width=67, item_height=31)
+        self.anim_h = image.Animation.from_image_sequence(self.img_grid_h[0:], 0.2, loop=True)
         
         self.hell_hound = cocos.sprite.Sprite(self.anim_h)
 

@@ -308,8 +308,13 @@ class Level3_Hero(ScrollableLayer):
                 self.get_flag(self.hell_hound,1)
                 self.get_fire(self.blue_hell_beast,1)
                 self.get_flag(self.nightmare,1)
-                #BOSS    
+                #ThirdStack
+                self.get_skeleton_flag(self.axe_skeleton_3,1)
+                self.get_flag(self.ghost_2,1)
+                self.get_skeleton_flag(self.axe_skeleton_4,1)
+                #FourthStack
                 self.get_flag(self.boss,1)
+                #BOSS   
                 self.get_skeleton_flag(self.axe_skeleton_b,1)
                 self.get_flag(self.ghost_b,1)
                 self.get_flag(self.blue_wolf_b,1)
@@ -333,14 +338,20 @@ class Level3_Hero(ScrollableLayer):
         if k == key.X:
             if not self.is_dead:
                 #FirstStack
-                self.get_skeleton_flag(self.axe_skeleton_1,1)
-                self.get_flag(self.ghost_1,1)
-                self.get_skeleton_flag(self.axe_skeleton_2,1)
+                self.get_skeleton_flag(self.axe_skeleton_1,1.5)
+                self.get_flag(self.ghost_1,1.5)
+                self.get_skeleton_flag(self.axe_skeleton_2,1.5)
                 #SecondStack
                 self.get_flag(self.hell_hound,1)
-                self.get_fire(self.blue_hell_beast,1)
-                self.get_flag(self.nightmare,1)
-                #BOSS    
+                self.get_fire(self.blue_hell_beast,1.5)
+                self.get_flag(self.nightmare,1.5)
+                #ThirdStack
+                self.get_skeleton_flag(self.axe_skeleton_3,1.5)
+                self.get_flag(self.ghost_2,1.5)
+                self.get_skeleton_flag(self.axe_skeleton_4,1.5)
+                #FourthStack
+                self.get_flag(self.boss,1.5)
+                #BOSS      
                 self.get_flag(self.boss,1.5)
                 self.get_skeleton_flag(self.axe_skeleton_b,1.5)
                 self.get_flag(self.ghost_b,1.5)
@@ -356,14 +367,20 @@ class Level3_Hero(ScrollableLayer):
         if k == key.C:
             if not self.is_dead:
                 #FirstStack
-                self.get_skeleton_flag(self.axe_skeleton_1,1)
-                self.get_skeleton_flag(self.axe_skeleton_2,1)
-                self.get_flag(self.ghost_1,1)
+                self.get_skeleton_flag(self.axe_skeleton_1,2)
+                self.get_flag(self.ghost_1,2)
+                self.get_skeleton_flag(self.axe_skeleton_2,2)
                 #SecondStack
-                self.get_flag(self.hell_hound,1)
-                self.get_fire(self.blue_hell_beast,1)
-                self.get_flag(self.nightmare,1)
-                #BOSS    
+                self.get_flag(self.hell_hound,2)
+                self.get_fire(self.blue_hell_beast,2)
+                self.get_flag(self.nightmare,2)
+                #ThirdStack
+                self.get_skeleton_flag(self.axe_skeleton_3,2)
+                self.get_flag(self.ghost_2,2)
+                self.get_skeleton_flag(self.axe_skeleton_4,2)
+                #FourthStack
+                self.get_flag(self.boss,2)
+                #BOSS     
                 self.get_flag(self.boss,2)
                 self.get_skeleton_flag(self.axe_skeleton_b,2)
                 self.get_flag(self.ghost_b,2)
