@@ -655,8 +655,8 @@ class Level3_Hero(ScrollableLayer):
             self.wolf_action(350, self.green_nightmare, 3, -1, 1)
         if self.green_hell_beast.sprite.visible:
             self.beast_action(150, self.green_hell_beast, self.green_hell_ball)
-        if self.skeleton.sprite.visible:
-            self.skeleton_action(350, self.skeleton, 1, -1, 1)
+        if self.axe_skeleton.sprite.visible:
+            self.skeleton_action(350, self.axe_skeleton, 1, -1, 1)
         if self.hell_beast.sprite.visible:
             self.beast_action(150, self.hell_beast, self.hell_ball)
         if self.blue_wolf.sprite.visible:

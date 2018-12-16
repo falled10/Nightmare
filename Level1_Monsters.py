@@ -9,16 +9,18 @@ class SimpleWolf(ScrollableLayer):
         super(SimpleWolf, self).__init__()
 
         #animation
-        self.img = pyglet.image.load('res/animation/level1_monsters/wolf1/wolf-runing-cycle.png')
-        self.img_grid = pyglet.image.ImageGrid(self.img, 1, 4, item_width=54, item_height=31)
-        self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[3:4], 0.2, loop=True)
+        self.img = pyglet.image.load('res/animation/level1_monsters/wolf1/UIHere1PartFinal.png')
+        self.img_grid = pyglet.image.ImageGrid(self.img, 1, 7, item_width=320, item_height=270)
+        self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[0:], 0.2, loop=True)
         self.lifes = 1  
         self.l = 1
+    
         self.flag = False
         self.sprite = Sprite(self.anim)
         self.sprite.scale = 1.4
         self.sprite.position = (800, 160)
         self.x = 0
+        self.sprite.scale = 0.3
         self.can_attack = False
         self.add(self.sprite)
 
