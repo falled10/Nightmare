@@ -600,6 +600,7 @@ class Level3_Hero(ScrollableLayer):
                 enemy.sprite.image = enemy.get_attack_animation()
                 fire_ball.do(MoveBy((-1,0), 0.6) + MoveBy((-550, 0), 1))
                 fire_ball.visible = True
+                
             '''
             when our hero is in visible of enemy and if our hero starts attack beast
             beast start burn and our hero move out of enemy
