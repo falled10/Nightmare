@@ -32,7 +32,7 @@ class Level3_Background(ScrollableLayer):
         lvl3 = Sprite('res/maps/Level3/LVL3.png')
         lvl3.position = (420,500)
         lvl3.scale = 0.7
-        blink = Blink(10,5)
+        blink = Blink(10,3)
         lvl3.do(blink)
         self.add(lvl3)
    
@@ -41,12 +41,7 @@ class Level3_Background(ScrollableLayer):
             director.push(ZoomTransition(PauseScene.get_pause()))
         
         if k == key.M:
-             Sound.mute_volume(0)
-        #це можна видалити, я просто тестив геймовер, цю штуку треба буде поставити коли життів 0 буде в Level3_Hero
-        """if k == key.SPACE:
-            import GameOver
-            director.push(ZoomTransition(GameOver.get_gameover(3)))"""
-    
+             Sound.on_off()
 
 def get_newgame():
     scene = Scene()

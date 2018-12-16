@@ -99,12 +99,15 @@ class Level2_Hero(ScrollableLayer):
         self.hell_fire_beast.sprite.position = (1900,430)
         self.hell_fire_beast.sprite.color = (255,0,0)
         self.hell_fire_beast.fire_ball.color = (255,0,0)
+
         #fourth
-        self.nightmare_2.sprite.position = (2100,420)
+        self.nightmare_2.sprite.position = (2150,420)
         self.nightmare_2.sprite.color = (0,255,0)
-        self.skeleton.sprite.position = (2300, 420)
+
+        self.skeleton.sprite.position = (2500, 420)
         self.skeleton.sprite.scale = 2
         self.skeleton.sprite.scale_x = -1
+        self.skeleton.sprite.color = (255,0,0)
         
 
         #--------------------------------------------------------------------------
@@ -126,22 +129,21 @@ class Level2_Hero(ScrollableLayer):
         self.attack = False
         self.flag = False
         self.x_y = 0
-        self.sprite.color = (0, 0, 0)
+        
 
         self.mirror_sprite = Sprite(animations.anim_i)
         self.mirror_sprite.position = (100, 320)
         self.mirror_sprite.scale = -2
         self.mirror_sprite.scale_x = -1
         self.mirror_sprite.velocity = (0,0)
+        self.mirror_sprite.color = (0, 0, 0)
         
-        #first stack ------------------------------------------------
-        self.ball_f.visible = False
-        self.ball.visible = False
         #FirstStack
         self.add(self.green_hound_1)
         self.add(self.green_hound_2)
         self.add(self.hell_beast)
         self.add(self.ball)
+        self.ball.visible = False
 
         #SecondStack
         self.add(self.red_hound_1)
@@ -151,6 +153,7 @@ class Level2_Hero(ScrollableLayer):
         self.add(self.nightmare_1)
         self.add(self.hell_fire_beast)
         self.add(self.ball_f)
+        self.ball_f.visible = False
 
         #FourthStack
         self.add(self.nightmare_2)
@@ -191,7 +194,7 @@ class Level2_Hero(ScrollableLayer):
     def get_skeleton_flag(self, enemy,hp):
         if not enemy.first_death:
             if enemy.flag:
-                    if enemy.lifes != 0:
+                    if enemy.lifes >= 0:
                         enemy.lifes -= hp
                         print('Enemy lifes: ', enemy.lifes)
                         
@@ -575,15 +578,11 @@ class Level2_Hero(ScrollableLayer):
                     
                 else:
                     enemy.flag = False
-                    enemy.sprite.position = (w_x, 410)
+                    enemy.sprite.position = (w_x, 405)
                     enemy.sprite._animation = enemy.anim
-
-                
-
 
     def update(self, dt):
         x,y = self.sprite.position
-        print(x)
         xm, ym = self.mirror_sprite.position
         if(x <=20 ):
             self.run_l = False
@@ -594,7 +593,7 @@ class Level2_Hero(ScrollableLayer):
             self.life = 3
             director.push(ZoomTransition(GameOver.get_gameover(2)))
             self.kill()
-        self.skeleton_action(200, self.skeleton, 1, -1, 1)
+        
        
         self.heart1.position = (x-20, y+40)
         self.heart2.position = (x, y+40)
@@ -621,7 +620,7 @@ class Level2_Hero(ScrollableLayer):
 
         #fourth --------------------------------------------------
         self.wolf_action(200, self.nightmare_2, 2.5, -1, 1) '''
-        self.skeleton_action(200, self.skeleton, 1, -1, 1)
+        self.skeleton_action(300, self.skeleton, 2, -1, 1)
         
 
         if self.life == 0:

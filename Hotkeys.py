@@ -22,7 +22,7 @@ class Hotkeys(Menu):
         super(Hotkeys, self).__init__()
 
         # ITEM SELECTED
-        self.font_item_selected['font_name'] = 'Motion Control'
+        self.font_item_selected['font_name'] = 'Roboto'
         self.font_item_selected['color'] = (215, 100, 55, 255)
         self.font_title['bold'] = True
         self.font_item_selected['font_size'] = 25
@@ -50,7 +50,7 @@ class HotkeyScene(Scene):
         bg = Sprite("res/keyboard/HorrorBack.png")
         bg.position = bg.width // 2, bg.height // 2
         self.add(bg)
-        manage = Label("Загальні", font_name = 'KreepTown', font_size = 30, bold = True, color = (10, 165, 85, 255))
+        manage = Label("Загальні", font_name = 'Roboto', font_size = 30, bold = True, color = (10, 165, 85, 255))
         manage.position = (60,560)
         self.add(manage)
         # ESC ==========================================================
@@ -58,7 +58,7 @@ class HotkeyScene(Scene):
         key_ESC.position = (30,510)
         self.add(key_ESC)
 
-        esc = Label("Вихід/Назад", font_size = 20, bold = True, color = (10, 165, 85, 255))
+        esc = Label("Вихід/Назад",font_name = 'Roboto', font_size = 20, bold = True, color = (10, 165, 85, 255))
         esc.position = (60,500)
         self.add(esc)
         
@@ -68,7 +68,7 @@ class HotkeyScene(Scene):
         
         self.add(key_P)
 
-        p = Label("Пауза", font_size = 20, bold = True, color = (10, 165, 85, 255))
+        p = Label("Пауза",font_name = 'Roboto', font_size = 20, bold = True, color = (10, 165, 85, 255))
         p.position = (60,440)
         self.add(p)
        
@@ -77,12 +77,12 @@ class HotkeyScene(Scene):
         key_M.position = (30,390)
         self.add(key_M)
 
-        m = Label("Вимкнути/Увімкнути звук", font_size = 20, bold = True, color = (10, 165, 85, 255))
+        m = Label("Вимкнути/Увімкнути звук",font_name = 'Roboto', font_size = 20, bold = True, color = (10, 165, 85, 255))
         m.position = (60,380)
         self.add(m)
         #===============================================================
 
-        movement = Label("Дії", font_name = 'Foul Fiend', font_size = 30, bold = True, color = (200, 150, 80, 255))
+        movement = Label("Дії", font_name = 'Roboto', font_size = 30, bold = True, color = (200, 150, 80, 255))
         movement.position = (650,560)
         self.add(movement)
         # Move Right ===================================================
@@ -90,7 +90,7 @@ class HotkeyScene(Scene):
         right_arrow.position = (580,510)
         self.add(right_arrow)
         
-        r_a = Label("Рух вправо", font_size = 20, bold = True, color = (220,150,80, 255))
+        r_a = Label("Рух вправо",font_name = 'Roboto', font_size = 20, bold = True, color = (220,150,80, 255))
         r_a.position = (620,505)
         self.add(r_a)
 
@@ -99,7 +99,7 @@ class HotkeyScene(Scene):
         left_arrow.position = (580,450)
         self.add(left_arrow)
         
-        l_a = Label("Рух вліво", font_size = 20, bold = True, color = (220,150,80, 255))
+        l_a = Label("Рух вліво",font_name = 'Roboto', font_size = 20, bold = True, color = (220,150,80, 255))
         l_a.position = (620,445)
         self.add(l_a)
 
@@ -108,14 +108,14 @@ class HotkeyScene(Scene):
         key_B.position = (580,390)
         self.add(key_B)
         
-        b = Label("Блок", font_size = 20, bold = True, color = (220,150,80, 255))
+        b = Label("Блок",font_name = 'Roboto', font_size = 20, bold = True, color = (220,150,80, 255))
         b.position = (620,380)
         self.add(b)
 
         
         #==============================================================
         
-        attack = Label("Атака", font_size = 30, bold = True, color = (255, 65, 65, 255))
+        attack = Label("Атака",font_name = 'Roboto', font_size = 30, bold = True, color = (255, 65, 65, 255))
         attack.position = (360,270)
         self.add(attack)
 
@@ -124,7 +124,7 @@ class HotkeyScene(Scene):
         key_Z.position = (170,220)
         self.add(key_Z)
 
-        a1 = Label("Атака мечем (Доступно на 1 рівні)", font_size = 20, bold = True, color = (255, 65, 65, 255))
+        a1 = Label("Атака мечем (Доступно на 1 рівні)",font_name = 'Roboto', font_size = 20, bold = True, color = (255, 65, 65, 255))
         a1.position = (200,215)
         self.add(a1)
 
@@ -133,7 +133,7 @@ class HotkeyScene(Scene):
         key_X.position = (170,160)
         self.add(key_X)
 
-        a2 = Label("Атака мечем (Доступно на 2 рівні)", font_size = 20, bold = True, color = (255, 65, 65, 255))
+        a2 = Label("Атака мечем (Доступно на 2 рівні)",font_name = 'Roboto', font_size = 20, bold = True, color = (255, 65, 65, 255))
         a2.position = (200,155)
         self.add(a2)
 
@@ -142,7 +142,7 @@ class HotkeyScene(Scene):
         key_C.position = (170,100)
         self.add(key_C)
 
-        a3 = Label("Атака мечем (Доступно на 3 рівні)", font_size = 20, bold = True, color = (255, 65, 65, 255))
+        a3 = Label("Атака мечем (Доступно на 3 рівні)",font_name = 'Roboto', font_size = 20, bold = True, color = (255, 65, 65, 255))
         a3.position = (200,95)
         self.add(a3)
         #===============================================================

@@ -43,15 +43,13 @@ class Level1_Hero(ScrollableLayer):
 
         # first level monsters -------------------------------------------------
         #Simple Wolf
-        self.white_wolf_1 = SimpleWolf()
-        self.white_wolf_2 = SimpleWolf()
-        self.white_wolf_3 = SimpleWolf()
-        self.white_wolf_4 = SimpleWolf()
+        self.hell_wolf_1 = SimpleWolf()
+        self.hell_wolf_2 = SimpleWolf()
 
-        self.gray_wolf_1 =  SimpleWolf()
-        self.gray_wolf_2 =  SimpleWolf()
-        self.gray_wolf_3 =  SimpleWolf()
-        self.gray_wolf_4 =  SimpleWolf()
+        self.dark_wolf_1 =  SimpleWolf()
+        self.dark_wolf_2 =  SimpleWolf()
+        self.dark_wolf_3 =  SimpleWolf()
+        self.dark_wolf_4 =  SimpleWolf()
         
 
         #Middle Wolf
@@ -72,40 +70,49 @@ class Level1_Hero(ScrollableLayer):
         
         #
         #FirstStack
-        self.white_wolf_1.sprite.position = (850,160)
-        self.white_wolf_1.sprite.scale_x = -1   
+        self.hell_wolf_1.sprite.position = (850,167)
+        self.hell_wolf_1.sprite.scale_x = -1   
+        self.hell_wolf_1.sprite.color = ( 115,92, 192)
 
-        self.gray_wolf_1.sprite.position = (900,160)
-        self.gray_wolf_1.sprite.color = (105,105,105)
-        self.gray_wolf_1.sprite.scale_x = -1
+        self.dark_wolf_1.sprite.position = (910,167)
+        self.dark_wolf_1.sprite.color = (50,72,61)
+        self.dark_wolf_1.sprite.scale_x = -1
 
-        self.white_wolf_2.sprite.position = (950,160)
+        self.hell_wolf_2.sprite.position = (970,167)
+        self.hell_wolf_2.sprite.color = ( 115,92, 192)
 
-        self.gray_wolf_2.sprite.position = (1000,160)
-        self.gray_wolf_2.sprite.color = (105,105,105)
+        self.dark_wolf_2.sprite.position = (1020,167)
+        self.dark_wolf_2.sprite.color = (50,72,61)
 
         #SecondStack
-        self.blue_wolf_1.sprite.position = (1200,160)
+        self.blue_wolf_1.sprite.position = (1200,174)
+        self.blue_wolf_1.sprite.color = (22,6,144)
         self.blue_wolf_1.sprite.scale_x = -1
-        self.blue_wolf_2.sprite.position = (1250,160)
+        self.blue_wolf_2.sprite.position = (1270,174)
+        self.blue_wolf_2.sprite.color = (22,6,144)
 
-        self.black_wolf_1.sprite.position = (1450,180)
-        self.black_wolf_1.lifes = 3
+        self.black_wolf_1.sprite.position = (1450,187)
+        self.black_wolf_1.lifes = 4
         self.black_wolf_1.sprite.color = (0,0,0)
         self.black_wolf_1.sprite.scale_x = -1
         self.black_wolf_1.sprite.scale = 2.5
 
         #ThirdStack
-        self.hell_hound_1.sprite.position = (1700,160)
-        self.blue_wolf_3.sprite.position = (1800,160)
-        self.gray_wolf_3.sprite.position = (1850,160)
-        self.gray_wolf_3.sprite.color = (105,105,105)
+        self.hell_hound_1.sprite.position = (1800,180)
+        self.blue_wolf_3.sprite.position = (1900,174)
+        self.blue_wolf_3.sprite.color = (22,6,144)
+        self.dark_wolf_3.sprite.position = (1950,167)
+        self.dark_wolf_3.sprite.color = (105,105,105)
         
         #FourthStack
-        self.hell_hound_2.sprite.position = (2300,160)
-        self.blue_wolf_4.sprite.position = (2500,160)
-        self.gray_wolf_4.sprite.position = (2550,160)
-        self.gray_wolf_4.sprite.color = (105,105,105)
+        self.hell_hound_2.sprite.position = (2400,180)
+
+        self.blue_wolf_4.sprite.position = (2600,174)
+        self.blue_wolf_4.sprite.color = (22,6,144)
+
+        self.dark_wolf_4.sprite.position = (2650,167)
+        self.dark_wolf_4.sprite.color = (105,105,105)
+
         self.hell_beast.sprite.position = (3000, 200)
 
         #----------------------------------------------------------------------
@@ -130,10 +137,10 @@ class Level1_Hero(ScrollableLayer):
         #first stack ------------------------------------------------
         self.ball.visible = False
         #FirstStack
-        self.add(self.white_wolf_1)
-        self.add(self.white_wolf_2)
-        self.add(self.gray_wolf_1)
-        self.add(self.gray_wolf_2)
+        self.add(self.hell_wolf_1)
+        self.add(self.hell_wolf_2)
+        self.add(self.dark_wolf_1)
+        self.add(self.dark_wolf_2)
         
         #SecondStack
         self.add(self.blue_wolf_1)
@@ -143,13 +150,13 @@ class Level1_Hero(ScrollableLayer):
         #ThirdStack
         self.add(self.hell_hound_1)
         self.add(self.blue_wolf_3)
-        self.add(self.gray_wolf_3)
+        self.add(self.dark_wolf_3)
         
 
         #FourthStack
         self.add(self.hell_hound_2)
         self.add(self.blue_wolf_4)
-        self.add(self.gray_wolf_4)
+        self.add(self.dark_wolf_4)
         self.add(self.hell_beast)
         self.add(self.ball)
         
@@ -209,10 +216,10 @@ class Level1_Hero(ScrollableLayer):
         if k == key.Z:
             if not self.is_dead:
                 #FirstStack
-                self.get_flag(self.white_wolf_1)
-                self.get_flag(self.white_wolf_2)
-                self.get_flag(self.gray_wolf_1)
-                self.get_flag(self.gray_wolf_2)
+                self.get_flag(self.hell_wolf_1)
+                self.get_flag(self.hell_wolf_2)
+                self.get_flag(self.dark_wolf_1)
+                self.get_flag(self.dark_wolf_2)
 
                 #SecondStack
                 self.get_flag(self.blue_wolf_1)
@@ -222,12 +229,12 @@ class Level1_Hero(ScrollableLayer):
                 #ThirdStack
                 self.get_flag(self.hell_hound_1)
                 self.get_flag(self.blue_wolf_3)
-                self.get_flag(self.gray_wolf_3)
+                self.get_flag(self.dark_wolf_3)
                 
 
                 #FourthStack
                 self.get_flag(self.hell_hound_2)
-                self.get_flag(self.gray_wolf_4)
+                self.get_flag(self.dark_wolf_4)
                 self.get_flag(self.blue_wolf_4)
                 self.get_fire(self.hell_beast)
                 
@@ -287,7 +294,6 @@ class Level1_Hero(ScrollableLayer):
             if (fire_ball.position[0]-x) < 10:
                 if self.sprite.image == animations.anim_a1 and self.sprite.scale_x == 1:
                     fire_ball.position = (b_x, b_y)
-
                 elif self.can_attack:
                     self.can_attack = False
                     # logic for visible heart
@@ -452,26 +458,26 @@ class Level1_Hero(ScrollableLayer):
         Level1_Background.scroller_1.set_focus(self.sprite.position[0], self.sprite.position[1])
         
         # first stack --------------------------------------------
-        self.wolf_action(200, self.white_wolf_1, 2, 1, -1)
-        self.wolf_action(210, self.white_wolf_2, 2, 1, -1)
-        self.wolf_action(220, self.gray_wolf_1, 2, 1, -1)
-        self.wolf_action(230, self.gray_wolf_2, 2, 1, -1)
+        self.wolf_action(200, self.hell_wolf_1, 2, -1, 1)
+        self.wolf_action(210, self.hell_wolf_2, 2, -1, 1)
+        self.wolf_action(220, self.dark_wolf_1, 2, -1, 1)
+        self.wolf_action(230, self.dark_wolf_2, 2, -1, 1)
         #---------------------------------------------------------
         # second stack -------------------------------------------
-        self.wolf_action(200, self.blue_wolf_1, 3, 1, -1)
-        self.wolf_action(200, self.blue_wolf_2, 3, 1, -1)
-        self.wolf_action(300, self.black_wolf_1, 3, 1, -1)
+        self.wolf_action(200, self.blue_wolf_1, 3, -1, 1)
+        self.wolf_action(200, self.blue_wolf_2, 3, -1, 1)
+        self.wolf_action(300, self.black_wolf_1, 3, -1, 1)
         
         # third stack--------------------------------------------
         self.wolf_action(250, self.hell_hound_1, 4, -1, 1)
-        self.wolf_action(200, self.gray_wolf_3, 2, 1, -1)
-        self.wolf_action(200, self.blue_wolf_3, 3, 1, -1)
+        self.wolf_action(200, self.dark_wolf_3, 2, -1, 1)
+        self.wolf_action(200, self.blue_wolf_3, 3, -1, 1)
         
 
         # fourth stack-------------------------------------------
         self.wolf_action(250, self.hell_hound_2, 4, -1, 1)
-        self.wolf_action(200, self.gray_wolf_4, 2, 1, -1)
-        self.wolf_action(200, self.blue_wolf_4, 3, 1, -1)
+        self.wolf_action(200, self.dark_wolf_4, 2, -1, 1)
+        self.wolf_action(200, self.blue_wolf_4, 3, -1, 1)
         self.beast_action(300, self.hell_beast, self.ball)
         #---------------------------------------------------------
         

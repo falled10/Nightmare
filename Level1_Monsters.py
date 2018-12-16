@@ -8,26 +8,23 @@ class SimpleWolf(ScrollableLayer):
     def __init__(self):
         super(SimpleWolf, self).__init__()
 
-        #animation
-        self.img = pyglet.image.load('res/animation/level1_monsters/wolf1/UIHere1PartFinal.png')
-        self.img_grid = pyglet.image.ImageGrid(self.img, 1, 7, item_width=320, item_height=270)
-        self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[0:], 0.2, loop=True)
-        self.lifes = 1  
-        self.l = 1
-    
+        #animation_idle
+        self.img_i = pyglet.image.load('res/animation/level1_monsters/hell_hound/hell-hound-idle.png')
+        self.img_grid_i = pyglet.image.ImageGrid(self.img_i, 1, 6, item_width=64, item_height=31)
+        self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid_i[0:], 0.2, loop=True)
+        self.lifes = 2
+        self.l = 2
         self.flag = False
         self.sprite = Sprite(self.anim)
-        self.sprite.scale = 1.4
-        self.sprite.position = (800, 160)
+        self.sprite.scale = 1.2
+        self.sprite.position = (1200, 160)
         self.x = 0
-        self.sprite.scale = 0.3
-        self.can_attack = False
         self.add(self.sprite)
 
 
     def get_run_animation(self):
-        img = pyglet.image.load('res/animation/level1_monsters/wolf1/wolf-runing-cycle.png')
-        img_grid = pyglet.image.ImageGrid(img, 1, 4, item_width=54, item_height=31)
+        img = pyglet.image.load('res/animation/level1_monsters/hell_hound/hell-hound-run.png')
+        img_grid = pyglet.image.ImageGrid(img, 1, 5, item_width=67, item_height=31)
         anim = pyglet.image.Animation.from_image_sequence(img_grid[0:], 0.2, loop=True)
         return anim
 
@@ -36,24 +33,24 @@ class MiddleWolf(ScrollableLayer):
     def __init__(self):
         super(MiddleWolf, self).__init__()
 
-        #animation
-        self.img = pyglet.image.load('res/animation/level1_monsters/wolf2/wolf-runing-cycle-skin.png')
-        self.img_grid = pyglet.image.ImageGrid(self.img, 1, 4, item_width=54, item_height=31)
-        self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid[1:2], 0.2, loop=True)
+        #animation_idle
+        self.img_i = pyglet.image.load('res/animation/level1_monsters/hell_hound/hell-hound-idle.png')
+        self.img_grid_i = pyglet.image.ImageGrid(self.img_i, 1, 6, item_width=64, item_height=31)
+        self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid_i[0:], 0.2, loop=True)
         self.lifes = 2
         self.l = 2
         self.flag = False
         self.sprite = Sprite(self.anim)
-        self.sprite.scale = 1.4
-        self.sprite.position = (1000, 160)
+        self.sprite.scale = 1.6
+        self.sprite.position = (1200, 160)
         self.x = 0
-        
+
         self.add(self.sprite)
 
 
     def get_run_animation(self):
-        img = pyglet.image.load('res/animation/level1_monsters/wolf2/wolf-runing-cycle-skin.png')
-        img_grid = pyglet.image.ImageGrid(img, 1, 4, item_width=54, item_height=31)
+        img = pyglet.image.load('res/animation/level1_monsters/hell_hound/hell-hound-run.png')
+        img_grid = pyglet.image.ImageGrid(img, 1, 5, item_width=67, item_height=31)
         anim = pyglet.image.Animation.from_image_sequence(img_grid[0:], 0.2, loop=True)
         return anim
 
@@ -66,11 +63,11 @@ class HellHound(ScrollableLayer):
         self.img_i = pyglet.image.load('res/animation/level1_monsters/hell_hound/hell-hound-idle.png')
         self.img_grid_i = pyglet.image.ImageGrid(self.img_i, 1, 6, item_width=64, item_height=31)
         self.anim = pyglet.image.Animation.from_image_sequence(self.img_grid_i[0:], 0.2, loop=True)
-        self.lifes = 2
-        self.l = 2
+        self.lifes = 3
+        self.l = 3
         self.flag = False
         self.sprite = Sprite(self.anim)
-        self.sprite.scale = 1.8
+        self.sprite.scale = 2
         self.sprite.position = (1200, 160)
         self.x = 0
 
@@ -93,7 +90,7 @@ class HellBeast(ScrollableLayer):
         self.anim_b = pyglet.image.Animation.from_image_sequence(self.img_grid_b[0:], 0.1   , loop=True)
         self.fire_ball = Sprite(self.anim_b)
         self.fire_ball.scale = 2
-        self.fire_ball.position = (500, 200)
+        self.fire_ball.position = (200, 200)
 
         self.ball_action = False
 
